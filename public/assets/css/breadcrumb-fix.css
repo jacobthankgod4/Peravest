@@ -1,4 +1,0 @@
-.site-breadcrumb .breadcrumb-menu li:first-child::before,
-.site-breadcrumb .breadcrumb-menu li::before {
-  display: none !important;
-}
