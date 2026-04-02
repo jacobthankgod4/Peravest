@@ -37,7 +37,8 @@ const AdminAjoManagement: React.FC = () => {
   };
 
   const processCyclePayout = async (cycleId: number) => {
-    if (!confirm('Process payout for this cycle? This action cannot be undone.')) return;
+    const confirmed = window.confirm('Process payout for this cycle? This action cannot be undone.');
+    if (!confirmed) return;
     
     try {
       await ajoPayoutScheduler.processCyclePayout(cycleId);

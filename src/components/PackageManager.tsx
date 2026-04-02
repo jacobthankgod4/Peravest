@@ -60,7 +60,7 @@ const PackageManager: React.FC<PackageManagerProps> = ({ propertyId, onUpdate })
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this package?')) return;
+    if (!window.confirm('Are you sure you want to delete this package?')) return;
     try {
       await packageService.deletePackage(id);
       fetchPackages();
