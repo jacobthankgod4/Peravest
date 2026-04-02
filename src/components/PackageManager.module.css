@@ -1,0 +1,167 @@
+.container {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  margin-top: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header h3 {
+  margin: 0;
+  color: #0e2e50;
+  font-size: 1.25rem;
+}
+
+.addBtn {
+  background: #09c398;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.addBtn:hover {
+  background: #07a07d;
+}
+
+.form {
+  background: #f7f9fc;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #5a6c7d;
+  margin-bottom: 6px;
+}
+
+.formGroup input {
+  padding: 10px 12px;
+  border: 1px solid #e0e6ed;
+  border-radius: 6px;
+  font-size: 0.9375rem;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: #09c398;
+}
+
+.saveBtn {
+  background: #0e2e50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.saveBtn:hover {
+  background: #1a4570;
+}
+
+.packageList {
+  display: grid;
+  gap: 16px;
+}
+
+.packageCard {
+  border: 1px solid #e0e6ed;
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.2s;
+}
+
+.packageCard:hover {
+  box-shadow: 0 4px 12px rgba(14, 46, 80, 0.1);
+}
+
+.packageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.packageHeader h4 {
+  margin: 0;
+  color: #0e2e50;
+  font-size: 1.125rem;
+}
+
+.deleteBtn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.deleteBtn:hover {
+  background: #ff5252;
+}
+
+.packageDetails {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail span {
+  font-size: 0.8125rem;
+  color: #8b98a5;
+}
+
+.detail strong {
+  font-size: 0.9375rem;
+  color: #0e2e50;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #8b98a5;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #8b98a5;
+  background: #f7f9fc;
+  border-radius: 8px;
+}

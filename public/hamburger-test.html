@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamburger Menu Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .main-navigation {
+            padding: 15px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0e2e50;
+            text-decoration: none;
+        }
+
+        .mobile-menu-right {
+            display: none;
+        }
+
+        .navbar-toggler {
+            border: none;
+            background: transparent;
+            padding: 8px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .navbar-toggler i {
+            font-size: 24px;
+            color: #0e2e50;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .mobile-menu-overlay.show {
+            display: block;
+        }
+
+        .mobile-menu-container {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            overflow-y: auto;
+            transition: right 0.3s ease-in-out;
+            padding: 80px 0 20px 0;
+        }
+
+        .mobile-menu-container.show {
+            right: 0;
+        }
+
+        .navbar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 15px 25px;
+            color: #0e2e50;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #f8f9fa;
+            color: #09c398;
+            padding-left: 30px;
+        }
+
+        /* Desktop menu */
+        .desktop-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .desktop-menu .nav-link {
+            padding: 0;
+            border: none;
+        }
+
+        .desktop-menu .nav-link:hover {
+            padding-left: 0;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 991px) {
+            .mobile-menu-right {
+                display: flex !important;
+                align-items: center;
+            }
+
+            .desktop-menu {
+                display: none !important;
+            }
+        }
+
+        /* Desktop styles */
+        @media (min-width: 992px) {
+            .mobile-menu-right {
+                display: none !important;
+            }
+
+            .mobile-menu-container {
+                position: static !important;
+                width: auto !important;
+                height: auto !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                right: auto !important;
+            }
+
+            .navbar-nav {
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 30px;
+            }
+
+            .nav-item {
+                border: none !important;
+            }
+
+            .nav-link {
+                padding: 0 !important;
+            }
+
+            .nav-link:hover {
+                padding-left: 0 !important;
+            }
+        }
+
+        .content {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .test-info {
+            background: #f0f9ff;
+            border: 2px solid #0e2e50;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .test-info h2 {
+            color: #0e2e50;
+            margin-bottom: 10px;
+        }
+
+        .test-info ul {
+            margin-left: 20px;
+        }
+
+        .test-info li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="main-navigation">
+            <div class="container">
+                <a href="#" class="navbar-brand">PERAVEST</a>
+
+                <!-- Desktop Menu -->
+                <ul class="desktop-menu">
+                    <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Listings</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">FAQ</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+                </ul>
+
+                <!-- Mobile Hamburger Button -->
+                <div class="mobile-menu-right">
+                    <button class="navbar-toggler" id="menuToggle">
+                        <i class="fas fa-bars" id="menuIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="overlay"></div>
+
+    <!-- Mobile Menu Container -->
+    <div class="mobile-menu-container" id="mobileMenu">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Listings</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">FAQ</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Sign Up</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div class="test-info">
+            <h2>🧪 Hamburger Menu Test Page</h2>
+            <p><strong>Instructions:</strong></p>
+            <ul>
+                <li>Resize your browser window to less than 991px width</li>
+                <li>You should see a hamburger icon (☰) appear in the top right</li>
+                <li>Click the hamburger icon to open the menu</li>
+                <li>The menu should slide in from the right</li>
+                <li>A dark overlay should appear behind the menu</li>
+                <li>Click the overlay or a menu item to close the menu</li>
+                <li>The icon should change from ☰ to × when menu is open</li>
+            </ul>
+            <p><strong>Current Screen Width:</strong> <span id="screenWidth"></span>px</p>
+            <p><strong>Menu Status:</strong> <span id="menuStatus">Closed</span></p>
+        </div>
+
+        <h1>Test Content</h1>
+        <p>This is a test page to verify the hamburger menu functionality works correctly.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+        const menuIcon = document.getElementById('menuIcon');
+        const menuStatus = document.getElementById('menuStatus');
+        const screenWidth = document.getElementById('screenWidth');
+        let isMenuOpen = false;
+
+        // Update screen width display
+        function updateScreenWidth() {
+            screenWidth.textContent = window.innerWidth;
+        }
+        updateScreenWidth();
+        window.addEventListener('resize', updateScreenWidth);
+
+        // Toggle menu
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                mobileMenu.classList.add('show');
+                overlay.classList.add('show');
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+                document.body.style.overflow = 'hidden';
+                menuStatus.textContent = 'Open';
+                menuStatus.style.color = '#09c398';
+            } else {
+                mobileMenu.classList.remove('show');
+                overlay.classList.remove('show');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+                document.body.style.overflow = 'unset';
+                menuStatus.textContent = 'Closed';
+                menuStatus.style.color = '#666';
+            }
+        }
+
+        // Close menu
+        function closeMenu() {
+            if (isMenuOpen) {
+                toggleMenu();
+            }
+        }
+
+        // Event listeners
+        menuToggle.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', closeMenu);
+        
+        // Close menu when clicking on menu items
+        const menuLinks = document.querySelectorAll('.mobile-menu-container .nav-link');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                closeMenu();
+            });
+        });
+
+        console.log('✅ Hamburger menu test page loaded');
+        console.log('📱 Current screen width:', window.innerWidth);
+        console.log('🍔 Menu should be visible on screens < 991px');
+    </script>
+</body>
+</html>

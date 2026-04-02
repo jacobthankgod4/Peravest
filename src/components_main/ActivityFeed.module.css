@@ -1,0 +1,84 @@
+.activityFeed {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.title {
+  color: #0e2e50;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+  font-family: 'K2D', sans-serif;
+}
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.activityItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.activityItem:hover {
+  background: #f8f9fa;
+}
+
+.iconWrapper {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.activityContent {
+  flex: 1;
+}
+
+.activityTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0e2e50;
+  margin: 0 0 0.25rem 0;
+}
+
+.activityDate {
+  font-size: 0.8rem;
+  color: #757f95;
+}
+
+.activityAmount {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #09c398;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #757f95;
+}
+
+.emptyState i {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+  opacity: 0.5;
+}
+
+.emptyState p {
+  margin: 0;
+  font-size: 0.95rem;
+}

@@ -1,0 +1,65 @@
+.statCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.iconWrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+}
+
+.title {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin: 0 0 0.25rem 0;
+  font-weight: 500;
+}
+
+.value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+}
+
+.change {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.change.up {
+  color: #28a745;
+}
+
+.change.down {
+  color: #dc3545;
+}
+
+.change i {
+  font-size: 0.75rem;
+}

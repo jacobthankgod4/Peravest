@@ -1,0 +1,324 @@
+/* Listing Detail Page Mobile Styles */
+
+/* Ensure header is always visible */
+@media (max-width: 991px) {
+  .header {
+    position: relative;
+    z-index: 1050 !important;
+  }
+
+  .main-navigation {
+    position: relative;
+    z-index: 1050 !important;
+  }
+
+  /* Property Single Section */
+  .property-single {
+    padding-top: 80px !important;
+  }
+
+  .property-single .container {
+    padding: 0 15px;
+  }
+
+  /* Image Gallery */
+  .property-single-gallery {
+    margin-top: 1rem !important;
+    border-radius: 10px !important;
+  }
+
+  .property-single-gallery img {
+    height: 300px !important;
+  }
+
+  /* Navigation buttons */
+  .property-single-gallery button {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.2rem !important;
+  }
+
+  /* Property Content */
+  .property-single-content {
+    padding: 1.5rem !important;
+    margin-top: 1rem;
+  }
+
+  .property-single-title {
+    font-size: 1.5rem !important;
+  }
+
+  /* Specs Grid */
+  .property-single-content > div[style*="grid-template-columns"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+    padding: 1rem !important;
+  }
+
+  /* Price Display */
+  .property-single-content > div[style*="fontSize: '2.5rem'"] {
+    font-size: 1.8rem !important;
+    padding: 1rem !important;
+  }
+
+  /* Amenities Grid */
+  .property-single-content div[style*="gridTemplateColumns"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Investment Stats */
+  .property-single-content .row.text-center h5 {
+    font-size: 1.25rem !important;
+  }
+
+  /* Sidebar */
+  .property-sidebar {
+    position: static !important;
+    margin-top: 2rem;
+  }
+
+  .property-sidebar > div {
+    padding: 1.5rem !important;
+  }
+
+  /* Investment Card */
+  .property-sidebar h3,
+  .property-sidebar h4 {
+    font-size: 1.25rem !important;
+  }
+
+  /* Buttons */
+  .property-sidebar button,
+  .property-single-content button {
+    padding: 1rem !important;
+    font-size: 1rem !important;
+  }
+
+  /* Key Features List */
+  .property-sidebar ul li {
+    font-size: 0.9rem !important;
+  }
+
+  /* Breadcrumb */
+  .breadcrumb-wrapper {
+    padding: 80px 0 40px !important;
+  }
+
+  .breadcrumb-wrapper h1 {
+    font-size: 1.75rem !important;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 576px) {
+  .property-single-gallery img {
+    height: 250px !important;
+  }
+
+  .property-single-title {
+    font-size: 1.25rem !important;
+  }
+
+  .property-single-content {
+    padding: 1rem !important;
+  }
+
+  /* Single column for specs on very small screens */
+  .property-single-content > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Amenities single column */
+  .property-single-content div[style*="gridTemplateColumns"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Investment stats stack vertically */
+  .property-single-content .row.text-center .col-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Listings Page Mobile Styles */
+@media (max-width: 991px) {
+  /* Listings Grid */
+  .listingsPage .propertiesGrid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Filter Section */
+  .listingsPage .filterSection {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  .listingsPage .searchBox {
+    width: 100% !important;
+  }
+
+  /* Property Cards */
+  .listingsPage .propertyCard {
+    margin: 0 !important;
+  }
+
+  .listingsPage .cardImage img {
+    height: 250px !important;
+  }
+
+  /* Stats Row */
+  .listingsPage .statsRow {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+
+  .listingsPage .stat {
+    font-size: 0.85rem !important;
+  }
+
+  /* Pagination */
+  .listingsPage .pagination {
+    overflow-x: auto;
+  }
+
+  .listingsPage .paginationList {
+    flex-wrap: nowrap !important;
+  }
+}
+
+/* Package Detail Page Mobile Styles */
+@media (max-width: 991px) {
+  /* Hero Section */
+  section[style*="padding: '120px 0 80px'"] {
+    padding: 80px 0 40px !important;
+  }
+
+  section h1 {
+    font-size: 2rem !important;
+  }
+
+  section p.lead {
+    font-size: 1rem !important;
+  }
+
+  /* How It Works Grid */
+  .row.g-4 .col-md-3 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* Features and Benefits */
+  .row .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* FAQ Section */
+  .row.justify-content-center .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* Sidebar */
+  .col-lg-4 > div[style*="position: sticky"] {
+    position: static !important;
+    margin-top: 2rem;
+  }
+
+  /* Investment Summary */
+  div[style*="Investment Summary"] {
+    padding: 1.5rem !important;
+  }
+
+  /* Buttons */
+  button[style*="Start Investing Now"],
+  a[style*="Get More Information"] {
+    padding: 15px !important;
+    font-size: 16px !important;
+  }
+}
+
+/* Tablet Adjustments */
+@media (min-width: 768px) and (max-width: 991px) {
+  .listingsPage .propertiesGrid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .property-single-content > div[style*="grid-template-columns"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-width: 991px) and (orientation: landscape) {
+  .property-single-gallery img {
+    height: 350px !important;
+  }
+
+  .mobile-menu-container {
+    height: 100vh !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* Touch-friendly adjustments */
+@media (max-width: 991px) {
+  /* Increase touch target sizes */
+  button,
+  a.theme-btn,
+  .nav-link {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Better spacing for touch */
+  .property-single-content > div {
+    margin-bottom: 2rem !important;
+  }
+
+  /* Prevent text selection on buttons */
+  button,
+  .theme-btn {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent zoom on input focus (iOS) */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Loading States */
+@media (max-width: 991px) {
+  .loading-spinner {
+    padding: 3rem 0;
+  }
+
+  .empty-state {
+    padding: 3rem 1rem;
+  }
+}
+
+/* Print Styles for Mobile */
+@media print {
+  .mobile-menu-right,
+  .mobile-menu-overlay,
+  .navbar-toggler,
+  .header-top {
+    display: none !important;
+  }
+
+  .property-single-content {
+    padding: 0 !important;
+  }
+}

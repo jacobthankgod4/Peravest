@@ -1,0 +1,109 @@
+/* Login Styles */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--color-bg-tertiary);
+}
+
+.login-form {
+  background: var(--color-bg-primary);
+  padding: var(--space-2xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-form h2 {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+  color: var(--color-text-primary);
+}
+
+.login-form input {
+  width: 100%;
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-base);
+}
+
+.error {
+  color: var(--color-error);
+  text-align: center;
+  margin-bottom: var(--space-md);
+  padding: var(--space-sm);
+  background: #f8d7da;
+  border-radius: var(--radius-sm);
+}
+
+/* Dashboard Styles */
+.dashboard {
+  min-height: 100vh;
+  background: var(--color-bg-secondary);
+}
+
+.dashboard-header {
+  background: var(--color-bg-primary);
+  padding: var(--space-md) var(--space-xl);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.dashboard-content {
+  padding: var(--space-xl);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.stat-card {
+  background: var(--color-bg-primary);
+  padding: var(--space-xl);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.stat-card h3 {
+  margin: 0 0 var(--space-sm) 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+}
+
+.stat-card p {
+  margin: 0;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+}

@@ -1,0 +1,57 @@
+/* Savings Features Text Size Fix */
+.savings-features-area {
+  font-size: 16px;
+}
+
+.savings-feature-card h4 {
+  font-size: 24px !important;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.savings-feature-card p {
+  font-size: 18px !important;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.feature-benefits {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-benefits li {
+  font-size: 16px !important;
+  padding: 8px 0;
+  position: relative;
+  padding-left: 25px;
+}
+
+.feature-benefits li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #28a745;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.feature-btn {
+  font-size: 16px !important;
+  padding: 12px 24px;
+  font-weight: 600;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.3s ease;
+}
+
+.feature-btn:hover {
+  background: #0056b3;
+  color: white;
+  text-decoration: none;
+}
