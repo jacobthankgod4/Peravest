@@ -1,0 +1,120 @@
+/* CRITICAL FIX: Button Icon Override - Maximum Specificity */
+
+/* Force correct arrow-right icon with !important and high specificity */
+.theme-btn i.far.fa-arrow-right::before,
+.theme-btn .far.fa-arrow-right::before,
+a.theme-btn i.far.fa-arrow-right::before,
+a.theme-btn .far.fa-arrow-right::before {
+    content: "\f061" !important;
+    font-family: "Font Awesome 6 Pro" !important;
+    font-weight: 400 !important;
+}
+
+/* Fix listing buttons without icons */
+.listing-btn::after {
+    content: " \f061" !important;
+    font-family: "Font Awesome 6 Pro" !important;
+    font-weight: 400 !important;
+    margin-left: 5px;
+}
+
+/* Fix location icons */
+i.far.fa-location-dot::before,
+.far.fa-location-dot::before {
+    content: "\f3c5" !important;
+    font-family: "Font Awesome 6 Pro" !important;
+    font-weight: 400 !important;
+}
+
+/* CRITICAL: Fix header buttons using SPAN tags */
+.theme-btn span.far.fa-plus-circle::before,
+span.far.fa-plus-circle::before {
+    content: "\f055" !important;
+    font-family: "Font Awesome 6 Pro" !important;
+    font-weight: 400 !important;
+}
+
+/* Fix header login/register buttons */
+.header-top-link i.far.fa-arrow-right-to-bracket::before,
+i.far.fa-arrow-right-to-bracket::before {
+    content: "\f2f6" !important;
+    font-family: "Font Awesome 6 Pro" !important;
+    font-weight: 400 !important;
+}
+
+.header-top-link i.far.fa-user-tie::before,
+i.far.fa-user-tie::before {
+    content: "\f508" !important;
+    font-family: "Font Awesome 6 Pro" !important;
+    font-weight: 400 !important;
+}
+
+/* Fix service arrow icons in How it Works cards */
+.service-arrow i.far.fa-arrow-right::before,
+.service-item .service-arrow i.far.fa-arrow-right::before {
+    content: "\f061" !important;
+    font-family: "Font Awesome 6 Pro" !important;
+    font-weight: 400 !important;
+}
+
+/* Fix header icons */
+.far.fa-map-marker-alt::before {
+    content: "\f3c5" !important;
+}
+
+.far.fa-phone-arrow-down-left::before {
+    content: "\e223" !important;
+}
+
+.far.fa-bars::before {
+    content: "\f0c9" !important;
+}
+
+/* Fix footer icons */
+.footer-list i.fas.fa-angle-double-right::before,
+.fas.fa-angle-double-right::before {
+    content: "\f101" !important;
+    font-family: "Font Awesome 6 Pro" !important;
+    font-weight: 900 !important;
+}
+
+.footer-contact i.far.fa-phone::before,
+.far.fa-phone::before {
+    content: "\f095" !important;
+    font-family: "Font Awesome 6 Pro" !important;
+    font-weight: 400 !important;
+}
+
+.footer-contact i.far.fa-map-marker-alt::before,
+.far.fa-map-marker-alt::before {
+    content: "\f3c5" !important;
+    font-family: "Font Awesome 6 Pro" !important;
+    font-weight: 400 !important;
+}
+
+.theme-btn i.far.fa-paper-plane::before,
+.far.fa-paper-plane::before {
+    content: "\f1d8" !important;
+    font-family: "Font Awesome 6 Pro" !important;
+    font-weight: 400 !important;
+}
+
+#scroll-top i.far.fa-angle-up::before,
+.far.fa-angle-up::before {
+    content: "\f106" !important;
+    font-family: "Font Awesome 6 Pro" !important;
+    font-weight: 400 !important;
+}
+
+/* Nuclear option: Override any cancel/close icons */
+.theme-btn i::before,
+.theme-btn span::before,
+.listing-btn i::before,
+.header-top-link i::before,
+.service-arrow i::before,
+.footer-list i::before,
+.footer-contact i::before,
+#scroll-top i::before {
+    font-family: "Font Awesome 6 Pro" !important;
+    font-weight: 400 !important;
+}
