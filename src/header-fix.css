@@ -312,6 +312,7 @@
 /* ── DROPDOWN (desktop) ── */
 .navbar .dropdown-menu {
   display: block;
+  position: absolute;
   opacity: 0;
   visibility: hidden;
   transition: 0.3s;
@@ -381,6 +382,10 @@
 }
 
 .navbar .nav-item .nav-link {
+  position: relative;
+}
+
+.navbar .nav-item.dropdown {
   position: relative;
 }
 
