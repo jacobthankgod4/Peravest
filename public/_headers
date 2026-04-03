@@ -1,0 +1,5 @@
+/*
+  Content-Security-Policy: script-src * 'unsafe-inline' 'unsafe-eval' blob:; style-src * 'unsafe-inline'; img-src * data: blob:; font-src * data:; connect-src *; frame-src https://checkout.paystack.com https://checkout.gointerpay.net https://checkout.rch.io
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Access-Control-Allow-Origin: *

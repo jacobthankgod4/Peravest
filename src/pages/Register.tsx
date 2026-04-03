@@ -76,7 +76,9 @@ const Register: React.FC = () => {
     setLoading(true);
 
     try {
-      const { error: authError } = await supabase.auth.signUp({
+      console.log('Attempting signup with:', { email: formData.email, fullName: formData.fullName });
+      
+      const { data, error: authError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -86,13 +88,22 @@ const Register: React.FC = () => {
             bank_code: formData.bankCode,
             age: parseInt(formData.age),
             gender: formData.gender
-          }
+          },
+          emailRedirectTo: `${window.location.origin}/auth/callback`
         }
       });
-      if (authError) throw authError;
+      
+      if (authError) {
+        console.error('Supabase auth error:', authError);
+        throw authError;
+      }
+      
+      console.log('Signup successful:', data);
       navigate('/login', { state: { message: 'Registration successful! Check your email to verify.' } });
     } catch (err: any) {
-      setErrors({ general: err.message || 'Registration failed' });
+      console.error('Registration error:', err);
+      const errorMessage = err.message || err.error_description || 'Registration failed';
+      setErrors({ general: errorMessage });
     } finally {
       setLoading(false);
     }
@@ -106,16 +117,16 @@ const Register: React.FC = () => {
           {/* Left Column - Branding */}
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <img src="/assets/img/logo/logo_a.png" alt="Peravest" style={{ height: '50px', marginBottom: '20px', objectFit: 'contain', objectPosition: 'center' }} />
-            <h2 style={{ color: '#fff', fontSize: '32px', fontWeight: 700, margin: '0 0 15px 0' }}>Join Peravest</h2>
-            <p style={{ color: '#a0a0b0', fontSize: '16px', lineHeight: '1.6', margin: 0 }}>Start your real estate investment journey with as low as ₦5,000. Create your account in minutes.</p>
+            <h2 style={{ color: '#fff', fontSize: '32px', fontWeight: 700, margin: '0 0 15px 0' }}>Join PeraVest</h2>
+            <p style={{ color: '#a0a0b0', fontSize: '16px', lineHeight: '1.6', margin: 0 }}>Start your cooperative real estate participation journey with as low as ₦5,000. Create your account in minutes.</p>
             <div style={{ marginTop: '30px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
               <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                 <i className="fas fa-check" style={{ color: '#09c398', fontSize: '18px' }}></i>
-                <span style={{ color: '#a0a0b0' }}>Secure & regulated platform</span>
+                <span style={{ color: '#a0a0b0' }}>Secure & cooperative platform</span>
               </div>
               <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                 <i className="fas fa-check" style={{ color: '#09c398', fontSize: '18px' }}></i>
-                <span style={{ color: '#a0a0b0' }}>Up to 25% annual returns</span>
+                <span style={{ color: '#a0a0b0' }}>Up to 25% projected member benefits</span>
               </div>
               <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                 <i className="fas fa-check" style={{ color: '#09c398', fontSize: '18px' }}></i>
