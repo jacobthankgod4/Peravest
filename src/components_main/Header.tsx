@@ -6,14 +6,11 @@ import '../header-fix.css';
 const Header: React.FC = () => {
   const { user, isAdmin, isAuthenticated, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth < 992);
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
-      const mobile = window.innerWidth < 992;
-      setIsMobile(mobile);
-      if (!mobile && menuOpen) setMenuOpen(false);
+      if (window.innerWidth >= 992 && menuOpen) setMenuOpen(false);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -22,307 +19,221 @@ const Header: React.FC = () => {
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
     } else {
       document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
     }
+    return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && menuOpen) setMenuOpen(false);
+      if (e.key === 'Escape') setMenuOpen(false);
     };
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [menuOpen]);
+  }, []);
 
   const handleLogout = () => {
     logout();
+    setMenuOpen(false);
     navigate('/');
   };
 
+  const close = () => setMenuOpen(false);
+
   return (
     <header className="header">
-      {isAdmin ? (
-        <div className="main-navigation">
-          <nav className="navbar navbar-expand-lg">
-            <div className="container" style={{ position: 'relative' }}>
-              <Link className="navbar-brand" to="/">
-                <img src="/assets/img/logo/logo_a.png" className="img-f" alt="Peravest Logo" style={{ maxHeight: '50px', width: 'auto' }} />
-              </Link>
+      {/* ── HEADER TOP BAR (desktop only, non-admin) ── */}
+      {!isAdmin && (
+        <div className="header-top">
+          <div className="container">
+            <div className="header-top-wrapper">
+              <div className="header-top-left">
+                <div className="header-top-contact">
+                  <ul>
+                    <li>
+                      <div className="header-top-contact-info">
+                        <a href="#"><i className="far fa-map-marker-alt"></i> 16, Afolabi Aina street, Off Allen Road Ikeja Lagos</a>
+                      </div>
+                    </li>
+                    <li>
+                      <div className="header-top-contact-info">
+                        <a href="tel:+2348109344800"><i className="far fa-phone-arrow-down-left"></i> (+234) 810 934 4800</a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="header-top-right">
+                {isAuthenticated ? (
+                  <Link to="/dashboard" className="header-top-link">
+                    <i className="far fa-arrow-right-to-bracket"></i> Dashboard
+                  </Link>
+                ) : (
+                  <>
+                    <Link to="/login" className="header-top-link">
+                      <i className="far fa-arrow-right-to-bracket"></i> Login
+                    </Link>
+                    <Link to="/register" className="header-top-link">
+                      <i className="far fa-user-tie"></i> Register
+                    </Link>
+                  </>
+                )}
+                <div className="header-top-social">
+                  <a href="https://facebook.com/Perazim-Proptee-limited" target="_blank" rel="noreferrer">
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="https://www.instagram.com/Perazim_proptee" target="_blank" rel="noreferrer">
+                    <i className="fab fa-instagram"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
-              {/* ADMIN HAMBURGER */}
-              <button 
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-label="Toggle navigation menu"
+      {/* ── MAIN NAVIGATION ── */}
+      <div className="main-navigation">
+        <nav className="navbar navbar-expand-lg">
+          <div className="container">
+
+            {/* Logo */}
+            <Link className="navbar-brand" to="/">
+              <img
+                src="/assets/img/logo/logo_a.png"
+                alt="Peravest Logo"
+                style={{ height: '50px', width: 'auto', maxWidth: '160px', objectFit: 'contain' }}
+              />
+            </Link>
+
+            {/* Mobile right: Invest Now + hamburger */}
+            <div className="mobile-menu-right">
+              <div className="header-account">
+                <Link to="/listings" className="theme-btn" onClick={close}>
+                  <span className="far fa-plus-circle"></span> Invest Now
+                </Link>
+              </div>
+              <button
+                className="navbar-toggler"
+                type="button"
+                onClick={() => setMenuOpen(o => !o)}
+                aria-label="Toggle navigation"
                 aria-expanded={menuOpen}
-                style={{
-                  display: isMobile ? 'block' : 'none',
-                  position: 'absolute',
-                  right: '15px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  border: 'none',
-                  background: 'transparent',
-                  padding: '10px',
-                  cursor: 'pointer',
-                  zIndex: 1002
-                }}
               >
-                <i className={`far ${menuOpen ? 'fa-times' : 'fa-bars'}`} style={{ fontSize: '24px', color: '#0e2e50' }}></i>
+                <span className="navbar-toggler-btn-icon">
+                  <i className={`far ${menuOpen ? 'fa-times' : 'fa-bars'}`}></i>
+                </span>
+              </button>
+            </div>
+
+            {/* Overlay */}
+            {menuOpen && (
+              <div
+                onClick={close}
+                style={{
+                  position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+                  background: 'rgba(0,0,0,0.5)', zIndex: 1000
+                }}
+              />
+            )}
+
+            {/* Nav menu */}
+            <div className={`navbar-collapse${menuOpen ? ' menu-open' : ''}`} id="main_nav">
+              {/* Close button inside drawer */}
+              <button className="menu-close-btn" onClick={close} aria-label="Close menu">
+                <i className="far fa-times"></i>
               </button>
 
-              {menuOpen && isMobile && (
-                <div 
-                  onClick={() => setMenuOpen(false)}
-                  style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    background: 'rgba(0,0,0,0.5)',
-                    zIndex: 1000
-                  }}
-                />
-              )}
-
-              <div 
-                style={{
-                  position: isMobile ? 'fixed' : 'static',
-                  top: 0,
-                  right: isMobile ? (menuOpen ? 0 : '-280px') : 'auto',
-                  width: isMobile ? '280px' : 'auto',
-                  height: isMobile ? '100vh' : 'auto',
-                  background: '#fff',
-                  zIndex: 1001,
-                  transition: 'right 0.3s ease',
-                  overflowY: isMobile ? 'auto' : 'visible',
-                  paddingTop: isMobile ? '80px' : '0',
-                  boxShadow: isMobile ? '-5px 0 15px rgba(0,0,0,0.1)' : 'none',
-                  display: isMobile ? 'block' : 'flex',
-                  alignItems: isMobile ? 'stretch' : 'center',
-                  marginLeft: 'auto'
-                }}
-                className="navbar-nav ms-auto"
-              >
-                {isMobile && (
-                  <button
-                    onClick={() => setMenuOpen(false)}
-                    aria-label="Close menu"
-                    style={{
-                      position: 'absolute',
-                      top: '20px',
-                      right: '20px',
-                      background: 'transparent',
-                      border: 'none',
-                      fontSize: '24px',
-                      color: '#0e2e50',
-                      cursor: 'pointer',
-                      padding: '5px'
-                    }}
-                  >
-                    <i className="far fa-times"></i>
-                  </button>
-                )}
-                <ul className="navbar-nav align-items-center" style={{ flexDirection: isMobile ? 'column' : 'row', width: '100%', display: 'flex', alignItems: isMobile ? 'stretch' : 'center', gap: isMobile ? '0' : '4px' }}>
-                  <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none', width: isMobile ? '100%' : 'auto' }}>
-                    <Link className="nav-link switch" to="/listings" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '0 15px', display: 'block', color: '#0e2e50', textDecoration: 'none' }}>Listings</Link>
-                  </li>
-                  <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none', width: isMobile ? '100%' : 'auto' }}>
-                    <Link className="nav-link switch" to="/admin/dashboard" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '0 15px', display: 'block', color: '#0e2e50', textDecoration: 'none' }}>Dashboard</Link>
-                  </li>
-                  <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none', width: isMobile ? '100%' : 'auto' }}>
-                    <Link className="nav-link switch" to="/admin/properties" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '0 15px', display: 'block', color: '#0e2e50', textDecoration: 'none' }}><i className="far fa-building"></i> Properties</Link>
-                  </li>
-                  <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none', width: isMobile ? '100%' : 'auto' }}>
-                    <Link className="nav-link switch" to="/admin/users" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '0 15px', display: 'block', color: '#0e2e50', textDecoration: 'none' }}><i className="far fa-users"></i> Users</Link>
-                  </li>
-                  <li className="nav-item" style={{ width: isMobile ? '100%' : 'auto' }}>
-                    <button className="nav-link switch" onClick={() => { handleLogout(); setMenuOpen(false); }} style={{ padding: isMobile ? '15px 25px' : '0 15px', border: 'none', background: 'none', width: '100%', textAlign: 'left', cursor: 'pointer', color: '#0e2e50' }}><i className="far fa-sign-out"></i> Logout</button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-        </div>
-      ) : (
-        <>
-          <div className="header-top" style={{ display: isMobile ? 'none' : 'block' }}>
-            <div className="container">
-              <div className="header-top-wrapper">
-                <div className="header-top-left">
-                  <div className="header-top-contact">
-                    <ul>
-                      <li><div className="header-top-contact-info"><a href="#"><i className="far fa-map-marker-alt"></i> 16,Afolabi Aina street, Off Allen Road Ikeja Lagos</a></div></li>
-                      <li><div className="header-top-contact-info"><a href="tel:+2348109344800"><i className="far fa-phone-arrow-down-left"></i> (+234) 810 934 4800</a></div></li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="header-top-right">
-                  {isAuthenticated ? (
-                    <Link to="/dashboard" className="header-top-link"><i className="far fa-arrow-right-to-bracket"></i> Dashboard</Link>
-                  ) : (
-                    <>
-                      <Link to="/login" className="header-top-link"><i className="far fa-arrow-right-to-bracket"></i> Login</Link>
-                      <Link to="/register" className="header-top-link"><i className="far fa-user-tie"></i> Register</Link>
-                    </>
-                  )}
-                  <div className="header-top-social">
-                    <a href="https://facebook.com/Perazim Proptee limited"><i className="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/Perazim_proptee"><i className="fab fa-instagram"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="main-navigation">
-            <nav className="navbar navbar-expand-lg">
-              <div className="container" style={{ position: 'relative' }}>
-                <Link className="navbar-brand" to="/">
-                  <img src="/assets/img/logo/logo_a.png" className="img-f" alt="Peravest Logo" style={{ maxHeight: '50px', width: 'auto' }} />
-                </Link>
-
-                {/* MOBILE MENU RIGHT - Invest Now + Hamburger */}
-                {isMobile && (
-                  <div className="mobile-menu-right">
-                    <div className="header-account">
-                      <Link to="/listings" className="theme-btn mt-2" onClick={() => setMenuOpen(false)}>
-                        <span className="far fa-plus-circle"></span>Invest Now
+              <ul className="navbar-nav">
+                {isAdmin ? (
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link switch" to="/listings" onClick={close}>Listings</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link switch" to="/admin/dashboard" onClick={close}>Dashboard</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link switch" to="/admin/properties" onClick={close}>
+                        <i className="far fa-building"></i> Properties
                       </Link>
-                    </div>
-                    <button 
-                      onClick={() => setMenuOpen(!menuOpen)}
-                      aria-label="Toggle navigation menu"
-                      aria-expanded={menuOpen}
-                      className="navbar-toggler"
-                      type="button"
-                      style={{ border: 'none', background: 'transparent', padding: '10px', cursor: 'pointer', zIndex: 1002, WebkitTapHighlightColor: 'transparent' }}
-                    >
-                      <span className="navbar-toggler-btn-icon">
-                        <i className={`far ${menuOpen ? 'fa-times' : 'fa-bars'}`} style={{ fontSize: '24px', color: '#0e2e50' }}></i>
-                      </span>
-                    </button>
-                  </div>
-                )}
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link switch" to="/admin/users" onClick={close}>
+                        <i className="far fa-users"></i> Users
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <button className="nav-link switch btn-nav" onClick={handleLogout}>
+                        <i className="far fa-sign-out"></i> Logout
+                      </button>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="nav-item">
+                      <Link className="nav-link switch" to="/" onClick={close}>Home</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link switch" to="/about" onClick={close}>About</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link switch" to="/listings" onClick={close}>Listings</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link switch" to="/faq" onClick={close}>Faq</Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link className="nav-link switch" to="/contact" onClick={close}>Contact</Link>
+                    </li>
 
-                {/* OVERLAY */}
-                {menuOpen && isMobile && (
-                  <div 
-                    onClick={() => setMenuOpen(false)}
-                    style={{
-                      position: 'fixed',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      background: 'rgba(0,0,0,0.5)',
-                      zIndex: 1000
-                    }}
-                  />
-                )}
-
-                {/* MENU */}
-                <div 
-                  style={{
-                    position: isMobile ? 'fixed' : 'static',
-                    top: 0,
-                    right: isMobile ? (menuOpen ? 0 : '-280px') : 'auto',
-                    width: isMobile ? '280px' : 'auto',
-                    height: isMobile ? '100vh' : 'auto',
-                    background: '#fff',
-                    zIndex: 1001,
-                    transition: 'right 0.3s ease',
-                    overflowY: isMobile ? 'auto' : 'visible',
-                    paddingTop: isMobile ? '80px' : '0',
-                    paddingBottom: isMobile ? '20px' : '0',
-                    boxShadow: isMobile ? '-5px 0 15px rgba(0,0,0,0.1)' : 'none',
-                    WebkitOverflowScrolling: 'touch'
-                  }}
-                  className="navbar-collapse"
-                >
-                  {isMobile && (
-                    <button
-                      onClick={() => setMenuOpen(false)}
-                      aria-label="Close menu"
-                      style={{
-                        position: 'absolute',
-                        top: '20px',
-                        right: '20px',
-                        background: 'transparent',
-                        border: 'none',
-                        fontSize: '24px',
-                        color: '#0e2e50',
-                        cursor: 'pointer',
-                        padding: '5px',
-                        zIndex: 10
-                      }}
-                    >
-                      <i className="far fa-times"></i>
-                    </button>
-                  )}
-                  <ul className="navbar-nav" style={{ flexDirection: isMobile ? 'column' : 'row' }}>
-                    <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                      <Link className="nav-link switch" to="/" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Home</Link>
-                    </li>
-                    <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                      <Link className="nav-link switch" to="/about" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>About</Link>
-                    </li>
-                    <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                      <Link className="nav-link switch" to="/listings" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Listings</Link>
-                    </li>
-                    <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                      <Link className="nav-link switch" to="/faq" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>FAQ</Link>
-                    </li>
-                    <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                      <Link className="nav-link switch" to="/contact" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Contact</Link>
-                    </li>
                     {isAuthenticated && (
                       <>
-                        <li className="nav-item dropdown" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                          <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Dashboard</a>
+                        <li className="nav-item dropdown">
+                          <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Dashboard</a>
                           <ul className="dropdown-menu fade-down">
-                            <li><Link className="dropdown-item" to="/my-investments" onClick={() => setMenuOpen(false)}><i className="far fa-chart-line"></i> My Investments</Link></li>
-                            <li><Link className="dropdown-item" to="/profile" onClick={() => setMenuOpen(false)}><i className="far fa-user"></i> Profile</Link></li>
-                            <li><Link className="dropdown-item" to="/edit-password" onClick={() => setMenuOpen(false)}><i className="far fa-lock"></i> Edit Password</Link></li>
-                            <li><button className="dropdown-item" onClick={() => { handleLogout(); setMenuOpen(false); }}><i className="far fa-sign-out"></i> Logout</button></li>
+                            <li><Link className="dropdown-item" to="/my-investments" onClick={close}><i className="far fa-chart-line"></i> My Investments</Link></li>
+                            <li><Link className="dropdown-item" to="/profile" onClick={close}><i className="far fa-user"></i> Profile</Link></li>
+                            <li><Link className="dropdown-item" to="/edit-password" onClick={close}><i className="far fa-lock"></i> Edit Password</Link></li>
+                            <li><button className="dropdown-item" onClick={handleLogout}><i className="far fa-sign-out"></i> Logout</button></li>
                           </ul>
                         </li>
-                        <li className="nav-item scratch" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                          <button className="nav-link switch" onClick={() => { handleLogout(); setMenuOpen(false); }} style={{ padding: isMobile ? '15px 25px' : '30px 0', border: 'none', background: 'none', width: '100%', textAlign: 'left' }}>Logout</button>
+                        <li className="nav-item scratch">
+                          <button className="nav-link switch btn-nav" onClick={handleLogout}>Logout</button>
                         </li>
                       </>
                     )}
+
                     {!isAuthenticated && (
                       <>
-                        <li className="nav-item scratch" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                          <Link className="nav-link switch" to="/login" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Login</Link>
+                        <li className="nav-item scratch">
+                          <Link className="nav-link switch" to="/login" onClick={close}>Login</Link>
                         </li>
-                        <li className="nav-item scratch" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                          <Link className="nav-link switch" to="/register" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Sign Up</Link>
+                        <li className="nav-item scratch">
+                          <Link className="nav-link switch" to="/register" onClick={close}>Sign Up</Link>
                         </li>
                       </>
                     )}
-                  </ul>
-                  <div className="header-nav-right" style={{ width: isMobile ? '100%' : 'auto', padding: isMobile ? '20px 25px' : '0', borderTop: isMobile ? '2px solid #f0f0f0' : 'none', marginTop: isMobile ? '10px' : '0' }}>
-                    <div className="header-account">
-                      <div className="header-btn">
-                        <Link to="/listings" className="theme-btn" onClick={() => setMenuOpen(false)} style={{ marginTop: isMobile ? '0' : '8px', width: isMobile ? '100%' : 'auto', textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                          <span className="far fa-plus-circle"></span> Invest Now
-                        </Link>
-                      </div>
-                    </div>
+                  </>
+                )}
+              </ul>
+
+              {/* Desktop: Invest Now button */}
+              <div className="header-nav-right">
+                <div className="header-account">
+                  <div className="header-btn">
+                    <Link to="/listings" className="theme-btn mt-2" onClick={close}>
+                      <span className="far fa-plus-circle"></span> Invest Now
+                    </Link>
                   </div>
                 </div>
               </div>
-            </nav>
+            </div>
+
           </div>
-        </>
-      )}
+        </nav>
+      </div>
     </header>
   );
 };
