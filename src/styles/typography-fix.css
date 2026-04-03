@@ -1,0 +1,421 @@
+/* ============================================
+   PHASE 7: TYPOGRAPHY & FONTS FIXES
+   ============================================ */
+
+/* 7.1 - Import Google Fonts (can also be in index.html) */
+@import url('https://fonts.googleapis.com/css2?family=K2D:wght@300;400;500;600;700;800&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+/* 7.2 - Font Family Application */
+body, p, span, div, button, input, textarea, select {
+  font-family: 'Roboto', sans-serif;
+  color: #666;
+}
+
+code {
+  font-family: 'Courier New', monospace;
+}
+
+/* 7.3 - Heading Font Families */
+h1, h2, h3, h4, h5, h6,
+.heading, .title {
+  font-family: 'K2D', sans-serif;
+  color: #0e2e50;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+h1 {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+h2 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+h5 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* 7.4 - Paragraph Styles */
+p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  color: #666;
+}
+
+.text-lg {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.text-normal {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.text-sm {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.text-xs {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* 7.5 - Text Accent Colors */
+.text-accent {
+  color: #09c398;
+  font-weight: 600;
+}
+
+.text-primary {
+  color: #0e2e50;
+}
+
+.text-secondary {
+  color: #666;
+}
+
+.text-muted {
+  color: #999;
+}
+
+.text-light {
+  color: #ccc;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.text-success {
+  color: #27ae60;
+}
+
+.text-danger {
+  color: #e74c3c;
+}
+
+.text-warning {
+  color: #f39c12;
+}
+
+.text-info {
+  color: #3498db;
+}
+
+/* 7.6 - Link Styles */
+a {
+  color: #09c398;
+  text-decoration: none;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+a:hover {
+  color: #08b189;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #067a6c;
+}
+
+a:visited {
+  color: #078c7a;
+}
+
+a.disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+/* 7.7 - Navigation Links */
+.nav-link, .navbar-nav .nav-link {
+  color: #333 !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover, .navbar-nav .nav-link:hover {
+  color: #09c398 !important;
+}
+
+.nav-link.active, .navbar-nav .nav-link.active {
+  color: #09c398 !important;
+  font-weight: 600;
+}
+
+/* 7.8 - Text Alignment */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+@media (max-width: 768px) {
+  .text-md-center { text-align: center; }
+  .text-md-left { text-align: left; }
+  .text-md-right { text-align: right; }
+}
+
+/* 7.9 - Text Transform */
+.text-uppercase {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.text-no-transform {
+  text-transform: none;
+}
+
+/* 7.10 - Font Weights */
+.font-weight-thin { font-weight: 100; }
+.font-weight-extra-light { font-weight: 200; }
+.font-weight-light { font-weight: 300; }
+.font-weight-normal { font-weight: 400; }
+.font-weight-medium { font-weight: 500; }
+.font-weight-semi-bold { font-weight: 600; }
+.font-weight-bold { font-weight: 700; }
+.font-weight-extra-bold { font-weight: 800; }
+.font-weight-black { font-weight: 900; }
+
+/* 7.11 - Text Decorations */
+.text-underline {
+  text-decoration: underline;
+  text-decoration-color: #09c398;
+  text-underline-offset: 4px;
+}
+
+.text-strikethrough {
+  text-decoration: line-through;
+}
+
+.text-no-underline {
+  text-decoration: none;
+}
+
+/* 7.12 - Line Height */
+.lh-1 { line-height: 1; }
+.lh-1-2 { line-height: 1.2; }
+.lh-1-5 { line-height: 1.5; }
+.lh-1-6 { line-height: 1.6; }
+.lh-1-8 { line-height: 1.8; }
+.lh-2 { line-height: 2; }
+
+/* 7.13 - Letter Spacing */
+.ls-1 { letter-spacing: 1px; }
+.ls-2 { letter-spacing: 2px; }
+.ls-neg1 { letter-spacing: -1px; }
+.ls-normal { letter-spacing: normal; }
+
+/* 7.14 - Word Spacing */
+.ws-1 { word-spacing: 1px; }
+.ws-2 { word-spacing: 2px; }
+
+/* 7.15 - Text Shadow */
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-shadow-lg {
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 7.16 - Block Quote Styles */
+blockquote {
+  border-left: 4px solid #09c398;
+  padding-left: 20px;
+  margin-left: 0;
+  margin-bottom: 20px;
+  font-style: italic;
+  color: #666;
+}
+
+blockquote p {
+  margin-bottom: 0;
+}
+
+/* 7.17 - Code Styles */
+code {
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #d73a49;
+}
+
+pre {
+  background: #f5f5f5;
+  padding: 16px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+/* 7.18 - List Styles */
+ol, ul {
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+ol li, ul li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.list-unstyled {
+  list-style: none;
+  padding-left: 0;
+}
+
+.list-inline {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.list-inline li {
+  margin-bottom: 0;
+}
+
+/* 7.19 - Description List */
+dt {
+  font-weight: 600;
+  color: #0e2e50;
+  margin-bottom: 5px;
+}
+
+dd {
+  margin-bottom: 15px;
+  margin-left: 0;
+  color: #666;
+}
+
+/* 7.20 - Mark/Highlight */
+mark, .mark {
+  background: #ffd700;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+/* 7.21 - Small Text */
+small {
+  font-size: 0.875em;
+}
+
+.small {
+  font-size: 13px;
+}
+
+/* 7.22 - Text Truncation */
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-wrap {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+/* 7.23 - Responsive Typography */
+@media (max-width: 1200px) {
+  h1 { font-size: 36px; }
+  h2 { font-size: 30px; }
+  h3 { font-size: 24px; }
+}
+
+@media (max-width: 768px) {
+  h1 { font-size: 28px; }
+  h2 { font-size: 24px; }
+  h3 { font-size: 20px; }
+  h4 { font-size: 18px; }
+  h5 { font-size: 16px; }
+  h6 { font-size: 14px; }
+  
+  p, body {
+    font-size: 14px;
+  }
+  
+  .text-lg { font-size: 16px; }
+  .text-sm { font-size: 12px; }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 24px; }
+  h2 { font-size: 20px; }
+  h3 { font-size: 18px; }
+
+  p, body {
+    font-size: 13px;
+  }
+}
+
+/* 7.24 - Text Animation */
+.text-gradient {
+  background: linear-gradient(135deg, #09c398, #0e2e50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-animate {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 7.25 - Android Font Smoothing */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

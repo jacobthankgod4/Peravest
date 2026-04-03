@@ -1,0 +1,272 @@
+/* ============================================
+   PHASE 12: SCROLL BEHAVIOR & ANIMATIONS
+   ============================================ */
+
+/* 12.1 - Smooth Scroll */
+html, body {
+  scroll-behavior: smooth;
+}
+
+* {
+  scroll-behavior: inherit;
+}
+
+/* 12.2 - Prevent Overflow Issues */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  position: relative;
+}
+
+/* 12.3 - Scroll Lock (prevent scroll) */
+body.scroll-lock {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* 12.4 - Scroll Reveal Animation */
+.reveal {
+  animation: reveal 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 12.5 - Scroll Bar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #09c398;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #08b189;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-color: #09c398 #f1f1f1;
+  scrollbar-width: thin;
+}
+
+/* 12.6 - Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 45px;
+  height: 45px;
+  background: #09c398;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 50;
+  font-size: 20px;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background: #08b189;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(9, 195, 152, 0.4);
+}
+
+.back-to-top:active {
+  transform: translateY(0);
+}
+
+/* 12.7 - Scroll Indicator Bar */
+.scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #09c398, #0e2e50);
+  z-index: 1000;
+  width: 0%;
+  transition: width 0.1s ease;
+}
+
+/* 12.8 - Parallax Effect */
+.parallax {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* 12.9 - Scroll Snap */
+.scroll-snap-container {
+  scroll-snap-type: y mandatory;
+}
+
+.scroll-snap-item {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* 12.10 - Sticky Elements */
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 98;
+}
+
+.sticky-bottom {
+  position: sticky;
+  bottom: 0;
+  z-index: 98;
+}
+
+/* 12.11 - Fade In on Scroll */
+.fade-in-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-scroll.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 12.12 - Slide In from Left */
+.slide-in-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.slide-in-left.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 12.13 - Slide In from Right */
+.slide-in-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.slide-in-right.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 12.14 - Zoom In on Scroll */
+.zoom-in-scroll {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.zoom-in-scroll.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 12.15 - Rotate Animation */
+.rotate-in {
+  opacity: 0;
+  transform: rotate(-10deg);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.rotate-in.in-view {
+  opacity: 1;
+  transform: rotate(0);
+}
+
+/* 12.16 - Stagger Animation */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.stagger-item:nth-child(1) { transition-delay: 0.1s; }
+.stagger-item:nth-child(2) { transition-delay: 0.2s; }
+.stagger-item:nth-child(3) { transition-delay: 0.3s; }
+.stagger-item:nth-child(4) { transition-delay: 0.4s; }
+.stagger-item:nth-child(5) { transition-delay: 0.5s; }
+
+.stagger-item.in-view {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* 12.17 - Respect Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 12.18 - Mobile Scroll Optimization */
+@media (max-width: 768px) {
+  .parallax {
+    background-attachment: scroll;
+  }
+  
+  .back-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
+
+/* 12.19 - Smooth Scroll Anchor Links */
+a[href^="#"] {
+  scroll-behavior: smooth;
+}
+
+/* 12.20 - Scroll Padding Top (for fixed headers) */
+html {
+  scroll-padding-top: 80px;
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 60px;
+  }
+}

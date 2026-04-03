@@ -1,0 +1,508 @@
+/* ============================================
+   PHASE 12: PRELOADER STYLES
+   ============================================ */
+
+/* 12.1 - Preloader Wrapper */
+.preloader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.preloader-wrapper.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* 12.2 - Preloader Base */
+.preloader {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 12.3 - Rotating Preloader */
+.preloader-rotate {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f0f0f0;
+  border-top: 4px solid #09c398;
+  border-radius: 50%;
+  animation: loader-rotate 1s linear infinite;
+}
+
+@keyframes loader-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 12.4 - Double Ring Preloader */
+.preloader-double-ring {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.preloader-double-ring::before,
+.preloader-double-ring::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #09c398;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: double-ring-rotate 2s linear infinite;
+}
+
+.preloader-double-ring::after {
+  border-top-color: #0e2e50;
+  width: 35px;
+  height: 35px;
+  top: 7.5px;
+  left: 7.5px;
+  animation: double-ring-rotate-reverse 1.5s linear infinite;
+}
+
+@keyframes double-ring-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes double-ring-rotate-reverse {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* 12.5 - Box Preloader */
+.preloader-box {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.preloader-box div {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #09c398;
+  border-radius: 100%;
+  animation: box-loader-animate 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.preloader-box div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+
+.preloader-box div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+
+.preloader-box div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+
+@keyframes box-loader-animate {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%, 100% {
+    top: 24px;
+    height: 32px;
+  }
+}
+
+/* 12.6 - Ring Preloader */
+.preloader-ring {
+  display: inline-block;
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+.preloader-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  margin: 6px;
+  border: 3px solid #09c398;
+  border-radius: 50%;
+  animation: ring-rotate 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #09c398 transparent transparent transparent;
+}
+
+.preloader-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.preloader-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.preloader-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes ring-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 12.7 - Pulse Preloader */
+.preloader-pulse {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #09c398;
+  animation: pulse-animate 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-animate {
+  0%, 100% {
+    transform: scale(0.5);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 12.8 - Ball Triangle Preloader */
+.preloader-ball {
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+
+.preloader-ball div {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #09c398;
+  border-radius: 50%;
+  animation: ball-animate 1.4s ease-in-out infinite;
+}
+
+.preloader-ball div:nth-child(1) {
+  animation-delay: -0.2s;
+}
+
+.preloader-ball div:nth-child(2) {
+  animation-delay: 0.2s;
+  left: 40px;
+}
+
+.preloader-ball div:nth-child(3) {
+  animation-delay: 0.4s;
+  left: 80px;
+}
+
+@keyframes ball-animate {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+/* 12.9 - Dots Preloader */
+.preloader-dots {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 40px;
+  color: #09c398;
+}
+
+.preloader-dots span {
+  display: inline-block;
+  font-weight: 700;
+  animation: dots-animate 0.6s ease-in-out infinite;
+}
+
+.preloader-dots span:nth-child(1) { animation-delay: 0; }
+.preloader-dots span:nth-child(2) { animation-delay: 0.1s; }
+.preloader-dots span:nth-child(3) { animation-delay: 0.2s; }
+
+@keyframes dots-animate {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+/* 12.10 - Wave Preloader */
+.preloader-wave {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.preloader-wave > div {
+  width: 6px;
+  height: 100%;
+  background: #09c398;
+  border-radius: 3px;
+  animation: wave-animate 1.2s ease-in-out infinite;
+}
+
+.preloader-wave div:nth-child(1) { animation-delay: 0; }
+.preloader-wave div:nth-child(2) { animation-delay: 0.1s; }
+.preloader-wave div:nth-child(3) { animation-delay: 0.2s; }
+.preloader-wave div:nth-child(4) { animation-delay: 0.3s; }
+.preloader-wave div:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes wave-animate {
+  0%, 100% {
+    height: 20px;
+  }
+  50% {
+    height: 50px;
+  }
+}
+
+/* 12.11 - Spinner Preloader */
+.preloader-spinner {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+.preloader-spinner::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 4px solid #f0f0f0;
+  border-color: #09c398 transparent #09c398 transparent;
+  animation: spinner-rotate 1.2s linear infinite;
+}
+
+@keyframes spinner-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 12.12 - Text Preloader */
+.preloader-text {
+  text-align: center;
+}
+
+.preloader-text h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #0e2e50;
+  margin-bottom: 20px;
+}
+
+.preloader-text p {
+  margin: 0;
+  font-size: 13px;
+  color: #999;
+  animation: fade-text 1.5s ease-in-out infinite;
+}
+
+@keyframes fade-text {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* 12.13 - Logo Preloader */
+.preloader-logo {
+  text-align: center;
+}
+
+.preloader-logo img {
+  max-width: 100px;
+  margin-bottom: 30px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* 12.14 - Preloader Footer Text */
+.preloader-footer {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.preloader-footer p {
+  margin: 0;
+  font-size: 13px;
+  color: #999;
+}
+
+.preloader-footer .percent {
+  font-weight: 700;
+  color: #09c398;
+  font-size: 18px;
+}
+
+/* 12.15 - Responsive Preloader */
+@media (max-width: 768px) {
+  .preloader-wrapper {
+    background: #f9f9f9;
+  }
+  
+  .preloader {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .preloader-rotate {
+    width: 40px;
+    height: 40px;
+    border-width: 3px;
+  }
+  
+  .preloader-logo img {
+    max-width: 80px;
+  }
+}
+
+/* 12.16 - Preloader Background Variants */
+.preloader-wrapper.dark {
+  background: #0e2e50;
+}
+
+.preloader-wrapper.dark .preloader-rotate,
+.preloader-wrapper.dark .preloader-ring div {
+  border-color: #ccc;
+  border-top-color: #09c398;
+}
+
+.preloader-wrapper.dark .preloader-text h3 {
+  color: #fff;
+}
+
+.preloader-wrapper.dark .preloader-text p {
+  color: #aaa;
+}
+
+/* 12.17 - Preloader Hide Animation */
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.preloader-wrapper.fade-out {
+  animation: fade-out 0.5s ease-out forwards;
+}
+
+/* 12.18 - Progress Preloader */
+.preloader-progress {
+  width: 100%;
+  height: 3px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #f0f0f0;
+  z-index: 9998;
+}
+
+.preloader-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #09c398, #0e2e50);
+  width: 0%;
+  animation: progress-animate 2s ease-in-out;
+}
+
+@keyframes progress-animate {
+  0% { width: 0%; }
+  50% { width: 70%; }
+  100% { width: 100%; }
+}
+
+/* 12.19 - Preloader Transition */
+.preloader-transition {
+  animation-name: preloader-out;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes preloader-out {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* 12.20 - Show Preloader */
+.show-preloader {
+  overflow: hidden;
+}

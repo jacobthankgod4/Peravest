@@ -1,0 +1,68 @@
+{
+  "timestamp": "2026-04-03T08:19:49.012Z",
+  "summary": {
+    "passed": 90,
+    "failed": 0,
+    "warnings": 0,
+    "success_rate": "100.0%"
+  },
+  "results": {
+    "passed": 90,
+    "failed": 0,
+    "warnings": 0,
+    "errors": [],
+    "warnings_list": [],
+    "components": {
+      "css_files": {
+        "passed": 17,
+        "failed": 0,
+        "total": 17
+      },
+      "css_imports": {
+        "passed": 17,
+        "failed": 0,
+        "total": 17
+      },
+      "css_syntax": {
+        "passed": 23,
+        "failed": 0,
+        "total": 23
+      },
+      "css_properties": {
+        "passed": 8,
+        "failed": 0,
+        "total": 8
+      },
+      "colors": {
+        "passed": 5,
+        "failed": 0,
+        "total": 5
+      },
+      "breakpoints": {
+        "passed": 4,
+        "failed": 0,
+        "total": 4
+      },
+      "animations": {
+        "passed": 5,
+        "failed": 0,
+        "total": 5
+      },
+      "fonts": {
+        "passed": 4,
+        "failed": 0,
+        "total": 4
+      },
+      "stats": {
+        "total_lines": 8181,
+        "total_files": 23,
+        "total_bytes": 153210
+      },
+      "icons": {
+        "passed": 5,
+        "failed": 0,
+        "total": 5
+      }
+    }
+  }
+}

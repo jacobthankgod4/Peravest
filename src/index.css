@@ -1,3 +1,21 @@
+@import './styles/icon-fix.css';
+@import './styles/header-top-fix.css';
+@import './styles/button-fix.css';
+@import './styles/typography-fix.css';
+@import './styles/form-fix.css';
+@import './styles/card-fix.css';
+@import './styles/spacing-utilities.css';
+@import './styles/display-utilities.css';
+@import './styles/scroll-behavior.css';
+@import './styles/wow-animations.css';
+@import './styles/preloader.css';
+@import './styles/responsive-mobile.css';
+@import './styles/footer-fix.css';
+@import './styles/hero-fix.css';
+@import './styles/modal-fix.css';
+@import './styles/text-utilities.css';
+@import './styles/border-utilities.css';
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

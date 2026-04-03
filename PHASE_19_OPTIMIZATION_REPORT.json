@@ -1,0 +1,181 @@
+{
+  "timestamp": "2026-04-03T08:26:17.832Z",
+  "totalFiles": 23,
+  "metrics": {
+    "original": 153208,
+    "minified": 103917,
+    "gzipped": 72752,
+    "reductionPercent": 32.17,
+    "gzipReductionPercent": 52.51
+  },
+  "fileBreakdown": [
+    {
+      "filename": "admin.css",
+      "original": 0,
+      "minified": 0,
+      "gzipped": 0,
+      "reduction": null
+    },
+    {
+      "filename": "border-utilities.css",
+      "original": 8603,
+      "minified": 6010,
+      "gzipped": 4207,
+      "reduction": 30.14
+    },
+    {
+      "filename": "button-fix.css",
+      "original": 7354,
+      "minified": 5087,
+      "gzipped": 3561,
+      "reduction": 30.83
+    },
+    {
+      "filename": "buttons.css",
+      "original": 3288,
+      "minified": 2472,
+      "gzipped": 1731,
+      "reduction": 24.82
+    },
+    {
+      "filename": "card-fix.css",
+      "original": 8649,
+      "minified": 6048,
+      "gzipped": 4234,
+      "reduction": 30.07
+    },
+    {
+      "filename": "display-utilities.css",
+      "original": 9212,
+      "minified": 6864,
+      "gzipped": 4805,
+      "reduction": 25.49
+    },
+    {
+      "filename": "footer-fix.css",
+      "original": 5947,
+      "minified": 4086,
+      "gzipped": 2861,
+      "reduction": 31.29
+    },
+    {
+      "filename": "form-fix.css",
+      "original": 10156,
+      "minified": 7296,
+      "gzipped": 5108,
+      "reduction": 28.16
+    },
+    {
+      "filename": "header-top-fix.css",
+      "original": 7793,
+      "minified": 5449,
+      "gzipped": 3815,
+      "reduction": 30.08
+    },
+    {
+      "filename": "hero-fix.css",
+      "original": 7169,
+      "minified": 4929,
+      "gzipped": 3451,
+      "reduction": 31.25
+    },
+    {
+      "filename": "icon-fix.css",
+      "original": 6683,
+      "minified": 4787,
+      "gzipped": 3351,
+      "reduction": 28.37
+    },
+    {
+      "filename": "listing-mobile.css",
+      "original": 6320,
+      "minified": 4055,
+      "gzipped": 2839,
+      "reduction": 35.84
+    },
+    {
+      "filename": "modal-fix.css",
+      "original": 8453,
+      "minified": 5731,
+      "gzipped": 4012,
+      "reduction": 32.2
+    },
+    {
+      "filename": "preloader.css",
+      "original": 9201,
+      "minified": 6305,
+      "gzipped": 4414,
+      "reduction": 31.47
+    },
+    {
+      "filename": "property-card-autoscroll.css",
+      "original": 828,
+      "minified": 606,
+      "gzipped": 425,
+      "reduction": 26.81
+    },
+    {
+      "filename": "responsive-mobile.css",
+      "original": 10731,
+      "minified": 6089,
+      "gzipped": 4263,
+      "reduction": 43.26
+    },
+    {
+      "filename": "responsive.css",
+      "original": 2377,
+      "minified": 1426,
+      "gzipped": 999,
+      "reduction": 40.01
+    },
+    {
+      "filename": "scroll-behavior.css",
+      "original": 5163,
+      "minified": 3262,
+      "gzipped": 2284,
+      "reduction": 36.82
+    },
+    {
+      "filename": "spacing-utilities.css",
+      "original": 6646,
+      "minified": 4514,
+      "gzipped": 3160,
+      "reduction": 32.08
+    },
+    {
+      "filename": "text-utilities.css",
+      "original": 9151,
+      "minified": 6224,
+      "gzipped": 4357,
+      "reduction": 31.99
+    },
+    {
+      "filename": "theme.css",
+      "original": 5441,
+      "minified": 3690,
+      "gzipped": 2583,
+      "reduction": 32.18
+    },
+    {
+      "filename": "typography-fix.css",
+      "original": 7260,
+      "minified": 4711,
+      "gzipped": 3298,
+      "reduction": 35.11
+    },
+    {
+      "filename": "wow-animations.css",
+      "original": 6783,
+      "minified": 4276,
+      "gzipped": 2994,
+      "reduction": 36.96
+    }
+  ],
+  "recommendations": [
+    "All minified files created in .min.css format",
+    "Consider using minified files in production builds",
+    "Enable gzip compression on web server (Apache/Nginx)",
+    "Use CDN for static CSS asset delivery",
+    "Estimated bandwidth savings: 71.0 KB per page load"
+  ]
+}
