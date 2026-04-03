@@ -264,7 +264,7 @@ const ContactUs: React.FC = () => {
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <div style={styles.header}>
-          <h2 style={{ ...styles.headerTitle, color: '#fff', fontWeight: 900 }}>Get In Touch</h2>
+          <h2 style={{ ...styles.headerTitle, color: '#fff', fontWeight: 900, fontSize: '56px' }}>Get In Touch</h2>
           <p style={styles.headerText}>We're here to help. Send us a message and we'll respond within 24 hours.</p>
         </div>
 
