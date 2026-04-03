@@ -172,8 +172,9 @@ const Home: React.FC = () => {
       </div>
 
       {/* Savings Features Section */}
-      <div className="savings-features-area" style={{ background: '#eaf7f4', padding: '80px 20px' }}>
-        <div className="container">
+      <div className="savings-features-area" style={{ background: '#eaf7f4', padding: '0 0 80px 0' }}>
+        <img src="/savings-features.png" alt="Our Investment Products" style={{ width: '100%', display: 'block' }} />
+        <div className="container" style={{ paddingTop: '80px' }}>
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
             <span className="site-title-tagline">Our Investment Products</span>
             <h2 className="site-title">Choose How You Want to Grow</h2>
