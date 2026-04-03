@@ -217,10 +217,12 @@
     padding: 80px 0 30px 0 !important;
     box-shadow: -8px 0 30px rgba(0, 0, 0, 0.12);
     display: block !important;
+    visibility: visible !important;
   }
 
   .navbar-collapse.show {
     right: 0;
+    visibility: visible !important;
   }
 
   .menu-close-btn {

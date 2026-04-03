@@ -5,36 +5,11 @@ import '../header-fix.css';
 
 const Header: React.FC = () => {
   const { user, isAdmin, isAuthenticated, logout } = useAuth();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => { document.body.style.overflow = 'unset'; };
-  }, [isMobileMenuOpen]);
 
   const handleLogout = () => {
     logout();
     navigate('/');
-  };
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
-
-  const handleNavClick = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    if (target.tagName === 'A' || target.tagName === 'BUTTON') {
-      closeMobileMenu();
-    }
   };
 
   return (
@@ -133,27 +108,21 @@ const Header: React.FC = () => {
               <button 
                 className="navbar-toggler" 
                 type="button"
-                onClick={toggleMobileMenu}
-                aria-expanded={isMobileMenuOpen}
+                data-bs-toggle="collapse"
+                data-bs-target="#main_nav"
+                aria-controls="main_nav"
+                aria-expanded="false"
                 aria-label="Toggle navigation"
               >
                 <span className="navbar-toggler-btn-icon">
-                  <i className={`far ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
+                  <i className="far fa-bars"></i>
                 </span>
               </button>
             </div>
 
-            {/* Mobile Menu Overlay */}
-            {isMobileMenuOpen && (
-              <div 
-                className="mobile-menu-overlay"
-                onClick={closeMobileMenu}
-              />
-            )}
-
             {/* Main Navigation Menu */}
-            <div className={`collapse navbar-collapse ${isMobileMenuOpen ? 'show' : ''}`} id="main_nav">
-              <ul className="navbar-nav" onClick={handleNavClick}>
+            <div className="collapse navbar-collapse" id="main_nav">
+              <ul className="navbar-nav">
                 <li className="nav-item">
                   <Link className="nav-link switch" to="/">Home</Link>
                 </li>
