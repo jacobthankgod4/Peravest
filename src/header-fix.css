@@ -89,11 +89,11 @@
     display: flex !important;
     align-items: center;
     width: 100%;
+    gap: 30px;
   }
 
   .navbar-brand {
     flex-shrink: 0;
-    margin-right: 30px;
   }
 
   .navbar-collapse {
@@ -121,8 +121,7 @@
   }
 
   .navbar-nav .nav-item .nav-link {
-    padding: 30px 0 !important;
-    margin-right: 22px;
+    padding: 30px 22px 30px 0 !important;
     color: #0e2e50 !important;
   }
 
