@@ -30,6 +30,13 @@ const Header: React.FC = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const handleNavClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+      closeMobileMenu();
+    }
+  };
+
   return (
     <header className="header">
       {/* Header Top */}
@@ -111,22 +118,27 @@ const Header: React.FC = () => {
 
             {/* Mobile Menu Right */}
             <div className="mobile-menu-right">
+              {isAdmin ? (
+                <AdminMobileMenu user={user} onLogout={handleLogout} />
+              ) : (
+                <div className="header-account">
+                  <div className="header-btn">
+                    <Link to="/listings" className="theme-btn mt-2">
+                      <span className="far fa-plus-circle"></span>
+                      Invest Now
+                    </Link>
+                  </div>
+                </div>
+              )}
               <button 
                 className="navbar-toggler" 
                 type="button"
                 onClick={toggleMobileMenu}
                 aria-expanded={isMobileMenuOpen}
                 aria-label="Toggle navigation"
-                style={{
-                  border: 'none',
-                  background: 'transparent',
-                  padding: '8px',
-                  cursor: 'pointer',
-                  zIndex: 1001
-                }}
               >
                 <span className="navbar-toggler-btn-icon">
-                  <i className={`far ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'}`} style={{ fontSize: '24px', color: '#0e2e50' }}></i>
+                  <i className={`far ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
                 </span>
               </button>
             </div>
@@ -136,79 +148,48 @@ const Header: React.FC = () => {
               <div 
                 className="mobile-menu-overlay"
                 onClick={closeMobileMenu}
-                style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  background: 'rgba(0, 0, 0, 0.5)',
-                  zIndex: 999,
-                  animation: 'fadeIn 0.3s ease'
-                }}
               />
             )}
 
             {/* Main Navigation Menu */}
-            <div className={`collapse navbar-collapse mobile-menu-container ${isMobileMenuOpen ? 'show' : ''}`} id="main_nav">
-              <ul className="navbar-nav" onClick={(e) => {
-                if ((e.target as HTMLElement).tagName === 'A' || (e.target as HTMLElement).tagName === 'BUTTON') {
-                  closeMobileMenu();
-                }
-              }}>
-                {!isAuthenticated && (
-                  <>
-                    <li className="nav-item">
-                      <Link className="nav-link switch" to="/">Home</Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link switch" to="/about">About</Link>
-                    </li>
-                  </>
-                )}
-                
+            <div className={`collapse navbar-collapse ${isMobileMenuOpen ? 'show' : ''}`} id="main_nav">
+              <ul className="navbar-nav" onClick={handleNavClick}>
+                <li className="nav-item">
+                  <Link className="nav-link switch" to="/">Home</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link switch" to="/about">About</Link>
+                </li>
                 <li className="nav-item">
                   <Link className="nav-link switch" to="/listings">Listings</Link>
                 </li>
-                
-                {!isAuthenticated && (
-                  <>
-                    <li className="nav-item">
-                      <Link className="nav-link switch" to="/faq">FAQ</Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link switch" to="/contact">Contact</Link>
-                    </li>
-                  </>
-                )}
+                <li className="nav-item">
+                  <Link className="nav-link switch" to="/faq">FAQ</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link switch" to="/contact">Contact</Link>
+                </li>
 
-                {/* User-specific Navigation */}
                 {isAuthenticated && !isAdmin && (
-                  <>
-                    <li className="nav-item">
-                      <Link className="nav-link switch" to="/dashboard">Dashboard</Link>
-                    </li>
-                    <li className="nav-item dropdown">
-                      <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                        Account
-                      </a>
-                      <ul className="dropdown-menu fade-down">
-                        <li><Link className="dropdown-item" to="/my-investments"><i className="far fa-chart-line"></i> My Investments</Link></li>
-                        <li><Link className="dropdown-item" to="/profile"><i className="far fa-user"></i> Profile</Link></li>
-                        <li><Link className="dropdown-item" to="/edit-password"><i className="far fa-lock"></i> Edit Password</Link></li>
-                        <li><button className="dropdown-item" onClick={handleLogout}><i className="far fa-sign-out"></i> Logout</button></li>
-                      </ul>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link switch" to="/contact">Contact</Link>
-                    </li>
-                    <li className="nav-item scratch">
-                      <button className="nav-link switch" onClick={handleLogout}>Logout</button>
-                    </li>
-                  </>
+                  <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                      Dashboard
+                    </a>
+                    <ul className="dropdown-menu fade-down">
+                      <li><Link className="dropdown-item" to="/my-investments">My Investments</Link></li>
+                      <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
+                      <li><Link className="dropdown-item" to="/edit-password">Edit Password</Link></li>
+                      <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
+                    </ul>
+                  </li>
                 )}
 
-                {/* Guest Navigation */}
+                {isAuthenticated && !isAdmin && (
+                  <li className="nav-item scratch">
+                    <button className="nav-link switch" onClick={handleLogout}>Logout</button>
+                  </li>
+                )}
+
                 {!isAuthenticated && (
                   <>
                     <li className="nav-item scratch">
