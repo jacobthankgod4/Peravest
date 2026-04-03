@@ -3,6 +3,15 @@
   font-size: 16px;
 }
 
+.savings-feature-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.savings-feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
 .savings-feature-card h4 {
   font-size: 24px !important;
   font-weight: 600;
@@ -40,7 +49,7 @@
   font-size: 16px !important;
   padding: 12px 24px;
   font-weight: 600;
-  background: #007bff;
+  background: #0e2e50;
   color: white;
   border: none;
   border-radius: 5px;
@@ -51,7 +60,7 @@
 }
 
 .feature-btn:hover {
-  background: #0056b3;
+  background: #09c398;
   color: white;
   text-decoration: none;
 }

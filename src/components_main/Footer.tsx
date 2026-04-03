@@ -50,10 +50,10 @@ const Footer: React.FC = () => {
             </div>
             <div className="col-md-6">
               <ul className="footer-social">
-                <li><a href="#"><i className="fab fa-facebook-f"></i></a></li>
-                <li><a href="#"><i className="fab fa-twitter"></i></a></li>
-                <li><a href="#"><i className="fab fa-linkedin-in"></i></a></li>
-                <li><a href="#"><i className="fab fa-instagram"></i></a></li>
+                <li><a href="https://facebook.com" target="_blank" rel="noreferrer"><i className="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com" target="_blank" rel="noreferrer"><i className="fab fa-twitter"></i></a></li>
+                <li><a href="https://linkedin.com" target="_blank" rel="noreferrer"><i className="fab fa-linkedin-in"></i></a></li>
+                <li><a href="https://instagram.com" target="_blank" rel="noreferrer"><i className="fab fa-instagram"></i></a></li>
               </ul>
             </div>
           </div>

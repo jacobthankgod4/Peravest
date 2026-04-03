@@ -4,7 +4,7 @@ import { withdrawalService } from '../services/withdrawalService';
 import { nigerianBanks } from '../data/nigerianBanks';
 import Swal from 'sweetalert2';
 
-interface Withdrawal {
+interface WithdrawalRecord {
   id: number;
   amount: number;
   bank_name: string;
@@ -16,7 +16,7 @@ interface Withdrawal {
 }
 
 const Withdrawal: React.FC = () => {
-  const [withdrawals, setWithdrawals] = useState<Withdrawal[]>([]);
+  const [withdrawals, setWithdrawals] = useState<WithdrawalRecord[]>([]);
   const [loading, setLoading] = useState(false);
   const [availableBalance, setAvailableBalance] = useState(0);
   const [balanceLoading, setBalanceLoading] = useState(true);

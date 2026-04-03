@@ -20,13 +20,11 @@ const ServiceStep: React.FC<ServiceStepProps> = ({ step, delay }) => {
       </div>
       <div className="service-content">
         <h3 className="service-title">
-          <a href="#">{step.title}</a>
+          <span>{step.title}</span>
         </h3>
         <p className="service-text">{step.description}</p>
         <div className="service-arrow">
-          <a href="#">
-            <i className="far fa-arrow-right"></i>
-          </a>
+          <span><i className="far fa-arrow-right"></i></span>
         </div>
       </div>
     </div>

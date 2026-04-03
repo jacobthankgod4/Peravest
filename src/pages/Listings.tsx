@@ -103,9 +103,7 @@ const Listings: React.FC = () => {
         const raisedAmount = investorCount * shareCost;
         
         let imageUrl = p.Images || 'default.jpg';
-        if (imageUrl.startsWith('http')) {
-          imageUrl = imageUrl;
-        } else if (!imageUrl.startsWith('/includes/admin/')) {
+        if (!imageUrl.startsWith('http') && !imageUrl.startsWith('/includes/admin/')) {
           imageUrl = `/includes/admin/${imageUrl}`;
         }
 

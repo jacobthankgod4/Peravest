@@ -53,7 +53,7 @@ const Header: React.FC = () => {
                   <ul>
                     <li>
                       <div className="header-top-contact-info">
-                        <a href="#"><i className="far fa-map-marker-alt"></i> 16, Afolabi Aina street, Off Allen Road Ikeja Lagos</a>
+                        <a href="https://maps.google.com/?q=16+Afolabi+Aina+street+Ikeja+Lagos" target="_blank" rel="noreferrer"><i className="far fa-map-marker-alt"></i> 16, Afolabi Aina street, Off Allen Road Ikeja Lagos</a>
                       </div>
                     </li>
                     <li>
@@ -191,7 +191,7 @@ const Header: React.FC = () => {
                     {isAuthenticated && (
                       <>
                         <li className="nav-item dropdown">
-                          <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Dashboard</a>
+                          <a className="nav-link dropdown-toggle" href="/dashboard" data-bs-toggle="dropdown">Dashboard</a>
                           <ul className="dropdown-menu fade-down">
                             <li><Link className="dropdown-item" to="/my-investments" onClick={close}><i className="far fa-chart-line"></i> My Investments</Link></li>
                             <li><Link className="dropdown-item" to="/profile" onClick={close}><i className="far fa-user"></i> Profile</Link></li>

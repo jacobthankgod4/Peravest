@@ -81,7 +81,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
       </div>
       <div className="listing-content">
         <h4 className="listing-title" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          <a href="#" onClick={(e) => { e.preventDefault(); }}>{property.title}</a>
+          <span style={{ cursor: 'pointer' }} onClick={handleViewDetails}>{property.title}</span>
         </h4>
         <p className="listing-sub-title">
           <i className="far fa-location-dot"></i>{property.address}

@@ -171,6 +171,38 @@ const Home: React.FC = () => {
         </div>
       </div>
 
+      {/* Savings Features Section */}
+      <div className="savings-features-area" style={{ background: '#eaf7f4', padding: '80px 20px' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+            <span className="site-title-tagline">Our Investment Products</span>
+            <h2 className="site-title">Choose How You Want to Grow</h2>
+          </div>
+          <div className="row">
+            {([
+              { key: 'real-estate', icon: 'fa-building', iconBg: '#0e2e50', title: 'Crowdfund Real Estate', description: 'Pool funds with other investors to own a share of premium real estate.', benefits: ['Invest from ₦5,000', 'Earn rental income', 'Capital appreciation'], cta: 'Explore Properties' },
+              { key: 'ajo', icon: 'fa-users', iconBg: '#09c398', title: 'Ajo Savings Circle', description: 'Join a trusted group savings circle and receive rotating payouts.', benefits: ['Rotating group payouts', 'Flexible contribution cycles', 'Community-backed trust'], cta: 'Join a Circle' },
+              { key: 'target-savings', icon: 'fa-bullseye', iconBg: '#0d6efd', title: 'Target Savings', description: 'Set a savings goal and watch your money grow towards it.', benefits: ['Save towards a goal', 'Automated contributions', 'Track your progress'], cta: 'Start Saving' },
+              { key: 'safelock', icon: 'fa-lock', iconBg: '#ffc107', title: 'SafeLock', description: 'Lock your funds for a fixed term and earn guaranteed returns.', benefits: ['Up to 15% annual returns', 'Fixed-term security', 'Zero market risk'], cta: 'Lock Funds' },
+            ] as { key: 'real-estate' | 'ajo' | 'target-savings' | 'safelock'; icon: string; iconBg: string; title: string; description: string; benefits: string[]; cta: string }[]).map((f) => (
+              <div key={f.key} className="col-md-6 col-lg-3 mb-4">
+                <div className="savings-feature-card" style={{ background: '#fff', borderRadius: '12px', padding: '30px 24px', height: '100%', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
+                  <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: f.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                    <i className={`fas ${f.icon}`} style={{ color: '#fff', fontSize: '24px' }}></i>
+                  </div>
+                  <h4 style={{ color: '#0e2e50' }}>{f.title}</h4>
+                  <p style={{ color: '#666' }}>{f.description}</p>
+                  <ul className="feature-benefits" style={{ marginBottom: '24px' }}>
+                    {f.benefits.map((b) => <li key={b}>{b}</li>)}
+                  </ul>
+                  <button className="feature-btn" onClick={() => handleFeatureClick(f.key)}>{f.cta}</button>
+                </div>
+              </div>
+            ))}
+            </div>
+        </div>
+      </div>
+
       {/* How It Works - Dark Gradient Background */}
       <div style={{ background: 'linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%)', padding: '80px 20px' }}>
         <div className="container">
