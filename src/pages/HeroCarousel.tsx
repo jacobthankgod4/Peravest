@@ -57,7 +57,7 @@ const HeroCarousel: React.FC = () => {
                       </h3>
                       <p data-animation="fadeInUp" data-delay=".50s"></p>
                       <div className="hero-btn d-block mt-5" data-animation="fadeInUp" data-delay=".75s">
-                        <Link to="/listings" className="theme-btn">
+                        <Link to="/listings" className="theme-btn" style={{ fontWeight: 800 }}>
                           Invest Now <i className="far fa-arrow-right"></i>
                         </Link>
                       </div>

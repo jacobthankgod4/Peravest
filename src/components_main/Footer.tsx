@@ -21,8 +21,8 @@ const Footer: React.FC = () => {
             </div>
             <div className="col-md-6 col-lg-3">
               <div className="footer-widget-box list">
-                <h4 className="footer-widget-title">Quick Links</h4>
-                <ul className="footer-list">
+                <h4 className="footer-widget-title" style={{ color: '#fff' }}>Quick Links</h4>
+                <ul className="footer-list" style={{ color: '#fff' }}>
                   <li><Link to="/">Home</Link></li>
                   <li><Link to="/about">About</Link></li>
                   <li><Link to="/listings">Properties</Link></li>
@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
             </div>
             <div className="col-md-6 col-lg-3">
               <div className="footer-widget-box">
-                <h4 className="footer-widget-title">Newsletter</h4>
+                <h4 className="footer-widget-title" style={{ color: '#fff' }}>Newsletter</h4>
                 <div className="footer-newsletter">
                   <input type="email" className="form-control" placeholder="Email" />
                   <button className="theme-btn">Subscribe</button>
