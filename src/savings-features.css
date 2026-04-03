@@ -5,6 +5,12 @@
 
 .savings-feature-card {
   transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.savings-feature-card .feature-btn {
+  margin-top: auto;
 }
 
 .savings-feature-card:hover {
