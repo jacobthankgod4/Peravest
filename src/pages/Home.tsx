@@ -204,12 +204,12 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      {/* How It Works - Dark Gradient Background */}
-      <div style={{ background: 'linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%)', padding: '80px 20px' }}>
+      {/* How It Works - White Background */}
+      <div style={{ background: '#fff', padding: '80px 20px' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
             <span style={{ color: '#09c398', fontSize: '14px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>Your way to your investment</span>
-            <h2 style={{ fontSize: '36px', fontWeight: 700, color: '#fff', marginBottom: '15px', marginTop: '10px' }}>How it works</h2>
+            <h2 style={{ fontSize: '36px', fontWeight: 700, color: '#0e2e50', marginBottom: '15px', marginTop: '10px' }}>How it works</h2>
           </div>
           <div className="row">
             <div className="col-md-6 col-lg-3">
