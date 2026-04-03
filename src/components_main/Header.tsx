@@ -187,27 +187,28 @@ const Header: React.FC = () => {
                   <img src="/assets/img/logo/logo_a.png" className="img-f" alt="Peravest Logo" style={{ maxHeight: '50px', width: 'auto' }} />
                 </Link>
 
-                {/* HAMBURGER BUTTON - MOBILE ONLY */}
-                <button 
-                  onClick={() => setMenuOpen(!menuOpen)}
-                  aria-label="Toggle navigation menu"
-                  aria-expanded={menuOpen}
-                  style={{
-                    display: isMobile ? 'block' : 'none',
-                    position: 'absolute',
-                    right: '15px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    border: 'none',
-                    background: 'transparent',
-                    padding: '10px',
-                    cursor: 'pointer',
-                    zIndex: 1002,
-                    WebkitTapHighlightColor: 'transparent'
-                  }}
-                >
-                  <i className={`far ${menuOpen ? 'fa-times' : 'fa-bars'}`} style={{ fontSize: '24px', color: '#0e2e50' }}></i>
-                </button>
+                {/* MOBILE MENU RIGHT - Invest Now + Hamburger */}
+                {isMobile && (
+                  <div className="mobile-menu-right">
+                    <div className="header-account">
+                      <Link to="/listings" className="theme-btn mt-2" onClick={() => setMenuOpen(false)}>
+                        <span className="far fa-plus-circle"></span>Invest Now
+                      </Link>
+                    </div>
+                    <button 
+                      onClick={() => setMenuOpen(!menuOpen)}
+                      aria-label="Toggle navigation menu"
+                      aria-expanded={menuOpen}
+                      className="navbar-toggler"
+                      type="button"
+                      style={{ border: 'none', background: 'transparent', padding: '10px', cursor: 'pointer', zIndex: 1002, WebkitTapHighlightColor: 'transparent' }}
+                    >
+                      <span className="navbar-toggler-btn-icon">
+                        <i className={`far ${menuOpen ? 'fa-times' : 'fa-bars'}`} style={{ fontSize: '24px', color: '#0e2e50' }}></i>
+                      </span>
+                    </button>
+                  </div>
+                )}
 
                 {/* OVERLAY */}
                 {menuOpen && isMobile && (
@@ -265,48 +266,43 @@ const Header: React.FC = () => {
                     </button>
                   )}
                   <ul className="navbar-nav" style={{ flexDirection: isMobile ? 'column' : 'row' }}>
-                    {!isAuthenticated && (
-                      <>
-                        <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                          <Link className="nav-link switch" to="/" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Home</Link>
-                        </li>
-                        <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                          <Link className="nav-link switch" to="/about" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>About</Link>
-                        </li>
-                      </>
-                    )}
+                    <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
+                      <Link className="nav-link switch" to="/" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Home</Link>
+                    </li>
+                    <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
+                      <Link className="nav-link switch" to="/about" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>About</Link>
+                    </li>
                     <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
                       <Link className="nav-link switch" to="/listings" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Listings</Link>
                     </li>
-                    {!isAuthenticated && (
-                      <>
-                        <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                          <Link className="nav-link switch" to="/faq" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>FAQ</Link>
-                        </li>
-                        <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                          <Link className="nav-link switch" to="/contact" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Contact</Link>
-                        </li>
-                      </>
-                    )}
+                    <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
+                      <Link className="nav-link switch" to="/faq" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>FAQ</Link>
+                    </li>
+                    <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
+                      <Link className="nav-link switch" to="/contact" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Contact</Link>
+                    </li>
                     {isAuthenticated && (
                       <>
-                        <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                          <Link className="nav-link switch" to="/dashboard" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Dashboard</Link>
+                        <li className="nav-item dropdown" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
+                          <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Dashboard</a>
+                          <ul className="dropdown-menu fade-down">
+                            <li><Link className="dropdown-item" to="/my-investments" onClick={() => setMenuOpen(false)}><i className="far fa-chart-line"></i> My Investments</Link></li>
+                            <li><Link className="dropdown-item" to="/profile" onClick={() => setMenuOpen(false)}><i className="far fa-user"></i> Profile</Link></li>
+                            <li><Link className="dropdown-item" to="/edit-password" onClick={() => setMenuOpen(false)}><i className="far fa-lock"></i> Edit Password</Link></li>
+                            <li><button className="dropdown-item" onClick={() => { handleLogout(); setMenuOpen(false); }}><i className="far fa-sign-out"></i> Logout</button></li>
+                          </ul>
                         </li>
-                        <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                          <Link className="nav-link switch" to="/profile" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Profile</Link>
-                        </li>
-                        <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
-                          <button className="nav-link switch" onClick={() => { handleLogout(); setMenuOpen(false); }} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px', border: 'none', background: 'none', width: '100%', textAlign: 'left' }}>Logout</button>
+                        <li className="nav-item scratch" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
+                          <button className="nav-link switch" onClick={() => { handleLogout(); setMenuOpen(false); }} style={{ padding: isMobile ? '15px 25px' : '30px 0', border: 'none', background: 'none', width: '100%', textAlign: 'left' }}>Logout</button>
                         </li>
                       </>
                     )}
                     {!isAuthenticated && (
                       <>
-                        <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
+                        <li className="nav-item scratch" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
                           <Link className="nav-link switch" to="/login" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Login</Link>
                         </li>
-                        <li className="nav-item" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
+                        <li className="nav-item scratch" style={{ borderBottom: isMobile ? '1px solid #f0f0f0' : 'none' }}>
                           <Link className="nav-link switch" to="/register" onClick={() => setMenuOpen(false)} style={{ padding: isMobile ? '15px 25px' : '30px 0', marginRight: isMobile ? '0' : '22px' }}>Sign Up</Link>
                         </li>
                       </>
