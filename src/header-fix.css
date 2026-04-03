@@ -261,6 +261,11 @@
 
 .hero-title {
   font-size: 40px !important;
+  color: #fff !important;
+}
+
+.hero-title span {
+  color: #09c398 !important;
 }
 
 @media (max-width: 767px) {
