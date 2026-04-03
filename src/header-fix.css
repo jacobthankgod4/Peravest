@@ -111,6 +111,7 @@
 
   .navbar-brand {
     flex-shrink: 0;
+    margin-right: 30px;
   }
 
   .navbar-collapse {
