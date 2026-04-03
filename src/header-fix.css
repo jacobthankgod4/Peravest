@@ -61,9 +61,15 @@
   display: inline-block;
   width: inherit;
   height: inherit;
-  font-size: 25px;
+  font-size: 28px;
   color: #0e2e50;
-  font-weight: 500;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.navbar-toggler:hover .navbar-toggler-btn-icon {
+  color: #09c398;
+  transform: scale(1.1);
 }
 
 /* ── MOBILE MENU RIGHT (hamburger + invest now) ── */
@@ -142,11 +148,18 @@
 
   .navbar-nav .nav-item .nav-link {
     padding: 30px 12px !important;
-    font-size: 17px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 600;
     color: #0e2e50 !important;
     text-transform: capitalize;
     white-space: nowrap;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+  }
+
+  .navbar-nav .nav-item .nav-link:hover {
+    color: #09c398 !important;
+    transform: translateY(-2px);
   }
 
   .navbar-nav .nav-item:last-child .nav-link {
@@ -212,7 +225,7 @@
     z-index: 1000;
     transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden !important;
-    padding: 80px 0 30px 0 !important;
+    padding: 20px 0 30px 0 !important;
     box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
     display: flex !important;
     flex-direction: column;
@@ -256,16 +269,17 @@
 
   .navbar-nav .nav-link,
   .navbar-nav .btn-nav {
-    padding: 14px 24px !important;
+    padding: 18px 24px !important;
     display: block;
     color: #0e2e50 !important;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: center;
     position: relative;
     margin: 0 12px;
-    border-radius: 8px;
+    border-radius: 12px;
   }
 
   .navbar-nav .nav-link::before,
@@ -277,16 +291,17 @@
     bottom: 0;
     width: 4px;
     background: #09c398;
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 12px 12px 0;
     transform: scaleY(0);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .navbar-nav .nav-link:hover,
   .navbar-nav .btn-nav:hover {
-    background: rgba(9, 195, 152, 0.08);
+    background: rgba(9, 195, 152, 0.12);
     color: #09c398 !important;
     padding-left: 28px !important;
+    transform: translateX(4px);
   }
 
   .navbar-nav .nav-link:hover::before,
@@ -302,25 +317,28 @@
     margin: 8px 12px !important;
     border: none !important;
     box-shadow: none !important;
-    background: rgba(9, 195, 152, 0.05) !important;
-    border-radius: 8px !important;
+    background: rgba(9, 195, 152, 0.08) !important;
+    border-radius: 12px !important;
     padding: 8px 0 !important;
   }
 
   .navbar-nav .dropdown-item {
-    padding: 12px 32px !important;
-    font-size: 15px;
+    padding: 14px 32px !important;
+    font-size: 16px;
+    font-weight: 500;
     text-align: center;
     color: #0e2e50 !important;
     transition: all 0.2s ease;
-    border-radius: 6px;
+    border-radius: 8px;
     margin: 4px 8px;
+    letter-spacing: 0.2px;
   }
 
   .navbar-nav .dropdown-item:hover {
-    background: rgba(9, 195, 152, 0.15) !important;
+    background: rgba(9, 195, 152, 0.2) !important;
     color: #09c398 !important;
     padding-left: 40px !important;
+    transform: translateX(4px);
   }
 
   .header-nav-right {
@@ -347,17 +365,18 @@
     justify-content: center;
     display: flex !important;
     padding: 16px 20px !important;
-    font-size: 17px;
-    font-weight: 600;
-    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 12px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 12px rgba(9, 195, 152, 0.2);
     margin: 0 !important;
   }
 
   .header-nav-right .theme-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(9, 195, 152, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(9, 195, 152, 0.35);
   }
 
   .nav-item.scratch {
@@ -376,17 +395,18 @@
     justify-content: center;
     display: flex !important;
     padding: 16px 20px !important;
-    font-size: 17px;
-    font-weight: 600;
-    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 12px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 12px rgba(9, 195, 152, 0.2);
     margin: 0 !important;
   }
 
   .nav-item.scratch.invest-now-mobile .theme-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(9, 195, 152, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(9, 195, 152, 0.35);
   }
 }
 
@@ -431,19 +451,21 @@
 
 .navbar .dropdown-menu .dropdown-item {
   font-size: 16px;
-  font-weight: 500;
-  padding: 10px 0 10px 20px;
+  font-weight: 600;
+  padding: 12px 0 12px 20px;
   color: #0e2e50;
   position: relative;
   text-transform: capitalize;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease;
   z-index: 1;
+  letter-spacing: 0.2px;
 }
 
 .navbar .dropdown-menu .dropdown-item:hover {
   background: 0 0;
   color: #09c398;
   padding-left: 30px;
+  transform: translateX(4px);
 }
 
 .navbar .dropdown-menu .dropdown-item::before {
@@ -456,7 +478,7 @@
   font-weight: 700;
   font-size: 6px;
   transform: scale(0, 0);
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease;
   z-index: -1;
 }
 
@@ -513,6 +535,8 @@
 .hero-title {
   font-size: 40px !important;
   color: #fff !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .hero-title span {
