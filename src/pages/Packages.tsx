@@ -166,8 +166,8 @@ const Packages: React.FC = () => {
     <Layout title="Investment Packages - Peravest">
       <div className={styles.packagesPage}>
         <div className={styles.hero}>
-          <h1 className={styles.heroTitle}>Investment Packages</h1>
-          <p className={styles.heroSubtitle}>Select your preferred investment period and start earning returns</p>
+          <h1 className={styles.heroTitle}>Cooperative Participation Packages</h1>
+          <p className={styles.heroSubtitle}>Select your preferred participation period and receive member benefits</p>
         </div>
 
         <div className={styles.container}>

@@ -35,7 +35,7 @@ const Privacy: React.FC = () => {
                   </p>
                   <ul>
                     <li>Personal identification information (name, email, phone number)</li>
-                    <li>Financial information (bank account details, investment preferences)</li>
+                    <li>Financial information (bank account details, participation preferences)</li>
                     <li>Identity verification documents</li>
                     <li>Communication records</li>
                   </ul>
@@ -45,10 +45,10 @@ const Privacy: React.FC = () => {
                   <h2>How We Use Your Information</h2>
                   <p>We use the information we collect to:</p>
                   <ul>
-                    <li>Provide and maintain our investment services</li>
+                    <li>Provide and maintain our cooperative participation services</li>
                     <li>Process transactions and send related information</li>
-                    <li>Verify your identity and prevent fraud</li>
-                    <li>Communicate with you about your account and investments</li>
+                    <li>Verify member identity and prevent fraud</li>
+                    <li>Communicate with you about your account and cooperative participations</li>
                     <li>Comply with legal and regulatory requirements</li>
                   </ul>
                 </div>

@@ -89,7 +89,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
         <div className="listing-price">
           <div className="listing-price-info">
             <h6 className="listing-price-amount">₦{property.shareCost.toLocaleString()}</h6>
-            <span className="listing-price-title">Cost of Share</span>
+            <span className="listing-price-title">Participation Unit Cost</span>
           </div>
           <div>
             <button 
@@ -108,7 +108,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
           </div>
           <div className="d-flexa">
             <div>
-              <h5>{property.investors.toLocaleString()} Investors</h5>
+              <h5>{property.investors.toLocaleString()} Members</h5>
             </div>
             <div>
               <h4>₦{property.raised.toLocaleString()} Raised</h4>

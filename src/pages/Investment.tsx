@@ -103,7 +103,7 @@ const Investment: React.FC = () => {
                 className={`nav-link ${activeTab === 'invest' ? 'active' : ''}`}
                 onClick={() => setActiveTab('invest')}
               >
-                Make Investment
+                Participate in Projects
               </button>
             </li>
             <li className="nav-item">
@@ -111,7 +111,7 @@ const Investment: React.FC = () => {
                 className={`nav-link ${activeTab === 'portfolio' ? 'active' : ''}`}
                 onClick={() => setActiveTab('portfolio')}
               >
-                My Portfolio
+                My Participations
               </button>
             </li>
           </ul>
@@ -123,7 +123,7 @@ const Investment: React.FC = () => {
           <div className="col-md-8">
             <div className="card">
               <div className="card-header">
-                <h5>Available Properties</h5>
+                <h5>Available Cooperative Projects</h5>
               </div>
               <div className="card-body">
                 {properties.map(property => (
@@ -141,11 +141,11 @@ const Investment: React.FC = () => {
                             }}
                           >
                             <div className="card-body p-3">
-                              <small className="text-muted">Share Cost</small>
+                              <small className="text-muted">Participation Unit Cost</small>
                               <h6>₦{property.shareCost.toLocaleString()}</h6>
                               <div className="d-flex justify-content-between">
-                                <span>{property.interestRate}% ROI</span>
-                                <span>Investment Property</span>
+                                <span>{property.interestRate}% Member Benefit Rate</span>
+                                <span>Cooperative Property</span>
                               </div>
                               <div className="progress mt-2">
                                 <div 
@@ -168,13 +168,13 @@ const Investment: React.FC = () => {
           <div className="col-md-4">
             <div className="card">
               <div className="card-header">
-                <h5>Investment Summary</h5>
+                <h5>Participation Summary</h5>
               </div>
               <div className="card-body">
                 {selectedPropertyData ? (
                   <>
                     <div className="mb-3">
-                      <label className="form-label">Number of Shares</label>
+                      <label className="form-label">Number of Participation Units</label>
                       <input
                         type="number"
                         className="form-control"
@@ -185,12 +185,12 @@ const Investment: React.FC = () => {
                     </div>
                     
                     <div className="mb-3">
-                      <strong>Total Amount: ₦{totalAmount.toLocaleString()}</strong>
+                      <strong>Total Participation Amount: ₦{totalAmount.toLocaleString()}</strong>
                     </div>
                     
                     <div className="mb-3">
                       <small className="text-muted">
-                        Expected Return: ₦{(totalAmount * (1 + selectedPropertyData.interestRate / 100)).toLocaleString()}
+                        Projected Member Benefit: ₦{(totalAmount * (1 + selectedPropertyData.interestRate / 100)).toLocaleString()}
                       </small>
                     </div>
                     
@@ -199,11 +199,11 @@ const Investment: React.FC = () => {
                       onClick={handleInvest}
                       disabled={loading}
                     >
-                      {loading ? 'Processing...' : 'Invest Now'}
+                      {loading ? 'Processing...' : 'Participate Now'}
                     </button>
                   </>
                 ) : (
-                  <p className="text-muted">Select a property package to continue</p>
+                  <p className="text-muted">Select a cooperative project to continue</p>
                 )}
               </div>
             </div>
@@ -216,7 +216,7 @@ const Investment: React.FC = () => {
           <div className="col-12">
             <div className="card">
               <div className="card-header">
-                <h5>My Investments</h5>
+                <h5>My Cooperative Participations</h5>
               </div>
               <div className="card-body">
                 {investments.length > 0 ? (
@@ -226,11 +226,11 @@ const Investment: React.FC = () => {
                         <tr>
                           <th>Property</th>
                           <th>Amount</th>
-                          <th>Shares</th>
-                          <th>ROI</th>
+                          <th>Units</th>
+                          <th>Member Benefit Rate</th>
                           <th>Period</th>
                           <th>Status</th>
-                          <th>Maturity</th>
+                          <th>Benefit Distribution Date</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -253,7 +253,7 @@ const Investment: React.FC = () => {
                     </table>
                   </div>
                 ) : (
-                  <p className="text-muted">No investments found</p>
+                  <p className="text-muted">No participations found</p>
                 )}
               </div>
             </div>

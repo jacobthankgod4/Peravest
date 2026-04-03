@@ -79,7 +79,7 @@ const PackageCard: React.FC<PackageCardProps> = ({
           
           <div className={styles.details}>
             <div className={styles.detailItem}>
-              <h6>Investment Period</h6>
+              <h6>Participation Period</h6>
               <select 
                 className={styles.select}
                 value={selectedPeriod}
@@ -87,24 +87,24 @@ const PackageCard: React.FC<PackageCardProps> = ({
               >
                 {investmentPeriods.map(period => (
                   <option key={period.months} value={period.months}>
-                    {period.label} - {period.roi}% ROI
+                    {period.label} - {period.roi}% Member Benefit Rate
                   </option>
                 ))}
               </select>
             </div>
             
             <div className={styles.detailItem}>
-              <h6>Share Cost</h6>
+              <h6>Participation Unit Cost</h6>
               <h4>₦{property.shareCost.toLocaleString()}</h4>
             </div>
             
             <div className={styles.detailItem}>
-              <h6>Expected Returns</h6>
+              <h6>Projected Member Benefit</h6>
               <h4 className={styles.success}>₦{calculateReturns(property.shareCost, selectedPeriod).toLocaleString()}</h4>
             </div>
             
             <div className={styles.detailItem}>
-              <h6>ROI</h6>
+              <h6>Member Benefit Rate</h6>
               <h4 className={styles.accent}>{roi}%</h4>
             </div>
           </div>
@@ -114,12 +114,12 @@ const PackageCard: React.FC<PackageCardProps> = ({
           </div>
           
           <div className={styles.stats}>
-            <span className={styles.statItem}>{property.investors.toLocaleString()} Investors</span>
+            <span className={styles.statItem}>{property.investors.toLocaleString()} Members</span>
             <span className={styles.statItem}>₦{property.raised.toLocaleString()} Raised</span>
           </div>
           
           <button onClick={onInvest} className={styles.investBtn}>
-            Invest Now
+            Participate Now
           </button>
         </div>
       </div>

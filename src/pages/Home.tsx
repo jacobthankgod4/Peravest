@@ -133,15 +133,15 @@ const Home: React.FC = () => {
           <div className="row align-items-center">
             <div className="col-lg-6">
               <div style={{ marginBottom: '30px' }}>
-                <h2 style={{ fontSize: '48px', fontWeight: 900, color: '#0e2e50', marginBottom: '15px' }}>Peravest unlocks professional real estate investments for everyone</h2>
-                <p style={{ fontSize: '16px', color: '#444', lineHeight: '1.8', marginBottom: '20px' }}>Real estate investing has long been limited to big institutions and high-net-worth individuals. Now, with just ₦5,000, anyone can enter the world of professional real estate investment.</p>
-                <Link to="/listings" style={{ display: 'inline-block', padding: '12px 32px', background: 'linear-gradient(135deg, #09c398 0%, #06a876 100%)', color: '#fff', textDecoration: 'none', borderRadius: '10px', fontWeight: 900, fontSize: '15px', transition: 'all 0.3s', letterSpacing: '0.5px' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(9, 195, 152, 0.3)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}>See our crowdfunding offers <i className="far fa-arrow-right" style={{ marginLeft: '8px' }}></i></Link>
+                <h2 style={{ fontSize: '48px', fontWeight: 900, color: '#0e2e50', marginBottom: '15px' }}>PeraVest enables cooperative real estate participation for all members</h2>
+                <p style={{ fontSize: '16px', color: '#444', lineHeight: '1.8', marginBottom: '20px' }}>Real estate participation has traditionally been limited to large institutions. Now, with just ₦5,000, any member can participate in professional real estate projects through our cooperative model.</p>
+                <Link to="/listings" style={{ display: 'inline-block', padding: '12px 32px', background: 'linear-gradient(135deg, #09c398 0%, #06a876 100%)', color: '#fff', textDecoration: 'none', borderRadius: '10px', fontWeight: 900, fontSize: '15px', transition: 'all 0.3s', letterSpacing: '0.5px' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(9, 195, 152, 0.3)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}>Explore our cooperative property participation opportunities <i className="far fa-arrow-right" style={{ marginLeft: '8px' }}></i></Link>
               </div>
             </div>
             <div className="col-lg-6">
               <div style={{ marginBottom: '30px' }}>
-                <h2 style={{ fontSize: '48px', fontWeight: 900, color: '#0e2e50', marginBottom: '15px' }}>A great investment shouldn't keep you up at night</h2>
-                <p style={{ fontSize: '16px', color: '#444', lineHeight: '1.8', marginBottom: '20px' }}>Invest with confidence, thanks to peravest's rigorous pre-vetting processes. Every project completes a thorough due diligence so that you can invest easily.</p>
+                <h2 style={{ fontSize: '48px', fontWeight: 900, color: '#0e2e50', marginBottom: '15px' }}>Participate with confidence in real estate projects</h2>
+                <p style={{ fontSize: '16px', color: '#444', lineHeight: '1.8', marginBottom: '20px' }}>Participate with confidence. PeraVest conducts rigorous due diligence on every property to ensure member protection and project viability.</p>
                 <Link to="/register" style={{ display: 'inline-block', padding: '12px 32px', background: 'linear-gradient(135deg, #09c398 0%, #06a876 100%)', color: '#fff', textDecoration: 'none', borderRadius: '10px', fontWeight: 900, fontSize: '15px', transition: 'all 0.3s', letterSpacing: '0.5px' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(9, 195, 152, 0.3)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}>Sign Up <i className="far fa-arrow-right" style={{ marginLeft: '8px' }}></i></Link>
               </div>
             </div>
@@ -154,7 +154,7 @@ const Home: React.FC = () => {
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
             <h2 style={{ fontSize: '36px', fontWeight: 800, color: '#0e2e50', marginBottom: '15px' }}>Featured Properties</h2>
-            <p style={{ fontSize: '16px', color: '#444' }}>Explore our curated selection of premium real estate investment opportunities</p>
+            <p style={{ fontSize: '16px', color: '#444' }}>Explore our curated selection of premium real estate participation opportunities</p>
           </div>
           <div className="row">
             {loading ? (
@@ -177,15 +177,15 @@ const Home: React.FC = () => {
         <img src="/savings-features.png" alt="Our Investment Products" style={{ width: '100%', display: 'block' }} />
         <div className="container" style={{ paddingTop: '80px' }}>
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-            <span className="site-title-tagline" style={{ fontWeight: 800, color: '#09c398' }}>Our Investment Products</span>
-            <h2 className="site-title" style={{ color: '#fff', fontWeight: 800 }}>Choose How You Want to Grow</h2>
+            <span className="site-title-tagline" style={{ fontWeight: 800, color: '#09c398' }}>Our Cooperative Participation Products</span>
+            <h2 className="site-title" style={{ color: '#fff', fontWeight: 800 }}>Choose Your Cooperative Participation Method</h2>
           </div>
           <div className="row">
             {([
-              { key: 'real-estate', icon: 'fa-building', iconBg: '#0e2e50', title: 'Crowdfund Real Estate', description: 'Pool funds with other investors to own a share of premium real estate.', benefits: ['Invest from ₦5,000', 'Earn rental income', 'Capital appreciation'], cta: 'Explore Properties' },
-              { key: 'ajo', icon: 'fa-users', iconBg: '#09c398', title: 'Ajo Savings Circle', description: 'Join a trusted group savings circle and receive rotating payouts.', benefits: ['Rotating group payouts', 'Flexible contribution cycles', 'Community-backed trust'], cta: 'Join a Circle' },
-              { key: 'target-savings', icon: 'fa-bullseye', iconBg: '#0d6efd', title: 'Target Savings', description: 'Set a savings goal and watch your money grow towards it.', benefits: ['Save towards a goal', 'Automated contributions', 'Track your progress'], cta: 'Start Saving' },
-              { key: 'safelock', icon: 'fa-lock', iconBg: '#ffc107', title: 'SafeLock', description: 'Lock your funds for a fixed term and earn guaranteed returns.', benefits: ['Up to 15% annual returns', 'Fixed-term security', 'Zero market risk'], cta: 'Lock Funds' },
+              { key: 'real-estate', icon: 'fa-building', iconBg: '#0e2e50', title: 'Property Participation', description: 'Pool resources with other members to participate in premium real estate projects.', benefits: ['Participate from ₦5,000', 'Receive member distributions', 'Participate in property appreciation'], cta: 'Explore Properties' },
+              { key: 'ajo', icon: 'fa-users', iconBg: '#09c398', title: 'Ajo Savings Circle', description: 'Join a cooperative savings circle and receive rotating member distributions.', benefits: ['Rotating member distributions', 'Flexible contribution cycles', 'Community-backed trust'], cta: 'Join a Circle' },
+              { key: 'target-savings', icon: 'fa-bullseye', iconBg: '#0d6efd', title: 'Target Savings', description: 'Set a savings goal and track your cooperative savings growth.', benefits: ['Participate in goal-based savings', 'Automated member contributions', 'Track your progress'], cta: 'Start Saving' },
+              { key: 'safelock', icon: 'fa-lock', iconBg: '#ffc107', title: 'SafeLock', description: 'Lock your funds for a fixed term and receive projected member benefits.', benefits: ['Up to 15% projected annual member benefits', 'Fixed-term participation', 'Lower market exposure'], cta: 'Lock Funds' },
             ] as { key: 'real-estate' | 'ajo' | 'target-savings' | 'safelock'; icon: string; iconBg: string; title: string; description: string; benefits: string[]; cta: string }[]).map((f) => (
               <div key={f.key} className="col-md-6 col-lg-3 mb-4">
                 <div className="savings-feature-card" style={{ background: '#fff', borderRadius: '12px', padding: '30px 24px', height: '100%', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
