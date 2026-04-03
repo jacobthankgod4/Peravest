@@ -172,12 +172,12 @@ const Home: React.FC = () => {
       </div>
 
       {/* Savings Features Section */}
-      <div className="savings-features-area" style={{ background: '#eaf7f4', padding: '0 0 80px 0' }}>
+      <div className="savings-features-area" style={{ background: '#0e2e50', padding: '0 0 80px 0' }}>
         <img src="/savings-features.png" alt="Our Investment Products" style={{ width: '100%', display: 'block' }} />
         <div className="container" style={{ paddingTop: '80px' }}>
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
             <span className="site-title-tagline">Our Investment Products</span>
-            <h2 className="site-title">Choose How You Want to Grow</h2>
+            <h2 className="site-title" style={{ color: '#fff' }}>Choose How You Want to Grow</h2>
           </div>
           <div className="row">
             {([
