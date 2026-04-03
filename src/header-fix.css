@@ -85,26 +85,50 @@
     display: block;
   }
 
+  .navbar {
+    display: flex !important;
+    align-items: center;
+    width: 100%;
+  }
+
+  .navbar-brand {
+    flex-shrink: 0;
+    margin-right: 30px;
+  }
+
   .navbar-collapse {
     display: flex !important;
     align-items: center;
     flex: 1;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
   }
 
   .navbar-nav {
     flex-direction: row;
     align-items: center;
     margin-left: 0;
-    margin-right: auto;
+    margin-right: 0;
+    flex: 1;
+  }
+
+  .navbar-nav .nav-item {
+    border-bottom: none !important;
   }
 
   .navbar-nav .nav-item .nav-link {
-    padding: 30px 0;
+    padding: 30px 0 !important;
     margin-right: 22px;
+    color: #0e2e50 !important;
   }
 
   .header-nav-right {
     margin-left: auto;
+    flex-shrink: 0;
   }
 
   /* Hide scratch items on desktop */
