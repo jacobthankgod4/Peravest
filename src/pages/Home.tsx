@@ -8,6 +8,7 @@ import HeroCarousel from './HeroCarousel';
 import PropertyCard from './PropertyCard';
 import ServiceStep from './ServiceStep';
 import ContactUs from './ContactUs';
+import Team from './Team';
 import '../savings-features.css';
 import '../testimonial-override.css';
 
@@ -230,6 +231,9 @@ const Home: React.FC = () => {
 
       {/* Contact Us Section */}
       <ContactUs />
+
+      {/* Team Section */}
+      <Team />
 
       {/* Blog Section */}
       <div className="blog-area py-120">

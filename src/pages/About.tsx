@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../components_main/Layout';
 import Breadcrumb from './Breadcrumb';
+import Team from './Team';
 import { useSmartRouting } from '../hooks/useSmartRouting';
 
 const About: React.FC = () => {
@@ -225,6 +226,9 @@ const About: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Team Section */}
+      <Team />
       </main>
     </Layout>
   );
