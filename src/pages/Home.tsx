@@ -176,7 +176,7 @@ const Home: React.FC = () => {
         <img src="/savings-features.png" alt="Our Investment Products" style={{ width: '100%', display: 'block' }} />
         <div className="container" style={{ paddingTop: '80px' }}>
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-            <span className="site-title-tagline">Our Investment Products</span>
+            <span className="site-title-tagline" style={{ fontWeight: 800 }}>Our Investment Products</span>
             <h2 className="site-title" style={{ color: '#fff' }}>Choose How You Want to Grow</h2>
           </div>
           <div className="row">
@@ -208,8 +208,8 @@ const Home: React.FC = () => {
       <div style={{ background: '#fff', padding: '80px 20px' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-            <span style={{ color: '#09c398', fontSize: '14px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>Your way to your investment</span>
-            <h2 style={{ fontSize: '36px', fontWeight: 700, color: '#0e2e50', marginBottom: '15px', marginTop: '10px' }}>How it works</h2>
+            <span style={{ color: '#09c398', fontSize: '14px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px' }}>Your way to your investment</span>
+            <h2 style={{ fontSize: '36px', fontWeight: 800, color: '#0e2e50', marginBottom: '15px', marginTop: '10px' }}>How it works</h2>
           </div>
           <div className="row">
             <div className="col-md-6 col-lg-3">
