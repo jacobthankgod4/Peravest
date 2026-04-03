@@ -132,15 +132,15 @@ const Home: React.FC = () => {
           <div className="row align-items-center">
             <div className="col-lg-6">
               <div style={{ marginBottom: '30px' }}>
-                <h2 style={{ fontSize: '32px', fontWeight: 700, color: '#0e2e50', marginBottom: '15px' }}>Peravest unlocks professional real estate investments for everyone</h2>
-                <p style={{ fontSize: '16px', color: '#666', lineHeight: '1.8', marginBottom: '20px' }}>Real estate investing has long been limited to big institutions and high-net-worth individuals. Now, with just ₦5,000, anyone can enter the world of professional real estate investment.</p>
+                <h2 style={{ fontSize: '32px', fontWeight: 800, color: '#0e2e50', marginBottom: '15px' }}>Peravest unlocks professional real estate investments for everyone</h2>
+                <p style={{ fontSize: '16px', color: '#444', lineHeight: '1.8', marginBottom: '20px' }}>Real estate investing has long been limited to big institutions and high-net-worth individuals. Now, with just ₦5,000, anyone can enter the world of professional real estate investment.</p>
                 <Link to="/listings" style={{ display: 'inline-block', padding: '12px 32px', background: 'linear-gradient(135deg, #09c398 0%, #06a876 100%)', color: '#fff', textDecoration: 'none', borderRadius: '10px', fontWeight: 600, fontSize: '14px', transition: 'all 0.3s' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(9, 195, 152, 0.3)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}>See our crowdfunding offers <i className="far fa-arrow-right" style={{ marginLeft: '8px' }}></i></Link>
               </div>
             </div>
             <div className="col-lg-6">
               <div style={{ marginBottom: '30px' }}>
-                <h2 style={{ fontSize: '32px', fontWeight: 700, color: '#0e2e50', marginBottom: '15px' }}>A great investment shouldn't keep you up at night</h2>
-                <p style={{ fontSize: '16px', color: '#666', lineHeight: '1.8', marginBottom: '20px' }}>Invest with confidence, thanks to peravest's rigorous pre-vetting processes. Every project completes a thorough due diligence so that you can invest easily.</p>
+                <h2 style={{ fontSize: '32px', fontWeight: 800, color: '#0e2e50', marginBottom: '15px' }}>A great investment shouldn't keep you up at night</h2>
+                <p style={{ fontSize: '16px', color: '#444', lineHeight: '1.8', marginBottom: '20px' }}>Invest with confidence, thanks to peravest's rigorous pre-vetting processes. Every project completes a thorough due diligence so that you can invest easily.</p>
                 <Link to="/register" style={{ display: 'inline-block', padding: '12px 32px', background: 'linear-gradient(135deg, #09c398 0%, #06a876 100%)', color: '#fff', textDecoration: 'none', borderRadius: '10px', fontWeight: 600, fontSize: '14px', transition: 'all 0.3s' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(9, 195, 152, 0.3)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}>Sign Up <i className="far fa-arrow-right" style={{ marginLeft: '8px' }}></i></Link>
               </div>
             </div>
@@ -152,8 +152,8 @@ const Home: React.FC = () => {
       <div style={{ background: '#f9f9f9', padding: '80px 20px' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-            <h2 style={{ fontSize: '36px', fontWeight: 700, color: '#0e2e50', marginBottom: '15px' }}>Featured Properties</h2>
-            <p style={{ fontSize: '16px', color: '#666' }}>Explore our curated selection of premium real estate investment opportunities</p>
+            <h2 style={{ fontSize: '36px', fontWeight: 800, color: '#0e2e50', marginBottom: '15px' }}>Featured Properties</h2>
+            <p style={{ fontSize: '16px', color: '#444' }}>Explore our curated selection of premium real estate investment opportunities</p>
           </div>
           <div className="row">
             {loading ? (
@@ -176,8 +176,8 @@ const Home: React.FC = () => {
         <img src="/savings-features.png" alt="Our Investment Products" style={{ width: '100%', display: 'block' }} />
         <div className="container" style={{ paddingTop: '80px' }}>
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-            <span className="site-title-tagline" style={{ fontWeight: 800 }}>Our Investment Products</span>
-            <h2 className="site-title" style={{ color: '#fff' }}>Choose How You Want to Grow</h2>
+            <span className="site-title-tagline" style={{ fontWeight: 800, color: '#09c398' }}>Our Investment Products</span>
+            <h2 className="site-title" style={{ color: '#fff', fontWeight: 800 }}>Choose How You Want to Grow</h2>
           </div>
           <div className="row">
             {([
@@ -237,8 +237,8 @@ const Home: React.FC = () => {
           <div className="row">
             <div className="col-lg-6 mx-auto wow fadeInDown" data-wow-duration="1s" data-wow-delay=".25s">
               <div className="site-heading text-center">
-                <span className="site-title-tagline">Our Blog</span>
-                <h2 className="site-title">Our Latest News & Blog</h2>
+                <span className="site-title-tagline" style={{ fontWeight: 800 }}>Our Blog</span>
+                <h2 className="site-title" style={{ fontWeight: 800 }}>Our Latest News & Blog</h2>
               </div>
             </div>
           </div>
