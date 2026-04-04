@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { ajoService } from '../services/ajoService';
 import { targetSavingsService } from '../services/targetSavingsService';
+import { paymentService } from '../services/paymentService';
 
 declare global {
   interface Window {
@@ -28,10 +29,8 @@ const Checkout: React.FC = () => {
     : isProperty ? stateData.amount 
     : isSafeLock ? stateData.amount
     : 0;
-  const vat = 0; // No VAT on investments
+  const vat = 0;
   const total = amount + vat;
-  const isTestMode = paymentConfig?.publicKey?.includes('pk_test');
-  const exceedsTestLimit = isTestMode && total > 50000;
 
   useEffect(() => {
     if (!stateData || !stateData.type) {
@@ -40,24 +39,32 @@ const Checkout: React.FC = () => {
       return;
     }
     
-    // User is guaranteed to be authenticated by ProtectedRoute
     const userEmail = user?.email;
     if (!userEmail) {
       console.error('User email not found');
       return;
     }
     
+    const reference = `${isProperty ? 'PROP' : isAjo ? 'AJO' : isTargetSavings ? 'TS' : isSafeLock ? 'SL' : 'INV'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    
     setPaymentConfig({
-      reference: `${isProperty ? 'PROP' : isAjo ? 'AJO' : isTargetSavings ? 'TS' : isSafeLock ? 'SL' : 'INV'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      tx_ref: reference,
       email: userEmail,
-      amount: total * 100,
-      publicKey: process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY || ''
+      amount: total,
+      publicKey: paymentService.getPublicKey()
     });
   }, [stateData, total, isProperty, isAjo, isTargetSavings, isSafeLock, user, navigate]);
   
-  const handlePaymentSuccess = async (reference: any) => {
+  const handlePaymentSuccess = async (response: any) => {
     setProcessing(true);
     try {
+      // Verify payment with Flutterwave
+      const verification = await paymentService.verifyPayment(response.transaction_id);
+      
+      if (verification.data.status !== 'successful') {
+        throw new Error('Payment verification failed');
+      }
+
       if (isProperty) {
         const { supabase } = await import('../lib/supabase');
         const userId = user?.id;
@@ -65,19 +72,6 @@ const Checkout: React.FC = () => {
         if (!userId) {
           throw new Error('User ID not found');
         }
-        
-        console.log('Inserting investment:', {
-          Usa_Id: userId,
-          proptee_id: stateData.propertyId,
-          package_id: stateData.packageId,
-          share_cost: amount,
-          interest: stateData.roi,
-          period: stateData.duration,
-          start_date: new Date().toISOString(),
-          payment_status: 'completed',
-          payment_reference: reference.reference,
-          status: 'active'
-        });
         
         const { data, error } = await supabase.from('invest_now').insert({
           Usa_Id: userId,
@@ -88,28 +82,26 @@ const Checkout: React.FC = () => {
           period: stateData.duration,
           start_date: new Date().toISOString(),
           payment_status: 'completed',
-          payment_reference: reference.reference,
+          payment_reference: response.transaction_id,
           status: 'active'
         });
         
         if (error) {
-          console.error('Supabase error:', error);
           throw new Error(`Database error: ${error.message}`);
         }
         
-        console.log('Investment created:', data);
         navigate('/dashboard?success=investment');
       } else if (isAjo) {
         await ajoService.createAjo({
           ...stateData,
-          paymentReference: reference.reference,
+          paymentReference: response.transaction_id,
           firstPayment: amount
         });
         navigate('/dashboard?success=ajo');
       } else if (isTargetSavings) {
         await targetSavingsService.createTargetSavings({
           ...stateData,
-          paymentReference: reference.reference,
+          paymentReference: response.transaction_id,
           firstPayment: amount
         });
         navigate('/dashboard?success=target-savings');
@@ -129,7 +121,7 @@ const Checkout: React.FC = () => {
           maturity_amount: stateData.maturityAmount,
           start_date: new Date().toISOString(),
           payment_status: 'completed',
-          payment_reference: reference.reference,
+          payment_reference: response.transaction_id,
           status: 'active'
         });
         
@@ -138,15 +130,8 @@ const Checkout: React.FC = () => {
       }
     } catch (error: any) {
       console.error('Payment processing failed:', error);
-      console.error('Error details:', {
-        message: error.message,
-        stack: error.stack,
-        stateData,
-        userId: user?.id,
-        reference: reference?.reference
-      });
       setProcessing(false);
-      alert(`Failed to process payment. Error: ${error.message}\n\nReference: ${reference.reference}\n\nPlease contact support.`);
+      alert(`Failed to process payment. Error: ${error.message}\n\nPlease contact support.`);
     }
   };
 
@@ -289,18 +274,6 @@ const Checkout: React.FC = () => {
                       </div>
                     </div>
 
-                    {exceedsTestLimit && (
-                      <div style={{ background: '#fff3cd', border: '1px solid #ffc107', borderRadius: '12px', padding: '1rem', marginBottom: '1rem' }}>
-                        <div style={{ display: 'flex', alignItems: 'start', gap: '0.75rem' }}>
-                          <i className="fas fa-exclamation-triangle" style={{ color: '#856404', fontSize: '1.25rem', marginTop: '0.125rem' }}></i>
-                          <div>
-                            <strong style={{ color: '#856404', display: 'block', marginBottom: '0.25rem' }}>Test Mode Limit</strong>
-                            <small style={{ color: '#856404', lineHeight: '1.4' }}>Paystack test cards have a ₦50,000 limit. This ₦{total.toLocaleString()} transaction will fail in test mode. Use live keys for production.</small>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
                     <button
                       onClick={() => {
                         if (processing) return;
@@ -317,8 +290,8 @@ const Checkout: React.FC = () => {
                         
                         (window as any).FlutterwaveCheckout({
                           public_key: paymentConfig.publicKey,
-                          tx_ref: paymentConfig.reference,
-                          amount: paymentConfig.amount / 100,
+                          tx_ref: paymentConfig.tx_ref,
+                          amount: paymentConfig.amount,
                           currency: 'NGN',
                           payment_options: 'card,mobilemoney,ussd',
                           customer: {
@@ -331,8 +304,9 @@ const Checkout: React.FC = () => {
                             logo: '/assets/img/logo/logo_a.png'
                           },
                           callback: (response: any) => {
+                            console.log('Flutterwave callback response:', response);
                             if (response.status === 'successful') {
-                              handlePaymentSuccess({ reference: response.transaction_id });
+                              handlePaymentSuccess(response);
                             } else {
                               alert('Payment failed. Please try again.');
                               setProcessing(false);
