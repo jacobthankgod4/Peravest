@@ -76,15 +76,12 @@ const Register: React.FC = () => {
     setLoading(true);
 
     try {
-      console.log('Attempting signup with:', { email: formData.email, fullName: formData.fullName });
+      console.log('Attempting signup with:', { email: formData.email });
       
       const { data, error: authError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
-          data: {
-            full_name: formData.fullName
-          },
           emailRedirectTo: `${window.location.origin}/auth/callback`
         }
       });
@@ -95,25 +92,26 @@ const Register: React.FC = () => {
       }
       
       if (data.user) {
+        console.log('User created, saving profile...');
         const { error: profileError } = await supabase
           .from('user_profiles')
-          .upsert({
+          .insert({
             id: data.user.id,
             full_name: formData.fullName,
             account_number: formData.accountNumber,
             bank_code: formData.bankCode,
             age: parseInt(formData.age),
-            gender: formData.gender,
-            updated_at: new Date().toISOString()
+            gender: formData.gender
           });
         
         if (profileError) {
-          console.error('Profile creation error:', profileError);
-          throw profileError;
+          console.warn('Profile save warning:', profileError);
+        } else {
+          console.log('Profile saved successfully');
         }
       }
       
-      console.log('Signup successful:', data);
+      console.log('Signup successful');
       navigate('/login', { state: { message: 'Registration successful! Check your email to verify.' } });
     } catch (err: any) {
       console.error('Registration error:', err);
