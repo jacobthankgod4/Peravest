@@ -83,11 +83,7 @@ const Register: React.FC = () => {
         password: formData.password,
         options: {
           data: {
-            full_name: formData.fullName,
-            account_number: formData.accountNumber,
-            bank_code: formData.bankCode,
-            age: parseInt(formData.age),
-            gender: formData.gender
+            full_name: formData.fullName
           },
           emailRedirectTo: `${window.location.origin}/auth/callback`
         }
@@ -96,6 +92,25 @@ const Register: React.FC = () => {
       if (authError) {
         console.error('Supabase auth error:', authError);
         throw authError;
+      }
+      
+      if (data.user) {
+        const { error: profileError } = await supabase
+          .from('user_profiles')
+          .upsert({
+            id: data.user.id,
+            full_name: formData.fullName,
+            account_number: formData.accountNumber,
+            bank_code: formData.bankCode,
+            age: parseInt(formData.age),
+            gender: formData.gender,
+            updated_at: new Date().toISOString()
+          });
+        
+        if (profileError) {
+          console.error('Profile creation error:', profileError);
+          throw profileError;
+        }
       }
       
       console.log('Signup successful:', data);
