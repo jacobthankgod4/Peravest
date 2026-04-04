@@ -220,7 +220,7 @@
     right: -100vw;
     width: 100vw;
     height: auto;
-    min-height: 80vh;
+    min-height: 92vh;
     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
     z-index: 1000;
     transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
