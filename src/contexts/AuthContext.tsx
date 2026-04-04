@@ -40,9 +40,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     });
 
-    // Listen for auth changes (only on actual auth events)
+    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      // Only reload on actual sign in/out events, not on token refresh
       if (_event === 'SIGNED_IN' || _event === 'SIGNED_OUT' || _event === 'USER_UPDATED') {
         setSession(session);
         if (session?.user) {
@@ -53,7 +52,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setLoading(false);
         }
       } else if (_event === 'TOKEN_REFRESHED') {
-        // Just update session without reloading user data
         setSession(session);
       }
     });
@@ -64,7 +62,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const loadUserData = async (supabaseUser: SupabaseUser) => {
     setLoading(true);
     
-    // Check localStorage cache first
     const cachedAdmin = localStorage.getItem('isAdmin') === 'true';
     
     const basicUser = {
@@ -76,39 +73,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     try {
-      const { data: userData, error } = await supabase
+      // Try to get user from user_accounts table
+      const { data: userData, error: userError } = await supabase
         .from('user_accounts')
         .select('Id, Email, Name, User_Type')
         .eq('Email', supabaseUser.email)
         .maybeSingle();
       
-      if (error || !userData) {
-        // Check if this is an admin user by email pattern or specific admin table
-        const { data: adminData } = await supabase
-          .from('admin_users')
-          .select('id, email, name')
-          .eq('email', supabaseUser.email)
-          .maybeSingle();
-        
-        if (adminData) {
-          const adminUser = {
-            id: adminData.id.toString(),
-            email: adminData.email,
-            name: adminData.name || basicUser.name,
-            isAdmin: true,
-            role: 'admin'
-          };
-          localStorage.setItem('isAdmin', 'true');
-          setUser(adminUser);
-        } else {
-          localStorage.removeItem('isAdmin');
-          setUser(basicUser);
-        }
-      } else {
+      if (!userError && userData) {
         const userInfo = {
           id: userData.Id.toString(),
           email: userData.Email,
-          name: userData.Name,
+          name: userData.Name || basicUser.name,
           isAdmin: userData.User_Type === 'admin',
           role: userData.User_Type
         };
@@ -120,9 +96,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
         
         setUser(userInfo);
+      } else {
+        // If user_accounts doesn't have data, just use basic user info
+        localStorage.removeItem('isAdmin');
+        setUser(basicUser);
       }
     } catch (error) {
       console.error('Error loading user data:', error);
+      localStorage.removeItem('isAdmin');
       setUser(basicUser);
     } finally {
       setLoading(false);
@@ -137,6 +118,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       
       if (error || !data.session || !data.user) {
+        console.error('Login error:', error);
         return false;
       }
       
@@ -144,6 +126,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await loadUserData(data.user);
       return true;
     } catch (error) {
+      console.error('Login exception:', error);
       return false;
     }
   };
