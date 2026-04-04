@@ -1,13 +1,13 @@
 import { api } from '../utils/api';
 
-export const paymentService = {
+export const flutterwaveService = {
   initialize: async (data: any) => {
     const response = await api.post('/api/payments/initialize', data);
     return response.data;
   },
   
-  verify: async (reference: string) => {
-    const response = await api.get(`/api/payments/verify/${reference}`);
+  verify: async (transactionId: string) => {
+    const response = await api.get(`/api/payments/verify/${transactionId}`);
     return response.data;
   },
   

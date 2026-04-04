@@ -6,7 +6,7 @@ import { targetSavingsService } from '../services/targetSavingsService';
 
 declare global {
   interface Window {
-    PaystackPop: any;
+    FlutterwaveCheckout: any;
   }
 }
 
@@ -51,7 +51,7 @@ const Checkout: React.FC = () => {
       reference: `${isProperty ? 'PROP' : isAjo ? 'AJO' : isTargetSavings ? 'TS' : isSafeLock ? 'SL' : 'INV'}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       email: userEmail,
       amount: total * 100,
-      publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY || ''
+      publicKey: process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY || ''
     });
   }, [stateData, total, isProperty, isAjo, isTargetSavings, isSafeLock, user, navigate]);
   
@@ -305,7 +305,7 @@ const Checkout: React.FC = () => {
                       onClick={() => {
                         if (processing) return;
                         
-                        if (!(window as any).PaystackPop) {
+                        if (!(window as any).FlutterwaveCheckout) {
                           alert('Payment system loading...');
                           return;
                         }
@@ -315,19 +315,34 @@ const Checkout: React.FC = () => {
                           return;
                         }
                         
-                        const handler = (window as any).PaystackPop.setup({
-                          key: paymentConfig.publicKey,
-                          email: paymentConfig.email,
-                          amount: paymentConfig.amount,
-                          ref: paymentConfig.reference,
-                          callback: (response: any) => {
-                            handlePaymentSuccess(response);
+                        (window as any).FlutterwaveCheckout({
+                          public_key: paymentConfig.publicKey,
+                          tx_ref: paymentConfig.reference,
+                          amount: paymentConfig.amount / 100,
+                          currency: 'NGN',
+                          payment_options: 'card,mobilemoney,ussd',
+                          customer: {
+                            email: paymentConfig.email,
+                            name: user?.name || 'Customer'
                           },
-                          onClose: () => {
+                          customizations: {
+                            title: isProperty ? 'Property Investment' : isAjo ? 'Ajo Savings' : isTargetSavings ? 'Target Savings' : isSafeLock ? 'SafeLock' : 'Investment',
+                            description: 'Complete your payment securely',
+                            logo: '/assets/img/logo/logo_a.png'
+                          },
+                          callback: (response: any) => {
+                            if (response.status === 'successful') {
+                              handlePaymentSuccess({ reference: response.transaction_id });
+                            } else {
+                              alert('Payment failed. Please try again.');
+                              setProcessing(false);
+                            }
+                          },
+                          onclose: () => {
                             console.log('Payment dialog closed');
+                            setProcessing(false);
                           }
                         });
-                        handler.openIframe();
                       }}
                       disabled={processing}
                       style={{
