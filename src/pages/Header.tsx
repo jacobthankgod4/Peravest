@@ -95,16 +95,7 @@ const Header: React.FC = () => {
             <div className="mobile-menu-right">
               {isAdmin ? (
                 <AdminMobileMenu user={user} onLogout={handleLogout} />
-              ) : (
-                <div className="header-account">
-                  <div className="header-btn">
-                    <Link to="/listings" className="theme-btn mt-2">
-                      <span className="far fa-plus-circle"></span>
-                      Invest Now
-                    </Link>
-                  </div>
-                </div>
-              )}
+              ) : null}
               <button 
                 className="navbar-toggler" 
                 type="button"
@@ -167,25 +158,20 @@ const Header: React.FC = () => {
                     <li className="nav-item scratch">
                       <Link className="nav-link switch" to="/register">Sign Up</Link>
                     </li>
+                    <li className="nav-item scratch invest-now-mobile">
+                      <Link to="/listings" className="theme-btn">
+                        <span className="far fa-plus-circle"></span>
+                        Participate Now
+                      </Link>
+                    </li>
                   </>
                 )}
               </ul>
 
-              {/* Header Nav Right */}
+              {/* Header Nav Right - Desktop Only */}
               {isAdmin ? (
                 <AdminDesktopMenu user={user} onLogout={handleLogout} />
-              ) : (
-                <div className="header-nav-right">
-                  <div className="header-account">
-                    <div className="header-btn">
-                      <Link to="/listings" className="theme-btn mt-2">
-                        <span className="far fa-plus-circle"></span>
-                        Invest Now
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )}
+              ) : null}
             </div>
           </div>
         </nav>

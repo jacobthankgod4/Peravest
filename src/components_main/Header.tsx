@@ -107,13 +107,8 @@ const Header: React.FC = () => {
               />
             </Link>
 
-            {/* Mobile right: Invest Now + hamburger */}
+            {/* Mobile right: hamburger only */}
             <div className="mobile-menu-right">
-              <div className="header-account">
-                <Link to="/listings" className="theme-btn" onClick={close}>
-                  <span className="far fa-plus-circle"></span> Invest Now
-                </Link>
-              </div>
               <button
                 className="navbar-toggler"
                 type="button"
@@ -213,22 +208,29 @@ const Header: React.FC = () => {
                         <li className="nav-item scratch">
                           <Link className="nav-link switch" to="/register" onClick={close}>Sign Up</Link>
                         </li>
+                        <li className="nav-item scratch invest-now-mobile">
+                          <Link to="/listings" className="theme-btn" onClick={close}>
+                            <span className="far fa-plus-circle"></span> Participate Now
+                          </Link>
+                        </li>
                       </>
                     )}
                   </>
                 )}
               </ul>
 
-              {/* Desktop: Invest Now button */}
-              <div className="header-nav-right">
-                <div className="header-account">
-                  <div className="header-btn">
-                    <Link to="/listings" className="theme-btn mt-2" onClick={close}>
-                      <span className="far fa-plus-circle"></span> Invest Now
-                    </Link>
+              {/* Desktop: Invest Now button - hidden on mobile */}
+              {!isAdmin && (
+                <div className="header-nav-right">
+                  <div className="header-account">
+                    <div className="header-btn">
+                      <Link to="/listings" className="theme-btn mt-2" onClick={close}>
+                        <span className="far fa-plus-circle"></span> Participate Now
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
           </div>
