@@ -48,19 +48,16 @@ const Login: React.FC = () => {
     try {
       const success = await login(formData.email, formData.password);
       if (success) {
-        // Check if there's a return location from ProtectedRoute
         const from = location.state?.from?.pathname;
         const fromState = location.state?.from?.state;
         
         if (from && from !== '/login') {
-          // Preserve the state when redirecting back
           navigate(from, { state: fromState, replace: true });
         } else {
-          // Default redirect based on role
           navigate(user?.isAdmin ? '/admin/dashboard' : decodeURIComponent(returnUrl), { replace: true });
         }
       } else {
-        setError('Invalid email or password.');
+        setError('Invalid email or password. Please check your credentials and ensure your email is confirmed.');
       }
     } catch (err: any) {
       setError(err.message || 'Login failed.');
@@ -79,7 +76,16 @@ const Login: React.FC = () => {
             <p style={{ color: '#a0a0b0', fontSize: '14px', margin: 0 }}>Login to your account</p>
           </div>
 
-          {successMessage && <div style={{ background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.3)', color: '#10b981', padding: '12px 15px', borderRadius: '8px', marginBottom: '20px', fontSize: '14px' }}>{successMessage}</div>}
+          {successMessage && (
+            <div>
+              <div style={{ background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.3)', color: '#10b981', padding: '12px 15px', borderRadius: '8px', marginBottom: '20px', fontSize: '14px' }}>
+                {successMessage}
+              </div>
+              <div style={{ background: 'rgba(59, 130, 246, 0.15)', border: '1px solid rgba(59, 130, 246, 0.3)', color: '#3b82f6', padding: '12px 15px', borderRadius: '8px', marginBottom: '20px', fontSize: '13px' }}>
+                <strong>Please check your email</strong> to confirm your account before logging in. Click the confirmation link in the email we sent you.
+              </div>
+            </div>
+          )}
           {error && <div style={{ background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', padding: '12px 15px', borderRadius: '8px', marginBottom: '20px', fontSize: '14px' }}>{error}</div>}
 
           <form onSubmit={handleSubmit}>
