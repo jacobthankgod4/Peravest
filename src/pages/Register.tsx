@@ -82,6 +82,9 @@ const Register: React.FC = () => {
         email: formData.email,
         password: formData.password,
         options: {
+          data: {
+            full_name: formData.fullName
+          },
           emailRedirectTo: `${window.location.origin}/auth/callback`
         }
       });
