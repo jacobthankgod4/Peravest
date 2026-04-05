@@ -1,17 +1,20 @@
 .activityFeed {
-  background: #fff;
+  background: #FFFFFF;
   border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-1);
+  margin-bottom: var(--space-4);
 }
 
-.title {
-  color: #0e2e50;
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 0 0 1.5rem 0;
-  font-family: 'K2D', sans-serif;
+.sectionLabel {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-1) 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
+
 
 .activityList {
   display: flex;

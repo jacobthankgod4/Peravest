@@ -7,7 +7,7 @@ export const usePermission = () => {
 
   const userRole: Role = useMemo(() => {
     // Determine user role from user object
-    if (user?.role === 'admin') {
+if ((user as any)?.role === 'admin' || (user as any)?.user_metadata?.role === 'admin') {
       return 'admin';
     }
     return 'user';

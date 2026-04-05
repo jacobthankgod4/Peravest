@@ -7,6 +7,7 @@ import { useAuth } from '../contexts/AuthContext';
 import StatCard from './StatCard';
 import ActivityFeed from './ActivityFeed';
 import styles from './Dashboard.module.css';
+import '../styles/design-tokens.css';
 
 interface Investment {
   Id_invest: number;
@@ -38,6 +39,7 @@ const Dashboard: React.FC = () => {
   const [showBalance, setShowBalance] = useState(true);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [successMessage, setSuccessMessage] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     loadDashboardData();
@@ -50,13 +52,13 @@ const Dashboard: React.FC = () => {
     const success = params.get('success');
     if (success) {
       const messages: Record<string, string> = {
-        investment: '🎉 Investment successful! Your property investment is now active.',
-        ajo: '🎉 Ajo savings created! Your first contribution has been recorded.',
-        'target-savings': '🎉 Target savings goal created! You\'re on your way to achieving your goal.',
-        safelock: '🎉 Funds locked successfully! Your SafeLock is now active.'
+        investment: '✓ Investment successful! Your property investment is now active.',
+        ajo: '✓ Ajo savings created! Your first contribution has been recorded.',
+        'target-savings': '✓ Target savings goal created! You\'re on your way to achieving your goal.',
+        safelock: '✓ Funds locked successfully! Your SafeLock is now active.'
       };
-      setSuccessMessage(messages[success] || '🎉 Transaction successful!');
-      setTimeout(() => setSuccessMessage(''), 8000);
+      setSuccessMessage(messages[success] || '✓ Transaction successful!');
+      setTimeout(() => setSuccessMessage(''), 5000);
       window.history.replaceState({}, '', '/dashboard');
     }
   };
@@ -145,59 +147,34 @@ const Dashboard: React.FC = () => {
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
       {/* Sidebar */}
-      <div style={{
-        width: sidebarOpen ? '250px' : '0',
-        background: '#0e2e50',
-        transition: 'width 0.3s ease',
-        overflow: 'hidden',
-        position: 'fixed',
-        height: '100vh',
-        zIndex: 1000
-      }}>
-        <div style={{ padding: '20px', borderBottom: '1px solid #1a3a5c' }}>
+      <div className={styles.sidebar} style={{ width: sidebarOpen ? '250px' : '0' }}>
+        <div className={styles.sidebarHeader}>
           <img src="/assets/img/logo/logo_a.png" alt="PeraVest" style={{ height: '40px' }} />
         </div>
         
-        <nav style={{ padding: '20px 0' }}>
+        <nav className={styles.sidebarNav}>
           {menuItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
               onClick={() => setSidebarOpen(false)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '12px 20px',
-                color: window.location.pathname === item.path ? '#09c398' : '#fff',
-                textDecoration: 'none',
-                background: window.location.pathname === item.path ? 'rgba(9, 195, 152, 0.1)' : 'transparent',
-                borderRight: window.location.pathname === item.path ? '3px solid #09c398' : 'none'
-              }}
+              className={`${styles.navItem} ${window.location.pathname === item.path ? styles.active : ''}`}
+              aria-current={window.location.pathname === item.path ? 'page' : undefined}
             >
-              <i className={item.icon} style={{ marginRight: '12px', width: '20px' }}></i>
-              {item.label}
+              <i className={item.icon} aria-hidden="true"></i>
+              <span>{item.label}</span>
             </Link>
           ))}
         </nav>
 
-        <div style={{ position: 'absolute', bottom: '20px', left: '20px', right: '20px' }}>
+        <div className={styles.sidebarFooter}>
           <button
             onClick={logout}
-            style={{
-              width: '100%',
-              padding: '12px',
-              background: 'transparent',
-              border: '1px solid #1a3a5c',
-              color: '#fff',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
+            className={styles.logoutBtn}
+            aria-label="Logout from your account"
           >
-            <i className="fas fa-sign-out-alt" style={{ marginRight: '8px' }}></i>
-            Logout
+            <i className="fas fa-sign-out-alt" aria-hidden="true"></i>
+            <span>Logout</span>
           </button>
         </div>
       </div>
@@ -205,185 +182,184 @@ const Dashboard: React.FC = () => {
       {/* Overlay */}
       {sidebarOpen && (
         <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'rgba(0,0,0,0.5)',
-            zIndex: 999
-          }}
+          className={styles.overlay}
           onClick={() => setSidebarOpen(false)}
+          role="presentation"
         />
       )}
 
       {/* Main Content */}
-      <div style={{ flex: 1, marginLeft: '0' }}>
+      <div className={styles.mainContent}>
         {/* Header */}
-        <header style={{
-          height: '60px',
-          background: '#fff',
-          borderBottom: '1px solid #e0e0e0',
-          display: 'flex',
-          alignItems: 'center',
-          padding: '0 20px',
-          position: 'sticky',
-          top: 0,
-          zIndex: 100
-        }}>
+        <header className={styles.header}>
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            style={{
-              background: 'none',
-              border: 'none',
-              fontSize: '20px',
-              cursor: 'pointer',
-              marginRight: '20px'
-            }}
+            className={styles.hamburger}
+            aria-label="Toggle navigation menu"
+            aria-expanded={sidebarOpen}
           >
-            ☰
+            <span></span>
+            <span></span>
+            <span></span>
           </button>
           
-          <div style={{ flex: 1 }}>
-            <h1 style={{ margin: 0, fontSize: '18px', color: '#0e2e50' }}>
-              Welcome, {user?.name || user?.email?.split('@')[0]}
-            </h1>
+          <div className={styles.headerTitle}>
+            <h1>Welcome, {user?.name || user?.email?.split('@')[0]}</h1>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-            <Link to="/notifications" style={{ fontSize: '18px', color: '#666' }}>
-              🔔
+          <div className={styles.headerActions}>
+            <Link 
+              to="/notifications" 
+              className={styles.notificationBtn}
+              aria-label="View notifications"
+            >
+              <i className="fas fa-bell" aria-hidden="true"></i>
             </Link>
-            <div style={{
-              width: '35px',
-              height: '35px',
-              borderRadius: '50%',
-              background: '#09c398',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#fff',
-              fontWeight: 'bold'
-            }}>
+            <button
+              className={styles.profileBtn}
+              aria-label="Open user menu"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
               {user?.name?.[0] || user?.email?.[0] || 'U'}
-            </div>
+            </button>
           </div>
         </header>
 
         {/* Dashboard Content */}
-        <div style={{ padding: '20px' }}>
+        <div className={styles.content}>
+          {/* Success Message */}
           {successMessage && (
-            <div style={{
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-              color: '#fff',
-              padding: '1rem 1.5rem',
-              borderRadius: '12px',
-              marginBottom: '1.5rem',
-              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-              animation: 'slideIn 0.3s ease-out'
-            }}>
-              <i className="fas fa-check-circle" style={{ fontSize: '1.5rem' }}></i>
-              <span style={{ flex: 1, fontWeight: 500 }}>{successMessage}</span>
+            <div className={styles.successMessage} role="alert">
+              <i className="fas fa-check-circle" aria-hidden="true"></i>
+              <span>{successMessage}</span>
               <button
                 onClick={() => setSuccessMessage('')}
-                style={{
-                  background: 'rgba(255,255,255,0.2)',
-                  border: 'none',
-                  color: '#fff',
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                  cursor: 'pointer',
-                  fontSize: '14px'
-                }}
+                className={styles.dismissBtn}
+                aria-label="Dismiss message"
               >
                 ×
               </button>
             </div>
           )}
+
           <div className={styles.container}>
-            {/* Portfolio Summary */}
-            <div className={styles.portfolioSummary}>
-              <StatCard 
-                icon="fas fa-wallet"
-                title="Total Invested"
-                value={showBalance ? `₦${portfolioStats.totalInvested.toLocaleString('en-NG')}` : '₦••••••'}
-                color="#09c398"
-              />
-              <StatCard 
-                icon="fas fa-chart-line"
-                title="Current Value"
-                value={showBalance ? `₦${portfolioStats.currentValue.toLocaleString('en-NG')}` : '₦••••••'}
-                color="#0d6efd"
-              />
-            </div>
-
-            {/* Balance Card */}
-            <div className={styles.balanceCard}>
-              <div className={styles.balanceLabel}>
-                My Balance
-                <span className={styles.eyeIcon} onClick={() => setShowBalance(!showBalance)}>
-                  {showBalance ? '👁️' : '👁️🗨️'}
-                </span>
+            {/* PRIMARY SECTION: Portfolio Stats (Hero) */}
+            <section className={styles.heroSection} aria-labelledby="portfolio-heading">
+              <h2 id="portfolio-heading" className={styles.sectionHeading}>Your Portfolio</h2>
+              <div className={styles.portfolioGrid}>
+                <StatCard 
+                  icon="fas fa-wallet"
+                  title="Total Invested"
+                  value={showBalance ? `₦${portfolioStats.totalInvested.toLocaleString('en-NG')}` : '₦••••••'}
+                  color="#09c398"
+                />
+                <StatCard 
+                  icon="fas fa-chart-line"
+                  title="Current Value"
+                  value={showBalance ? `₦${portfolioStats.currentValue.toLocaleString('en-NG')}` : '₦••••••'}
+                  color="#0d6efd"
+                />
+                <StatCard 
+                  icon="fas fa-coins"
+                  title="Total Returns"
+                  value={showBalance ? `₦${portfolioStats.totalReturns.toLocaleString('en-NG')}` : '₦••••••'}
+                  color="#6f42c1"
+                />
+                <StatCard 
+                  icon="fas fa-chart-bar"
+                  title="Active Investments"
+                  value={portfolioStats.activeCount.toString()}
+                  color="#fd7e14"
+                />
               </div>
-              <h1 className={styles.balanceAmount}>
-                {showBalance ? `₦${balance.toLocaleString('en-NG', { minimumFractionDigits: 2 })}` : '₦••••••'}
-              </h1>
-            </div>
+            </section>
 
-            {/* Quick Actions */}
-            <div className={styles.quickActions}>
-              <Link to="/listings" className={styles.actionBtn}>
-                <span>Invest Now</span>
-                <div className={styles.actionIcon}><i className="fas fa-chart-line"></i></div>
-              </Link>
-              <Link to="/withdrawal" className={styles.actionBtn}>
-                <span>Withdraw</span>
-                <div className={styles.actionIcon}><i className="fas fa-money-bill-wave"></i></div>
-              </Link>
-              <Link to="/refer" className={styles.actionBtn}>
-                <span>Refer & Earn</span>
-                <div className={styles.actionIcon}><i className="fas fa-users"></i></div>
-              </Link>
-              <Link to="/kyc" className={styles.actionBtn}>
-                <span>Complete KYC</span>
-                <div className={styles.actionIcon}><i className="fas fa-shield-alt"></i></div>
-              </Link>
-            </div>
+            {/* SECONDARY SECTION: Available Balance */}
+            <section className={styles.balanceSection} aria-labelledby="balance-heading">
+              <div className={styles.balanceCard}>
+                <div className={styles.balanceHeader}>
+                  <h3 id="balance-heading">Available Balance</h3>
+                  <button
+                    onClick={() => setShowBalance(!showBalance)}
+                    className={styles.toggleBalanceBtn}
+                    aria-label={showBalance ? 'Hide balance' : 'Show balance'}
+                    title={showBalance ? 'Hide balance' : 'Show balance'}
+                  >
+                    <i className={`fas fa-eye${showBalance ? '' : '-slash'}`} aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div className={styles.balanceAmount}>
+                  {showBalance ? `₦${balance.toLocaleString('en-NG', { minimumFractionDigits: 2 })}` : '₦••••••'}
+                </div>
+              </div>
+            </section>
+
+            {/* PRIMARY ACTIONS: Only 3 CTAs */}
+            <section className={styles.actionsSection} aria-labelledby="actions-heading">
+              <h2 id="actions-heading" className={styles.sectionHeading}>Quick Actions</h2>
+              <div className={styles.primaryActions}>
+                <Link to="/listings" className={styles.primaryActionBtn} aria-label="Start investing in properties">
+                  <i className="fas fa-chart-line" aria-hidden="true"></i>
+                  <span>Invest Now</span>
+                </Link>
+                <Link to="/withdrawal" className={styles.primaryActionBtn} aria-label="Withdraw your funds">
+                  <i className="fas fa-money-bill-wave" aria-hidden="true"></i>
+                  <span>Withdraw</span>
+                </Link>
+                <Link to="/profile" className={styles.primaryActionBtn} aria-label="View your profile">
+                  <i className="fas fa-user" aria-hidden="true"></i>
+                  <span>Profile</span>
+                </Link>
+              </div>
+            </section>
 
             {/* Recent Activity */}
-            <ActivityFeed activities={generateRecentActivities()} />
+            <section className={styles.activitySection} aria-labelledby="activity-heading">
+              <h2 id="activity-heading" className={styles.sectionHeading}>Recent Activity</h2>
+              <ActivityFeed activities={generateRecentActivities()} />
+            </section>
 
             {/* Empty State */}
             {investments.length === 0 && (
-              <div className={styles.emptyState}>
-                <i className="fas fa-chart-line" style={{ fontSize: '3rem', color: '#09c398', marginBottom: '1rem' }}></i>
-                <p>No investments yet. Start investing today!</p>
-              </div>
+              <section className={styles.emptyStateSection} aria-labelledby="empty-heading">
+                <div className={styles.emptyState}>
+                  <i className="fas fa-chart-line" aria-hidden="true"></i>
+                  <h3 id="empty-heading">Ready to grow your wealth?</h3>
+                  <p>Start with our beginner-friendly investment packages</p>
+                  <Link to="/listings" className={styles.emptyStateBtn}>
+                    Browse Properties
+                  </Link>
+                </div>
+              </section>
             )}
 
             {/* Properties Carousel */}
             {properties.length > 0 && (
-              <div className={styles.carouselSection}>
-                <h3 className={styles.carouselTitle}>Featured Properties</h3>
+              <section className={styles.carouselSection} aria-labelledby="carousel-heading">
+                <h2 id="carousel-heading" className={styles.sectionHeading}>Featured Properties</h2>
                 <div className={styles.carousel}>
-                  <button className={styles.carouselBtn} onClick={() => setCarouselIndex(Math.max(0, carouselIndex - 1))} disabled={carouselIndex === 0}>
-                    <i className="fas fa-chevron-left"></i>
+                  <button 
+                    className={styles.carouselBtn}
+                    onClick={() => setCarouselIndex(Math.max(0, carouselIndex - 1))}
+                    disabled={carouselIndex === 0}
+                    aria-label="Previous property"
+                  >
+                    <i className="fas fa-chevron-left" aria-hidden="true"></i>
                   </button>
                   <div className={styles.carouselTrack}>
                     {properties.map((prop, idx) => (
-                      <div key={prop.Id} className={styles.propertyCarouselCard} style={{ transform: `translateX(${(idx - carouselIndex) * 100}%)` }}>
+                      <div 
+                        key={prop.Id} 
+                        className={styles.propertyCarouselCard}
+                        style={{ transform: `translateX(${(idx - carouselIndex) * 100}%)` }}
+                      >
                         <div className={styles.propertyImage}>
                           <img src={`/includes/admin/${prop.Images}`} alt={prop.Title} />
                         </div>
                         <div className={styles.propertyInfo}>
                           <h4>{prop.Title}</h4>
                           <p className={styles.propertyAddress}>
-                            <i className="fas fa-map-marker-alt"></i> {prop.Address}
+                            <i className="fas fa-map-marker-alt" aria-hidden="true"></i> {prop.Address}
                           </p>
                           <div className={styles.propertyPrice}>₦{Number(prop.Price).toLocaleString()}</div>
                         </div>
@@ -391,11 +367,16 @@ const Dashboard: React.FC = () => {
                       </div>
                     ))}
                   </div>
-                  <button className={styles.carouselBtn} onClick={() => setCarouselIndex(Math.min(properties.length - 1, carouselIndex + 1))} disabled={carouselIndex === properties.length - 1}>
-                    <i className="fas fa-chevron-right"></i>
+                  <button 
+                    className={styles.carouselBtn}
+                    onClick={() => setCarouselIndex(Math.min(properties.length - 1, carouselIndex + 1))}
+                    disabled={carouselIndex === properties.length - 1}
+                    aria-label="Next property"
+                  >
+                    <i className="fas fa-chevron-right" aria-hidden="true"></i>
                   </button>
                 </div>
-              </div>
+              </section>
             )}
           </div>
         </div>

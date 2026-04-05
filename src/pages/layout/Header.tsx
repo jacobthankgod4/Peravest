@@ -116,7 +116,7 @@ const Header: React.FC = () => {
                 >
                   Dashboard
                 </Link>
-                {user.role === 'admin' && (
+{(user as any)?.role === 'admin' && (
                   <Link 
                     to="/admin" 
                     className="text-gray-700 hover:text-blue-600"

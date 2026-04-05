@@ -44,7 +44,6 @@ const Dashboard: React.FC = () => {
     } catch (error: any) {
       console.error('❌ Failed to load dashboard:', error);
       console.error('Error details:', error.message);
-      // Don't throw - show empty state instead
       setBalance(0);
       setInvestments([]);
     } finally {
@@ -98,7 +97,7 @@ const Dashboard: React.FC = () => {
       <div className={styles.dashboard}>
         <div className={styles.loading}>
           <div className={styles.spinner}></div>
-          <p style={{ marginTop: '1rem' }}>Loading your dashboard...</p>
+          <p>Loading your dashboard...</p>
         </div>
       </div>
     );
@@ -137,37 +136,59 @@ const Dashboard: React.FC = () => {
           />
         </div>
 
-        {/* Balance Card */}
+        {/* Balance Card - Spec #4 */}
         <div className={styles.balanceCard}>
           <div className={styles.balanceLabel}>
             My Balance
-            <span className={styles.eyeIcon} onClick={() => setShowBalance(!showBalance)}>
-              {showBalance ? '👁️' : '👁️‍🗨️'}
+            <span 
+              className={styles.eyeIcon} 
+              onClick={() => setShowBalance(!showBalance)}
+              aria-label={showBalance ? 'Hide balance' : 'Show balance'}
+            >
+              <i className={`fas fa-eye${showBalance ? '' : '-slash'}`} aria-hidden="true" />
             </span>
           </div>
           <h1 className={styles.balanceAmount}>
             {showBalance ? `₦${balance.toLocaleString('en-NG', { minimumFractionDigits: 2 })}` : '₦••••••'}
           </h1>
+          {/* Sub-info Row */}
+          <div className={styles.balanceSubRow}>
+            <span>Total Invested: ₦{portfolioStats.totalInvested.toLocaleString()}</span>
+            <span>{investments.length} Active</span>
+          </div>
+          {/* Mini Chart */}
+          <div className={styles.balanceChart}>
+            <div className={styles.chartDot}></div>
+            <div className={styles.chartBar1}></div>
+            <div className={styles.chartBar2}></div>
+            <div className={styles.chartBar3}></div>
+          </div>
         </div>
 
-        {/* Quick Actions */}
-        <div className={styles.quickActions}>
-          <Link to="/listings" className={styles.actionBtn}>
-            <span>Invest Now</span>
-            <div className={styles.actionIcon}><i className="fas fa-chart-line"></i></div>
+        {/* Header Bar #2 */}
+        <div className={styles.headerBar}>
+          <i className="fas fa-arrow-left headerIcon" aria-label="Back" />
+          <div className={styles.headerTitle}>Flex Naira</div>
+          <i className="fas fa-info-circle headerIcon" aria-label="Info" />
+        </div>
+
+        {/* Top Badges #3 */}
+        <div className={styles.badgesRow}>
+          <div className={`${styles.badge} ${styles.badgeVerified}`}>Verified</div>
+          <div className={`${styles.badge} ${styles.badgePremium}`}>Premium</div>
+        </div>
+
+        {/* Primary Actions #6 */}
+        <div className={styles.primaryActions}>
+          <Link to="/listings" className={`${styles.primaryActionBtn} ${styles.addMoneyBtn}`} aria-label="Add Money">
+            <i className="fas fa-plus" aria-hidden="true" />
+            <span>Add Money</span>
           </Link>
-          <Link to="/withdrawal" className={styles.actionBtn}>
+          <Link to="/withdrawal" className={`${styles.primaryActionBtn} ${styles.withdrawBtn}`} aria-label="Withdraw">
+            <i className="fas fa-money-bill-wave" aria-hidden="true" />
             <span>Withdraw</span>
-            <div className={styles.actionIcon}><i className="fas fa-money-bill-wave"></i></div>
+            <small>Available Balance</small>
           </Link>
-          <a href="#" className={styles.actionBtn}>
-            <span>Refer & Earn</span>
-            <div className={styles.actionIcon}><i className="fas fa-users"></i></div>
-          </a>
-          <a href="#" className={styles.actionBtn}>
-            <span>Complete KYC</span>
-            <div className={styles.actionIcon}><i className="fas fa-shield-alt"></i></div>
-          </a>
         </div>
 
         {/* Savings Programs */}
@@ -266,3 +287,4 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
+

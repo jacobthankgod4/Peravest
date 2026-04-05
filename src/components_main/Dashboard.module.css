@@ -1,8 +1,47 @@
-/* Dashboard - Matching Website Theme */
+/* Dashboard Phase 1 - Pixel-Perfect Spec Tokens & Foundation */
+:root {
+  /* Spec Color Tokens */
+  --bg-primary: #F6F7FB;
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --border-light: #E5E7EB;
+  --gradient-primary: linear-gradient(135deg, #FF4D8D 0%, #FF7AB6 100%);
+  --gradient-purple: linear-gradient(135deg, #6C5CE7 0%, #A78BFA 100%);
+  --gradient-dark: linear-gradient(135deg, #1C2235 0%, #2A3350 100%);
+  --success: #10B981;
+  --info: #2563EB;
+  --warning: #FACC15;
+
+  /* Spec Spacing (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  /* Spec Typography */
+  --text-xs: 10px;
+  --text-sm: 11px;
+  --text-base: 13px;
+  --text-lg: 15px;
+  --text-xl: 24px;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Spec Shadows */
+  --shadow-1: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-2: 0 4px 12px rgba(0,0,0,0.1);
+  --shadow-3: 0 12px 24px rgba(0,0,0,0.15);
+}
+
 .dashboard {
   min-height: 100vh;
-  background: #f8f9fa;
-  padding: 2rem 0;
+  background: var(--bg-primary);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 32px;
+  margin: var(--space-3);
 }
 
 .container {
@@ -10,6 +49,162 @@
   margin: 0 auto;
   padding: 0 1.5rem;
 }
+
+/* Spec #3 Badges */
+.badgesRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+}
+
+.badge {
+  padding: 0 var(--space-5);
+  height: 22px;
+  border-radius: 9999px;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.badgeVerified {
+  background: #111827;
+  color: #FFFFFF;
+  font-size: var(--text-xs);
+}
+
+.badgePremium {
+  background: var(--gradient-primary);
+  color: #FFFFFF;
+}
+
+/* Spec #2 Header */
+.headerBar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.headerIcon {
+  font-size: 20px;
+  color: #1F2937;
+}
+
+.headerTitle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+/* Spec #6 Actions */
+.primaryActions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.primaryActionBtn {
+  flex: 1;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  text-decoration: none;
+  box-shadow: var(--shadow-1);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-light);
+}
+
+.primaryActionBtn i {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-1);
+}
+
+.primaryActionBtn:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-2px);
+}
+
+.addMoneyBtn {
+  background: var(--gradient-primary);
+  color: #FFFFFF;
+  border-color: transparent;
+}
+
+.withdrawBtn {
+  background: #FFFFFF;
+}
+
+.withdrawBtn small {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+  display: block;
+}
+
+/* Balance Chart #5 */
+.balanceCard {
+  position: relative;
+}
+
+.balanceChart {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.chartDot {
+  width: 8px;
+  height: 8px;
+  background: var(--warning);
+  border-radius: 50%;
+  margin-bottom: var(--space-1);
+}
+
+.chartBar {
+  width: 8px;
+  border-radius: 4px;
+}
+
+.chartBar1 {
+  height: 28px;
+  background: #6C5CE7;
+}
+
+.chartBar2 {
+  height: 42px;
+  background: #FF4D8D;
+}
+
+.chartBar3 {
+  height: 60px;
+  background: var(--warning);
+}
+
+.balanceSubRow {
+  margin-top: var(--space-2);
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+  color: #9CA3AF;
+  line-height: 1.4;
+}
+
 
 /* Portfolio Summary */
 .portfolioSummary {
@@ -19,87 +214,213 @@
   margin-bottom: 2rem;
 }
 
-/* Balance Card */
+/* Balance Card - Spec Pixel-Exact #4 */
 .balanceCard {
-  background: #fff;
-  border-radius: 12px;
-  padding: 2.5rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.05);
+  position: relative;
+  height: 150px;
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  border-radius: 20px;
+  background: var(--gradient-dark);
+  box-shadow: var(--shadow-2);
+  overflow: hidden;
 }
 
 .balanceLabel {
-  color: #757f95;
-  font-size: 0.875rem;
-  font-weight: 500;
+  color: #9CA3AF;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
 }
 
 .eyeIcon {
   cursor: pointer;
-  transition: transform 0.2s;
-  font-size: 1.2rem;
+  font-size: 16px;
+  color: #9CA3AF;
+  margin-left: var(--space-1);
+  transition: color 0.2s, transform 0.2s;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
 }
 
 .eyeIcon:hover {
-  transform: scale(1.1);
+  color: #F3F4F6;
+  transform: scale(1.05);
+  background: rgba(255,255,255,0.1);
 }
 
 .balanceAmount {
-  color: #0e2e50;
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin: 0;
-  font-family: 'K2D', sans-serif;
+  color: #FFFFFF;
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  margin: 0 0 var(--space-2) 0;
+  letter-spacing: -0.3px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro', sans-serif;
+  line-height: 1.1;
 }
 
-/* Quick Actions */
-.quickActions {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.actionBtn {
-  background: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: 1.5rem;
+/* Spec #5 Right-side Mini Chart - Absolute */
+.balanceChart {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-1);
   align-items: center;
+}
+
+.chartBar {
+  width: 8px;
+  border-radius: 6px;
+}
+
+.chartBar1 { height: 28px; background: #6C5CE7; }
+.chartBar2 { height: 42px; background: #FF4D8D; }
+.chartBar3 { height: 60px; background: #FACC15; }
+
+.chartDot {
+  width: 8px;
+  height: 8px;
+  background: #FACC15;
+  border-radius: 50%;
+  margin-bottom: var(--space-1);
+}
+
+/* Sub-info Row Spec */
+.balanceSubRow {
+  display: flex;
   justify-content: space-between;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  text-decoration: none;
-  color: #0e2e50;
-  font-weight: 600;
-  font-size: 1rem;
-  box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.05);
+  align-items: center;
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: #9CA3AF;
+  line-height: 14px;
 }
 
-.actionBtn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 3px 24px rgba(0, 0, 0, 0.12);
-  color: #0e2e50;
+/* Quick Actions - Spec #6: 2 Primary Buttons */
+.primaryActions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-4);
 }
 
-.actionIcon {
-  width: 45px;
-  height: 45px;
+.primaryActionBtn {
+  flex: 1;
+  height: 44px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  background: #09c398;
-  color: #fff;
+  gap: var(--space-2);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-1);
+  border: none;
 }
+
+.addMoneyBtn {
+  background: var(--gradient-primary);
+  color: #FFFFFF;
+}
+
+.withdrawBtn {
+  background: #FFFFFF;
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+}
+
+.primaryActionBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+}
+
+.primaryActionBtn i {
+  font-size: 18px;
+}
+
+/* Spec #2 Header Bar */
+.headerBar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  background: transparent;
+  margin-bottom: var(--space-2);
+}
+
+.headerIcon {
+  width: 20px;
+  height: 20px;
+  color: #1F2937;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.headerIcon:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.headerTitle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+/* Spec #3 Top Badges Row */
+.badgesRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.badge {
+  height: 22px;
+  padding: 0 var(--space-3);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: var(--font-semibold);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+}
+
+.badgeVerified {
+  background: #111827;
+}
+
+.badgePremium {
+  background: var(--gradient-primary);
+}
+</new_str>
+</edit_file> 
+
+<edit_file>
+<parameter name="path">src/components_main/Dashboard.tsx
 
 /* Savings Section */
 .savingsSection {
