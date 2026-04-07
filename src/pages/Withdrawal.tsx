@@ -30,6 +30,7 @@ const Withdrawal: React.FC = () => {
   });
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchWithdrawals();
     fetchAvailableBalance();
     fetchSavedBankAccounts();

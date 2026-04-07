@@ -102,54 +102,62 @@
   color: var(--text-primary);
 }
 
-/* Spec #6 Actions */
-.primaryActions {
-  display: flex;
-  gap: var(--space-2);
-  margin-top: var(--space-3);
-}
 
-.primaryActionBtn {
-  flex: 1;
-  height: 44px;
+
+.withdrawFundsBtn {
+  background: #0e2e50;
+  color: #fff;
+  border: none;
   border-radius: 12px;
-  display: flex;
-  flex-direction: column;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-  text-decoration: none;
-  box-shadow: var(--shadow-1);
-  transition: all 0.3s ease;
-  border: 1px solid var(--border-light);
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 }
 
-.primaryActionBtn i {
-  font-size: 1.25rem;
-  margin-bottom: var(--space-1);
+.withdrawFundsBtn::before {
+  content: "";
+  height: 400px;
+  width: 400px;
+  background: #09c398;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%) scale(0);
+  transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: -1;
 }
 
-.primaryActionBtn:hover {
-  box-shadow: var(--shadow-2);
+.withdrawFundsBtn:hover {
+  color: #fff;
+}
+
+.withdrawFundsBtn:hover::before {
+  transform: translateY(-50%) translateX(-50%) scale(1);
+}
+
+.kycBtn {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+  color: #FFFFFF !important;
+  border: none !important;
+  display: flex !important;
+  visibility: visible !important;
+}
+
+.kycBtn:hover {
+  background: linear-gradient(135deg, #FF5252 0%, #FF6B6B 100%);
   transform: translateY(-2px);
-}
-
-.addMoneyBtn {
-  background: var(--gradient-primary);
-  color: #FFFFFF;
-  border-color: transparent;
-}
-
-.withdrawBtn {
-  background: #FFFFFF;
-}
-
-.withdrawBtn small {
-  font-size: var(--text-xs);
-  color: var(--text-secondary);
-  margin-top: var(--space-1);
-  display: block;
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
 }
 
 /* Balance Chart #5 */
@@ -315,34 +323,49 @@
   gap: var(--space-2);
   margin-top: var(--space-3);
   margin-bottom: var(--space-4);
+  flex-wrap: wrap;
 }
 
 .primaryActionBtn {
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 100px;
   height: 44px;
   border-radius: 12px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
   font-size: var(--text-base);
   font-weight: var(--font-semibold);
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: var(--shadow-1);
-  border: none;
+  border: 1px solid var(--border-light);
 }
 
 .addMoneyBtn {
   background: var(--gradient-primary);
   color: #FFFFFF;
+  border: none;
 }
 
 .withdrawBtn {
   background: #FFFFFF;
   color: var(--text-primary);
   border: 1px solid var(--border-light);
+}
+
+.referralBtn {
+  background: linear-gradient(135deg, #6C5CE7 0%, #A78BFA 100%);
+  color: #FFFFFF;
+  border: none;
+}
+
+.referralBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(108, 92, 231, 0.4);
 }
 
 .primaryActionBtn:hover {
@@ -415,6 +438,94 @@
 
 .badgePremium {
   background: var(--gradient-primary);
+}
+
+.badgePending {
+  background: #FACC15;
+  color: #111827;
+}
+
+.badgeNotVerified {
+  background: #EF4444;
+  color: #FFFFFF;
+}
+
+/* KYC Alert */
+.kycAlert {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: 12px;
+  margin-bottom: var(--space-4);
+  border-left: 4px solid;
+}
+
+.kycAlertPending {
+  background: #FEF3C7;
+  border-left-color: #FACC15;
+}
+
+.kycAlertWarning {
+  background: #FEE2E2;
+  border-left-color: #EF4444;
+}
+
+.kycAlert i {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.kycAlertPending i {
+  color: #FACC15;
+}
+
+.kycAlertWarning i {
+  color: #EF4444;
+}
+
+.kycAlertContent {
+  flex: 1;
+}
+
+.kycAlertContent h4 {
+  margin: 0 0 var(--space-1) 0;
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.kycAlertContent p {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.kycAlertBtn {
+  padding: var(--space-2) var(--space-4);
+  border-radius: 8px;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.kycAlertPending .kycAlertBtn {
+  background: #FACC15;
+  color: #111827;
+}
+
+.kycAlertWarning .kycAlertBtn {
+  background: #EF4444;
+  color: #FFFFFF;
+}
+
+.kycAlertBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
 }
 </new_str>
 </edit_file> 
@@ -662,8 +773,15 @@
 /* Responsive */
 @media (max-width: 768px) {
   .balanceAmount { font-size: 2.5rem; }
-  .quickActions { grid-template-columns: repeat(2, 1fr); }
+  .primaryActions { flex-wrap: wrap; }
+  .primaryActionBtn { flex: 1 1 calc(50% - var(--space-1)); }
   .investmentContent { grid-template-columns: 1fr; }
   .investmentStats { grid-template-columns: repeat(3, 1fr); }
   .investmentActions { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .primaryActionBtn { flex: 1 1 100%; }
+  .kycAlert { flex-direction: column; }
+  .kycAlertBtn { width: 100%; text-align: center; }
 }

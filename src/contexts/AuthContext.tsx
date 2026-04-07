@@ -7,6 +7,7 @@ interface User {
   email: string;
   name: string;
   isAdmin: boolean;
+  kyc_verified: boolean;
 }
 
 interface AuthContextType {
@@ -51,14 +52,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => subscription.unsubscribe();
   }, []);
 
-  const setUserFromAuth = (supabaseUser: SupabaseUser) => {
-    const user: User = {
+  const setUserFromAuth = async (supabaseUser: SupabaseUser) => {
+    const userData: User = {
       id: supabaseUser.id,
       email: supabaseUser.email || '',
       name: supabaseUser.user_metadata?.full_name || supabaseUser.email?.split('@')[0] || 'User',
-      isAdmin: false
+      isAdmin: false,
+      kyc_verified: false
     };
-    setUser(user);
+
+    try {
+      const { data: profile, error } = await supabase
+        .from('user_profiles')
+        .select('kyc_status')
+        .eq('user_id', supabaseUser.id)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.warn('Error fetching KYC status:', error);
+      }
+
+      if (profile) {
+        userData.kyc_verified = profile.kyc_status === 'approved';
+      }
+    } catch (err) {
+      console.warn('Failed to fetch KYC status:', err);
+    }
+
+    setUser(userData);
     setLoading(false);
   };
 
@@ -68,16 +89,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         email,
         password
       });
-      
-      if (error || !data.session || !data.user) {
-        return false;
+
+      if (error) {
+        console.error('Login error:', error.message);
+        throw new Error(
+          error.message.includes('Email not confirmed')
+            ? 'Please confirm your email address before logging in. Check your inbox.'
+            : error.message.includes('Invalid login credentials')
+            ? 'Invalid email or password.'
+            : error.message
+        );
       }
-      
+
+      if (!data.session || !data.user) return false;
+
       setSession(data.session);
       setUserFromAuth(data.user);
       return true;
     } catch (error) {
-      return false;
+      throw error;
     }
   };
 

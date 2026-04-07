@@ -2,8 +2,9 @@ import { supabase } from '../lib/supabase';
 
 export const withdrawalService = {
   create: async (data: any) => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error('Not authenticated');
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('Not authenticated');
+    const user = session.user;
 
     const { data: userData } = await supabase
       .from('user_accounts')
@@ -35,8 +36,9 @@ export const withdrawalService = {
   },
 
   getUserWithdrawals: async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error('Not authenticated');
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return { data: [] };
+    const user = session.user;
 
     const { data: userData } = await supabase
       .from('user_accounts')
@@ -61,8 +63,9 @@ export const withdrawalService = {
   },
 
   getAvailableBalance: async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error('Not authenticated');
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return { data: { balance: 0 } };
+    const user = session.user;
 
     const { data: userData } = await supabase
       .from('user_accounts')
@@ -85,8 +88,9 @@ export const withdrawalService = {
   },
 
   getBankAccounts: async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error('Not authenticated');
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return { data: [] };
+    const user = session.user;
 
     const { data: userData } = await supabase
       .from('user_accounts')
@@ -110,7 +114,8 @@ export const withdrawalService = {
     console.log('📝 Input data:', data);
     
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { session } } = await supabase.auth.getSession();
+      const user = session?.user;
       console.log('👤 Current user:', user?.email);
       
       if (!user) throw new Error('Not authenticated');

@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import { kycVerificationService } from '../services/kycVerificationService';
 import Swal from 'sweetalert2';
 
 const KYC: React.FC = () => {
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',

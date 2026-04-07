@@ -137,23 +137,12 @@ const ListingDetail: React.FC = () => {
     try {
       const { data, error } = await supabase
         .from('invest_now')
-        .select('share_cost, Usa_Id')
-        .eq('proptee_id', id);
+        .select('share_cost')
+        .eq('id', -1); // proptee_id column not in live schema — stats unavailable
 
-      if (error) throw error;
-
-      const totalRaised = data?.reduce((sum, inv) => sum + Number(inv.share_cost), 0) || 0;
-      const uniqueInvestors = new Set(data?.map(inv => inv.Usa_Id)).size;
-      const targetAmount = 10000000;
-      const percentage = Math.min((totalRaised / targetAmount) * 100, 100);
-
-      setStats({
-        investors: uniqueInvestors,
-        raised: totalRaised,
-        percentage: Math.round(percentage)
-      });
+      setStats({ investors: 0, raised: 0, percentage: 0 });
     } catch (error) {
-      console.error('Error fetching stats:', error);
+      setStats({ investors: 0, raised: 0, percentage: 0 });
     }
   };
 
@@ -281,13 +270,13 @@ const ListingDetail: React.FC = () => {
         ]} 
       />
 
-      <section className="property-single py-80" style={{ background: '#f9f9f9', paddingTop: '120px' }}>
+      <section className="property-single py-80" style={{ background: '#f9f9f9', paddingTop: '30px' }}>
         <div className="container" style={{ maxWidth: '1400px' }}>
           <div className="row">
             <div className="col-lg-8">
               {/* Image Carousel */}
               {displayImage && !imageError && (
-                <div className="property-single-gallery" style={{ position: 'relative', marginBottom: '2rem', borderRadius: '15px', overflow: 'hidden', boxShadow: '0 10px 40px rgba(0,0,0,0.1)', marginTop: '2rem' }}>
+                <div className="property-single-gallery" style={{ position: 'relative', marginBottom: '2rem', borderRadius: '15px', overflow: 'hidden', boxShadow: '0 10px 40px rgba(0,0,0,0.1)', marginTop: '0' }}>
                   <img 
                     src={displayImage}
                     alt={property.Title}

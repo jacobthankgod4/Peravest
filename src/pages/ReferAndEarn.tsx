@@ -14,6 +14,10 @@ const ReferAndEarn: React.FC = () => {
   const [newCode, setNewCode] = useState('');
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (referralCode) {
       setReferralLink(referralService.generateReferralLink(referralCode));
     }

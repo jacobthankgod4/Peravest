@@ -1,20 +1,7 @@
 -- Postgres migration: create `users` table (production-grade)
-CREATE TABLE IF NOT EXISTS public.users (
-  "Id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  "User_Type" VARCHAR(50) NOT NULL DEFAULT 'user',
-  "Email" VARCHAR(255) NOT NULL,
-  "Name" VARCHAR(255),
-  "age" INT,
-  "gender" VARCHAR(16),
-  "bank" VARCHAR(128),
-  "Account" VARCHAR(128),
-  "Password" VARCHAR(255) NOT NULL,
-  "account_activation_hash" VARCHAR(255),
-  "reset_token_hash" VARCHAR(255),
-  "reset_token_expires_at" TIMESTAMP,
-  "status" VARCHAR(32) NOT NULL DEFAULT 'active',
-  "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT users_email_unique UNIQUE ("Email")
-);
+-- DEPRECATED: Use 100_create_user_accounts_table.sql instead
+-- This migration is kept for reference only and should not be run
 
-CREATE INDEX IF NOT EXISTS users_email_idx ON public.users ("Email");
+-- The correct table name is 'user_accounts' (not 'users')
+-- All services expect 'user_accounts' table
+-- See 100_create_user_accounts_table.sql for the definitive schema

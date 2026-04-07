@@ -17,8 +17,8 @@ const AdminAjoManagement: React.FC = () => {
 
   const loadGroups = async () => {
     try {
-      const { data } = await ajoGroupService.getUserGroups();
-      setGroups(data);
+      const { data } = await ajoGroupService.getUserGroups(0);
+      setGroups((Array.isArray(data) ? data.flat() : []) as AjoGroup[]);
     } catch (error) {
       console.error('Failed to load groups:', error);
     } finally {

@@ -54,17 +54,6 @@ const Home: React.FC = () => {
         throw error;
       }
       
-      const propertyIds = (data || []).map((p: any) => p.Id);
-      
-      const { data: investData, error: investError } = await supabase
-        .from('invest_now')
-        .select('proptee_id, share_cost, Usa_Id')
-        .in('proptee_id', propertyIds);
-      
-      if (investError) {
-        console.error('[Home] Investment fetch error:', investError);
-      }
-      
       const mapped = (data || []).map((p: any) => {
         const imageUrls: string[] = [];
         if (p.property_image && Array.isArray(p.property_image) && p.property_image.length > 0) {
@@ -74,14 +63,8 @@ const Home: React.FC = () => {
         }
         
         if (imageUrls.length === 0) {
-          imageUrls.push('/assets/img/property/default.jpg');
+          imageUrls.push('/i/1.jpg');
         }
-
-        const investments = (investData || []).filter((inv: any) => inv.proptee_id === p.Id);
-        const totalRaised = investments.reduce((sum: number, inv: any) => sum + Number(inv.share_cost || 0), 0);
-        const uniqueInvestors = new Set(investments.map((inv: any) => inv.Usa_Id)).size;
-        const targetAmount = Number(p.Price || 10000000);
-        const percentage = Math.min((totalRaised / targetAmount) * 100, 100);
 
         const packageData = Array.isArray(p.investment_package) && p.investment_package.length > 0
           ? p.investment_package[0]
@@ -97,9 +80,9 @@ const Home: React.FC = () => {
           image: imageUrls.join(','),
           shareCost: shareCost,
           interest: interestRate,
-          percent: Math.round(percentage),
-          investors: uniqueInvestors,
-          raised: totalRaised
+          percent: 0,
+          investors: 0,
+          raised: 0
         };
       });
       

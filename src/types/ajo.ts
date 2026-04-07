@@ -126,3 +126,20 @@ export interface CycleStatus {
   can_process_payout: boolean;
   next_recipient: AjoGroupMember | null;
 }
+
+export interface AjoFormData {
+  type: 'personal' | 'group';
+  contributionAmount: number;
+  frequency: 'daily' | 'weekly' | 'monthly';
+  duration: number;
+  startDate: string;
+  groupName?: string;
+  groupDescription?: string;
+  maxMembers?: number;
+  reliabilityThreshold?: number;
+}
+
+export interface CreateAjoData extends AjoFormData {
+  paymentReference: string;
+  firstPayment: number;
+}

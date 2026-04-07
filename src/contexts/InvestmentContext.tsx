@@ -69,9 +69,10 @@ export const InvestmentProvider: React.FC<{children: React.ReactNode}> = ({ chil
   };
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) getInvestments();
     });
+    return () => subscription.unsubscribe();
   }, []);
 
   return (

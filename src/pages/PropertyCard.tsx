@@ -27,7 +27,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
   
   const images = useMemo(() => {
     const imgs = property.image ? property.image.split(',').filter(img => img.trim()) : [];
-    return imgs.length > 0 ? imgs : ['/assets/img/property/default.jpg'];
+    return imgs.length > 0 ? imgs : ['/i/1.jpg'];
   }, [property.image]);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
             }}
             onError={(e) => {
               console.error('[PropertyCard] Image failed to load:', img);
-              e.currentTarget.src = '/assets/img/property/default.jpg';
+              e.currentTarget.src = '/i/1.jpg';
             }}
           />
         ))}

@@ -6,6 +6,7 @@ import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import StatCard from './StatCard';
 import ActivityFeed from './ActivityFeed';
+import PropertyCard from './PropertyCard';
 import styles from './Dashboard.module.css';
 import '../styles/design-tokens.css';
 
@@ -26,6 +27,12 @@ interface Property {
   Images: string;
   Price: number;
   Status: string;
+  _resolvedImage: string;
+  _shareCost: number;
+  _interestRate: number;
+  _percent: number;
+  _investors: number;
+  _raised: number;
 }
 
 const Dashboard: React.FC = () => {
@@ -37,13 +44,18 @@ const Dashboard: React.FC = () => {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [showBalance, setShowBalance] = useState(true);
-  const [carouselIndex, setCarouselIndex] = useState(0);
   const [successMessage, setSuccessMessage] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    loadDashboardData();
-    fetchProperties();
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        loadDashboardData();
+        fetchProperties();
+      } else {
+        setLoading(false);
+      }
+    });
     checkSuccessMessage();
   }, []);
 
@@ -67,11 +79,38 @@ const Dashboard: React.FC = () => {
     try {
       const { data, error } = await supabase
         .from('property')
-        .select('*')
+        .select('*, property_image(Image_Url, Display_Order), investment_package(Share_Cost, Interest_Rate)')
         .eq('Status', 'active')
         .limit(10);
-      if (error) throw error;
-      setProperties(data || []);
+
+      if (error || !data) return;
+
+      const mapped = data.map((p: any) => {
+        const imageUrls: string[] = [];
+        if (p.property_image?.length > 0) {
+          imageUrls.push(...[...p.property_image]
+            .sort((a: any, b: any) => a.Display_Order - b.Display_Order)
+            .map((img: any) => img.Image_Url));
+        } else if (p.Images?.trim()) {
+          imageUrls.push(p.Images.trim());
+        } else {
+          imageUrls.push('/i/1.jpg');
+        }
+
+        const pkg = Array.isArray(p.investment_package) && p.investment_package.length > 0 ? p.investment_package[0] : null;
+
+        return {
+          ...p,
+          _resolvedImage: imageUrls.join(','),
+          _shareCost: pkg ? Number(pkg.Share_Cost) : 5000,
+          _interestRate: pkg ? Number(pkg.Interest_Rate) : 25,
+          _percent: 0,
+          _investors: 0,
+          _raised: 0
+        };
+      });
+
+      setProperties(mapped);
     } catch (error) {
       console.error('Failed to fetch properties:', error);
     }
@@ -243,6 +282,7 @@ const Dashboard: React.FC = () => {
           )}
 
           <div className={styles.container}>
+
             {/* PRIMARY SECTION: Portfolio Stats (Hero) */}
             <section className={styles.heroSection} aria-labelledby="portfolio-heading">
               <h2 id="portfolio-heading" className={styles.sectionHeading}>Your Portfolio</h2>
@@ -294,7 +334,7 @@ const Dashboard: React.FC = () => {
               </div>
             </section>
 
-            {/* PRIMARY ACTIONS: Only 3 CTAs */}
+            {/* PRIMARY ACTIONS */}
             <section className={styles.actionsSection} aria-labelledby="actions-heading">
               <h2 id="actions-heading" className={styles.sectionHeading}>Quick Actions</h2>
               <div className={styles.primaryActions}>
@@ -305,6 +345,14 @@ const Dashboard: React.FC = () => {
                 <Link to="/withdrawal" className={styles.primaryActionBtn} aria-label="Withdraw your funds">
                   <i className="fas fa-money-bill-wave" aria-hidden="true"></i>
                   <span>Withdraw</span>
+                </Link>
+                <Link to="/refer" className={styles.primaryActionBtn} aria-label="Refer and earn">
+                  <i className="fas fa-gift" aria-hidden="true"></i>
+                  <span>Refer & Earn</span>
+                </Link>
+                <Link to="/kyc" className={styles.primaryActionBtn} aria-label="Complete KYC verification">
+                  <i className="fas fa-shield-alt" aria-hidden="true"></i>
+                  <span>KYC</span>
                 </Link>
                 <Link to="/profile" className={styles.primaryActionBtn} aria-label="View your profile">
                   <i className="fas fa-user" aria-hidden="true"></i>
@@ -333,48 +381,27 @@ const Dashboard: React.FC = () => {
               </section>
             )}
 
-            {/* Properties Carousel */}
+            {/* Properties Grid */}
             {properties.length > 0 && (
               <section className={styles.carouselSection} aria-labelledby="carousel-heading">
                 <h2 id="carousel-heading" className={styles.sectionHeading}>Featured Properties</h2>
-                <div className={styles.carousel}>
-                  <button 
-                    className={styles.carouselBtn}
-                    onClick={() => setCarouselIndex(Math.max(0, carouselIndex - 1))}
-                    disabled={carouselIndex === 0}
-                    aria-label="Previous property"
-                  >
-                    <i className="fas fa-chevron-left" aria-hidden="true"></i>
-                  </button>
-                  <div className={styles.carouselTrack}>
-                    {properties.map((prop, idx) => (
-                      <div 
-                        key={prop.Id} 
-                        className={styles.propertyCarouselCard}
-                        style={{ transform: `translateX(${(idx - carouselIndex) * 100}%)` }}
-                      >
-                        <div className={styles.propertyImage}>
-                          <img src={`/includes/admin/${prop.Images}`} alt={prop.Title} />
-                        </div>
-                        <div className={styles.propertyInfo}>
-                          <h4>{prop.Title}</h4>
-                          <p className={styles.propertyAddress}>
-                            <i className="fas fa-map-marker-alt" aria-hidden="true"></i> {prop.Address}
-                          </p>
-                          <div className={styles.propertyPrice}>₦{Number(prop.Price).toLocaleString()}</div>
-                        </div>
-                        <Link to={`/listings/${prop.Id}`} className={styles.packageBtn}>View Details</Link>
-                      </div>
-                    ))}
-                  </div>
-                  <button 
-                    className={styles.carouselBtn}
-                    onClick={() => setCarouselIndex(Math.min(properties.length - 1, carouselIndex + 1))}
-                    disabled={carouselIndex === properties.length - 1}
-                    aria-label="Next property"
-                  >
-                    <i className="fas fa-chevron-right" aria-hidden="true"></i>
-                  </button>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1.5rem' }}>
+                  {properties.map((prop) => (
+                    <PropertyCard
+                      key={prop.Id}
+                      property={{
+                        id: String(prop.Id),
+                        title: prop.Title,
+                        address: prop.Address,
+                        image: prop._resolvedImage,
+                        shareCost: prop._shareCost,
+                        interest: prop._interestRate,
+                        percent: prop._percent,
+                        investors: prop._investors,
+                        raised: prop._raised
+                      }}
+                    />
+                  ))}
                 </div>
               </section>
             )}

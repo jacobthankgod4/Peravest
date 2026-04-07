@@ -4,8 +4,9 @@ export const targetSavingsService = {
   // Create new Target Savings plan
   createTargetSavings: async (data: any) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('Not authenticated');
+      const user = session.user;
 
       const { data: userData } = await supabase
         .from('user_accounts')
@@ -63,8 +64,9 @@ export const targetSavingsService = {
   // Get user's Target Savings
   getUserTargetSavings: async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return { data: [] };
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return { data: [] };
+      const user = session.user;
 
       const { data: userData } = await supabase
         .from('user_accounts')
@@ -108,8 +110,9 @@ export const targetSavingsService = {
   // Get Target Savings stats
   getTargetSavingsStats: async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return { data: { totalSaved: 0, activeGoals: 0, completedGoals: 0 } };
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return { data: { totalSaved: 0, activeGoals: 0, completedGoals: 0 } };
+      const user = session.user;
 
       const { data: userData } = await supabase
         .from('user_accounts')

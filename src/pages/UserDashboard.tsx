@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../lib/supabase';
+
+interface User {
+  kyc_verified?: boolean;
+}
 
 interface Investment {
   id: string;
@@ -60,6 +66,12 @@ const UserDashboard: React.FC = () => {
           <div className="col-12">
             <h2>Welcome back, {user?.name}</h2>
             <p className="text-muted">Manage your investments and track your portfolio</p>
+            {!user?.kyc_verified && (
+              <div className="alert alert-warning mt-3">
+                <i className="fas fa-shield-alt me-2"></i>
+                <Link to="/kyc" className="alert-link">Complete your KYC verification</Link> to unlock full features
+              </div>
+            )}
           </div>
         </div>
 

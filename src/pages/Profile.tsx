@@ -47,6 +47,7 @@ const Profile: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchProfile();
   }, []);
 

@@ -1,11 +1,40 @@
 import { supabase } from '../lib/supabase';
+import {
+  InvalidAjoTypeError,
+  GroupNotFoundError,
+  MemberNotFoundError,
+  DuplicateMemberError,
+  LowReliabilityError,
+} from '../types/ajoErrors';
+
+type AjoType = 'personal' | 'group';
+
+interface CreateAjoData {
+  type: AjoType;
+  contributionAmount: number;
+  frequency: 'daily' | 'weekly' | 'monthly';
+  duration: number;
+  startDate: string;
+  totalCommitment?: number;
+  paymentReference: string;
+  firstPayment: number;
+  groupName?: string;
+  groupDescription?: string;
+  maxMembers?: number;
+  reliabilityThreshold?: number;
+}
 
 export const ajoService = {
-  // Create new Ajo savings plan
-  createAjo: async (data: any) => {
+  // Create new Ajo (personal or group) - 2.1: Branch by type
+  createAjo: async (data: CreateAjoData) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      if (!['personal', 'group'].includes(data.type)) {
+        throw new InvalidAjoTypeError(data.type);
+      }
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('Not authenticated');
+      const user = session.user;
 
       const { data: userData } = await supabase
         .from('user_accounts')
@@ -15,6 +44,20 @@ export const ajoService = {
 
       if (!userData) throw new Error('User not found');
 
+      if (data.type === 'personal') {
+        return await ajoService.createPersonalAjo(data, userData.Id);
+      } else {
+        return await ajoService.createGroupAjo(data, userData.Id);
+      }
+    } catch (error) {
+      console.error('createAjo error:', error);
+      throw error;
+    }
+  },
+
+  // Create personal Ajo
+  createPersonalAjo: async (data: CreateAjoData, userId: number) => {
+    try {
       const startDate = new Date(data.startDate);
       const endDate = new Date(startDate);
       endDate.setMonth(endDate.getMonth() + data.duration);
@@ -22,8 +65,8 @@ export const ajoService = {
       const { data: ajo, error } = await supabase
         .from('ajo_savings')
         .insert([{
-          user_id: userData.Id,
-          ajo_type: data.ajoType,
+          user_id: userId,
+          ajo_type: 'personal',
           contribution_amount: data.contributionAmount,
           frequency: data.frequency,
           duration: data.duration,
@@ -39,21 +82,79 @@ export const ajoService = {
 
       if (error) throw error;
 
-      // Create first transaction
       await supabase
         .from('ajo_transactions')
         .insert([{
           ajo_id: ajo.id,
-          user_id: userData.Id,
+          user_id: userId,
           amount: data.firstPayment,
           transaction_type: 'contribution',
           payment_reference: data.paymentReference,
           status: 'completed'
         }]);
 
+      await ajoService.logAjoEvent('create_personal_ajo', {
+        ajoId: ajo.id,
+        userId,
+        amount: data.contributionAmount
+      });
+
       return { data: ajo };
     } catch (error) {
-      console.error('createAjo error:', error);
+      console.error('createPersonalAjo error:', error);
+      throw error;
+    }
+  },
+
+  // Create group Ajo - 2.2: createGroup service
+  createGroupAjo: async (data: CreateAjoData, userId: number) => {
+    try {
+      if (!data.groupName) throw new Error('Group name required');
+      if (!data.maxMembers) throw new Error('Max members required');
+
+      const { data: group, error } = await supabase
+        .from('ajo_groups')
+        .insert([{
+          name: data.groupName,
+          description: data.groupDescription || '',
+          max_members: data.maxMembers,
+          contribution_amount: data.contributionAmount,
+          frequency: data.frequency,
+          cycle_duration: data.duration,
+          status: 'forming',
+          created_by: userId,
+          reliability_threshold: data.reliabilityThreshold || 0.7,
+          payout_bid_enabled: false
+        }])
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      const { data: member, error: memberError } = await supabase
+        .from('ajo_group_members')
+        .insert([{
+          group_id: group.id,
+          user_id: userId,
+          position: 1,
+          status: 'active',
+          payout_order: 1
+        }])
+        .select()
+        .single();
+
+      if (memberError) throw memberError;
+
+      await ajoService.logAjoEvent('create_group_ajo', {
+        groupId: group.id,
+        userId,
+        groupName: data.groupName,
+        maxMembers: data.maxMembers
+      });
+
+      return { data: group };
+    } catch (error) {
+      console.error('createGroupAjo error:', error);
       throw error;
     }
   },
@@ -61,8 +162,9 @@ export const ajoService = {
   // Get user's Ajo savings
   getUserAjos: async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return { data: [] };
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return { data: [] };
+      const user = session.user;
 
       const { data: userData } = await supabase
         .from('user_accounts')
@@ -82,6 +184,33 @@ export const ajoService = {
       return { data: data || [] };
     } catch (error) {
       console.error('getUserAjos error:', error);
+      return { data: [] };
+    }
+  },
+
+  // Get available groups with reliability filter - 2.3
+  getAvailableGroups: async (userReliabilityScore?: number) => {
+    try {
+      let query = supabase
+        .from('ajo_groups')
+        .select('*, ajo_group_members(count)')
+        .eq('status', 'forming')
+        .order('created_at', { ascending: false });
+
+      const { data: groups, error } = await query;
+
+      if (error) throw error;
+
+      // Filter by reliability threshold if user score provided
+      if (userReliabilityScore !== undefined) {
+        return {
+          data: groups?.filter(g => userReliabilityScore >= (g.reliability_threshold || 0.7)) || []
+        };
+      }
+
+      return { data: groups || [] };
+    } catch (error) {
+      console.error('getAvailableGroups error:', error);
       return { data: [] };
     }
   },
@@ -106,8 +235,9 @@ export const ajoService = {
   // Get Ajo stats
   getAjoStats: async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return { data: { totalSaved: 0, activeAjos: 0, totalCommitment: 0 } };
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return { data: { totalSaved: 0, activeAjos: 0, totalCommitment: 0 } };
+      const user = session.user;
 
       const { data: userData } = await supabase
         .from('user_accounts')
@@ -162,6 +292,22 @@ export const ajoService = {
     } catch (error) {
       console.error('updateAjoBalance error:', error);
       throw error;
+    }
+  },
+
+  // Log Ajo event - 2.12: Event logging
+  logAjoEvent: async (event: string, data: any) => {
+    try {
+      await supabase
+        .from('ajo_event_logs')
+        .insert([{
+          event_type: event,
+          event_data: data,
+          created_at: new Date().toISOString()
+        }]);
+    } catch (error) {
+      console.error('logAjoEvent error:', error);
+      // Don't throw - logging failures shouldn't break main flow
     }
   }
 };

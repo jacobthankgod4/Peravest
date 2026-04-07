@@ -33,18 +33,21 @@ export const investmentService = {
       
       if (!investments) return { data: [] };
 
-      const data = await Promise.all(investments.map(async (inv) => {
-        let property = null;
-        if (inv.proptee_id) {
-          const { data: propData } = await supabase
+      const propertyIds = investments.map((inv) => Number(inv.proptee_id)).filter(Boolean);
+
+      const { data: propertiesData } = propertyIds.length > 0
+        ? await supabase
             .from('property')
-            .select('Id, Title, Images, Address')
-            .eq('Id', inv.proptee_id)
-            .maybeSingle();
-          property = propData ? [propData] : null;
-        }
-        return { ...inv, property };
-      }));
+            .select('Id, Title, Images, Address, property_image(Image_Url, Display_Order)')
+            .in('Id', propertyIds)
+        : { data: [] };
+
+      const propertiesMap = new Map((propertiesData || []).map((p: any) => [Number(p.Id), p]));
+
+      const data = investments.map((inv) => {
+        const propData = inv.proptee_id ? propertiesMap.get(Number(inv.proptee_id)) : null;
+        return { ...inv, property: propData ? [propData] : null };
+      });
 
       return { data };
     } catch (error) {
@@ -55,10 +58,11 @@ export const investmentService = {
 
   getStats: async () => {
     try {
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
-      if (authError || !user) {
-        throw new Error('Not authenticated');
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        return { data: { totalInvestments: 0, activeInvestments: 0, totalReturns: 0, pendingWithdrawals: 0 } };
       }
+      const user = session.user;
 
       const { data: userData, error: userError } = await supabase
         .from('user_accounts')
@@ -99,10 +103,9 @@ export const investmentService = {
 
   createInvestment: async (data: any) => {
     try {
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
-      if (authError || !user) {
-        throw new Error('Not authenticated');
-      }
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('Not authenticated');
+      const user = session.user;
 
       const { data: userData, error: userError } = await supabase
         .from('user_accounts')
@@ -137,8 +140,9 @@ export const investmentService = {
   },
 
   checkDuplicateInvestment: async (propertyId: string) => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return false;
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return false;
+    const user = session.user;
 
     const { data: userData } = await supabase
       .from('user_accounts')
@@ -159,8 +163,9 @@ export const investmentService = {
   },
 
   getRecentActivity: async (limit: number) => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error('Not authenticated');
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return { data: [] };
+    const user = session.user;
 
     const { data: userData } = await supabase
       .from('user_accounts')

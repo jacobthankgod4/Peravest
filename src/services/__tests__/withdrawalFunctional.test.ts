@@ -1,3 +1,5 @@
+export {};
+
 describe('Withdrawal Functional Tests', () => {
   describe('Group Ajo Withdrawals', () => {
     it('should allow withdrawal when user turn and cycle complete', () => {
@@ -151,7 +153,7 @@ describe('Withdrawal Functional Tests', () => {
     });
 
     it('should validate required fields for group withdrawal', () => {
-      const request = {
+      const request: { user_id: number; group_id?: number; withdrawal_type: string } = {
         user_id: 1,
         withdrawal_type: 'group'
       };
@@ -245,7 +247,7 @@ describe('Withdrawal Functional Tests', () => {
 
     it('should block payout if any member missing', () => {
       const expectedMembers = 5;
-      const contributedMembers = 4;
+      const contributedMembers: number = 4;
       
       const allContributed = contributedMembers === expectedMembers;
       expect(allContributed).toBe(false);

@@ -1,6 +1,6 @@
 import { supabase } from './supabaseClient';
 
-export type KYCStatus = 'pending' | 'under_review' | 'approved' | 'rejected';
+export type KYCStatus = 'pending' | 'submitted' | 'under_review' | 'approved' | 'rejected';
 export type DocumentType = 'national_id' | 'passport' | 'drivers_license' | 'utility_bill';
 
 interface KYCDocument {
@@ -17,7 +17,11 @@ interface KYCDocument {
 class KYCVerificationService {
   async submitKYC(formData: FormData) {
     try {
-      // Upload files to storage first
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('User not authenticated');
+
+      const userId = user.id;
+
       const files = {
         idDocument: formData.get('idDocument') as File,
         proofOfAddress: formData.get('proofOfAddress') as File,
@@ -40,8 +44,8 @@ class KYCVerificationService {
       const uploadResults = await Promise.all(uploadPromises);
       const documentUrls = uploadResults.reduce((acc, result) => ({ ...acc, ...result }), {});
 
-      // Save KYC data to database
       const kycData = {
+        user_id: userId,
         first_name: formData.get('firstName'),
         last_name: formData.get('lastName'),
         date_of_birth: formData.get('dateOfBirth'),
@@ -66,14 +70,24 @@ class KYCVerificationService {
         .single();
 
       if (error) throw error;
+
+      const { error: profileError } = await supabase
+        .from('user_profiles')
+        .update({ kyc_status: 'submitted' })
+        .eq('user_id', userId);
+
+      if (profileError) throw profileError;
+
       return { data, error: null };
     } catch (error) {
+      console.error('KYC Submission Error:', error);
       return { data: null, error };
     }
   }
-  async getUserKYC(userId: number) {
+
+  async getUserKYC(userId: string) {
     const { data, error } = await supabase
-      .from('kyc_documents')
+      .from('kyc_submissions')
       .select('*')
       .eq('user_id', userId);
 
@@ -87,32 +101,23 @@ class KYCVerificationService {
     rejectionReason?: string
   ) {
     const { data, error } = await supabase
-      .from('kyc_documents')
+      .from('kyc_submissions')
       .update({
         status,
-        rejection_reason: rejectionReason,
-        verified_at: status === 'approved' ? new Date().toISOString() : null,
-        verified_by: adminId
+        updated_at: new Date().toISOString()
       })
       .eq('id', documentId)
       .select()
       .single();
-
-    if (!error && status === 'approved') {
-      await supabase
-        .from('users')
-        .update({ kyc_verified: true })
-        .eq('id', data.user_id);
-    }
 
     return { data, error };
   }
 
   async getPendingKYC() {
     const { data, error } = await supabase
-      .from('kyc_documents')
-      .select('*, users(email, full_name)')
-      .in('status', ['pending', 'under_review'])
+      .from('kyc_submissions')
+      .select('*')
+      .eq('status', 'pending')
       .order('created_at', { ascending: true });
 
     return { data, error };

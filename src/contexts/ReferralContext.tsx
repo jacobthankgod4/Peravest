@@ -65,10 +65,11 @@ export const ReferralProvider: React.FC<ReferralProviderProps> = ({ children }) 
       trackReferral(refCode);
     }
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) refreshStats();
-      else setLoading(false);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session && _event === 'SIGNED_IN') refreshStats();
+      else if (!session) setLoading(false);
     });
+    return () => subscription.unsubscribe();
   }, []);
 
   const value = {

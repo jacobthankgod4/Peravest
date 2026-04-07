@@ -25,21 +25,21 @@ interface ReferralStats {
 
 class ReferralService {
   async getUserReferralCode(): Promise<{ data: { referral_code: string } }> {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error('User not authenticated');
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('User not authenticated');
+    const user = session.user;
 
     let { data, error } = await supabase
-      .from('users_profile')
+      .from('user_profiles')
       .select('referral_code')
-      .eq('auth_id', user.id)
+      .eq('user_id', user.id)
       .single();
 
     if (error && error.code === 'PGRST116') {
-      // Profile doesn't exist, create one
       const newCode = this.generateCode();
       const { data: newProfile, error: insertError } = await supabase
-        .from('users_profile')
-        .insert({ auth_id: user.id, referral_code: newCode })
+        .from('user_profiles')
+        .insert({ user_id: user.id, referral_code: newCode })
         .select('referral_code')
         .single();
       
@@ -53,8 +53,9 @@ class ReferralService {
   }
 
   async updateReferralCode(newCode: string): Promise<{ data: { referral_code: string } }> {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error('User not authenticated');
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('User not authenticated');
+    const user = session.user;
 
     // Validate code format
     if (!/^[A-Za-z0-9]{3,20}$/.test(newCode)) {
@@ -62,9 +63,9 @@ class ReferralService {
     }
 
     const { data, error } = await supabase
-      .from('users_profile')
+      .from('user_profiles')
       .update({ referral_code: newCode })
-      .eq('auth_id', user.id)
+      .eq('user_id', user.id)
       .select('referral_code')
       .single();
 
@@ -79,8 +80,9 @@ class ReferralService {
   }
 
   async getReferralStats(): Promise<{ data: ReferralStats }> {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error('User not authenticated');
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('User not authenticated');
+    const user = session.user;
 
     const { data, error } = await supabase
       .from('referrals')
@@ -101,14 +103,15 @@ class ReferralService {
   }
 
   async getUserReferrals(): Promise<{ data: ReferralData[] }> {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error('User not authenticated');
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('User not authenticated');
+    const user = session.user;
 
     const { data, error } = await supabase
       .from('referrals')
       .select(`
         *,
-        referred_user:users_profile!referred_user_id(
+        referred_user:user_profiles!referred_user_id(
           referral_code
         )
       `)
@@ -121,8 +124,9 @@ class ReferralService {
   }
 
   async withdrawReferralBonus(amount: number): Promise<{ success: boolean; message: string }> {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error('User not authenticated');
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('User not authenticated');
+    const user = session.user;
 
     // Insert withdrawal request
     const { error } = await supabase
