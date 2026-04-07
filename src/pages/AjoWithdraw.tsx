@@ -27,16 +27,18 @@ export default function AjoWithdraw() {
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Fetch group details
-  const { data: group, isLoading: groupLoading } = useQuery(
+  const { data: groupResponse, isLoading: groupLoading } = useQuery(
     ['group-detail', groupId],
     () => ajoGroupService.getGroupDetails(parseInt(groupId || '0'))
   );
+  const group = groupResponse?.data;
 
   // Fetch current cycle
-  const { data: cycle, isLoading: cycleLoading } = useQuery(
+  const { data: cycleResponse, isLoading: cycleLoading } = useQuery(
     ['current-cycle', groupId],
     () => ajoGroupService.getCurrentCycle(parseInt(groupId || '0'))
   );
+  const cycle = cycleResponse?.data;
 
   // Check eligibility
   const { data: eligibility, isLoading: eligibilityLoading, error: eligibilityError } = useQuery(
@@ -101,20 +103,11 @@ export default function AjoWithdraw() {
     );
   }
 
-  if (!group || !cycle) {
-    return (
-      <UserLayout>
-        <div className="min-h-screen bg-gradient-peravest from-green-50 to-emerald-100 py-12 px-4">
-          <Alert type="error" className="max-w-2xl mx-auto">
-            Unable to load withdrawal details. Please try again.
-          </Alert>
-        </div>
-      </UserLayout>
-    );
-  }
+  const groupData = group as any;
+  const cycleData = cycle as any;
 
   const isEligible = eligibility?.eligible || false;
-  const maxWithdrawal = cycle.payout_amount || 0;
+  const maxWithdrawal = cycleData?.payout_amount || 0;
   const penalty = state.withdrawalType === 'partial' ? Math.round(maxWithdrawal * 0.1) : 0;
   const finalAmount = state.amount - penalty;
 
@@ -124,7 +117,7 @@ export default function AjoWithdraw() {
         {/* Header */}
         <div className="max-w-2xl mx-auto mb-12">
           <h1 className="text-4xl font-bold text-primary-green mb-2">Withdraw Payout</h1>
-          <p className="text-lg text-gray-600">{group.name}</p>
+          <p className="text-lg text-gray-600">{groupData.name}</p>
         </div>
 
         {/* Main Content */}
@@ -154,9 +147,9 @@ export default function AjoWithdraw() {
             {/* Cycle Status */}
             <div className="bg-white rounded-2xl shadow-lg p-8 border border-blue-200">
               <p className="text-sm text-gray-600 mb-2">Cycle Status</p>
-              <p className="text-2xl font-bold text-blue-600 capitalize">{cycle.status}</p>
+              <p className="text-2xl font-bold text-blue-600 capitalize">{cycleData.status}</p>
               <p className="text-xs text-gray-500 mt-2">
-                Completed: {new Date(cycle?.payout_date || cycle?.end_date).toLocaleDateString()}
+                Completed: {new Date(cycleData?.payout_date || cycleData?.end_date).toLocaleDateString()}
               </p>
             </div>
           </div>

@@ -11,22 +11,25 @@ export default function AjoGroupDetail() {
   const [activeTab, setActiveTab] = useState<'overview' | 'members' | 'cycles'>('overview');
 
   // Fetch group details
-  const { data: group, isLoading: groupLoading, error: groupError } = useQuery(
+  const { data: groupResponse, isLoading: groupLoading, error: groupError } = useQuery(
     ['group-detail', groupId],
     () => ajoGroupService.getGroupDetails(parseInt(groupId || '0'))
   );
+  const group = groupResponse?.data;
 
   // Fetch group members
-  const { data: members, isLoading: membersLoading } = useQuery(
+  const { data: membersResponse, isLoading: membersLoading } = useQuery(
     ['group-members', groupId],
     () => ajoGroupService.getGroupMembers(parseInt(groupId || '0'))
   );
+  const members = membersResponse?.data;
 
   // Fetch group cycles
-  const { data: cycles, isLoading: cyclesLoading } = useQuery(
+  const { data: cyclesResponse, isLoading: cyclesLoading } = useQuery(
     ['group-cycles', groupId],
     () => ajoGroupService.getGroupCycles(parseInt(groupId || '0'))
   );
+  const cycles = cyclesResponse?.data;
 
   const isLoading = groupLoading || membersLoading || cyclesLoading;
 
@@ -52,6 +55,8 @@ export default function AjoGroupDetail() {
     );
   }
 
+  const groupData = group as any;
+
   return (
     <UserLayout>
       <div className="min-h-screen bg-gradient-peravest from-green-50 to-emerald-100 py-12 px-4 md:px-8">
@@ -60,11 +65,11 @@ export default function AjoGroupDetail() {
           <div className="bg-white rounded-2xl shadow-lg p-8 border border-green-200">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h1 className="text-4xl font-bold text-primary-green mb-2">{group?.name}</h1>
-                <p className="text-lg text-gray-600">{group?.description}</p>
+                <h1 className="text-4xl font-bold text-primary-green mb-2">{groupData?.name}</h1>
+                <p className="text-lg text-gray-600">{groupData?.description}</p>
               </div>
               <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full font-semibold">
-                {group.status}
+                {groupData.status}
               </span>
             </div>
 
@@ -73,25 +78,25 @@ export default function AjoGroupDetail() {
               <div>
                 <p className="text-sm text-gray-600 mb-1">Members</p>
                 <p className="text-2xl font-bold text-primary-green">
-                  {group?.current_members}/{group?.max_members}
+                  {groupData?.current_members}/{groupData?.max_members}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-gray-600 mb-1">Contribution</p>
                 <p className="text-2xl font-bold text-accent-orange">
-                  ₦{group?.contribution_amount?.toLocaleString()}
+                  ₦{groupData?.contribution_amount?.toLocaleString()}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-gray-600 mb-1">Frequency</p>
                 <p className="text-2xl font-bold text-blue-600 capitalize">
-                  {group?.frequency}
+                  {groupData?.frequency}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-gray-600 mb-1">Trust Score</p>
                 <p className="text-2xl font-bold text-purple-600">
-                  {(group?.reliability_threshold * 100).toFixed(0)}%
+                  {(groupData?.reliability_threshold * 100).toFixed(0)}%
                 </p>
               </div>
             </div>
@@ -148,19 +153,19 @@ export default function AjoGroupDetail() {
                     <div>
                       <p className="text-sm text-gray-600">Created</p>
                       <p className="text-lg font-semibold text-gray-900">
-                        {new Date(group.created_at).toLocaleDateString()}
+                        {new Date(groupData.created_at).toLocaleDateString()}
                       </p>
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Cycle Duration</p>
                       <p className="text-lg font-semibold text-gray-900">
-                        {group.cycle_duration} days
+                        {groupData.cycle_duration} days
                       </p>
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">Total Cycles</p>
                       <p className="text-lg font-semibold text-gray-900">
-                        {group.total_cycles || 'Ongoing'}
+                        {groupData.total_cycles || 'Ongoing'}
                       </p>
                     </div>
                   </div>
@@ -175,12 +180,12 @@ export default function AjoGroupDetail() {
                         <div
                           className="bg-primary-green h-3 rounded-full"
                           style={{
-                            width: `${(group.current_members / group.max_members) * 100}%`,
+                            width: `${(groupData.current_members / groupData.max_members) * 100}%`,
                           }}
                         />
                       </div>
                       <p className="text-xs text-gray-600 mt-1">
-                        {group.current_members} of {group.max_members} members
+                        {groupData.current_members} of {groupData.max_members} members
                       </p>
                     </div>
                   </div>
